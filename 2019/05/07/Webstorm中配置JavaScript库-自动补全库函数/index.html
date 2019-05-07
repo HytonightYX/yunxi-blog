@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/4 | Hytonight云息</title>
+  <title>Webstorm中配置JavaScript库+自动补全库函数 | Hytonight云息</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hytonight云息">
-<meta property="og:url" content="http://yoursite.com/archives/2019/04/index.html">
+  <meta name="description" content="使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个  费了九牛二虎之力终于搞明白了如何解决 直接上干货！ 到顶部let x = require(&amp;#39;xxxx&amp;#39;)双击要引入的库函数xxxx  点击旁边的小灯泡或者按下 opt + return (Win下为  Alt + Enter) 点击Install TypeScript definit">
+<meta name="keywords" content="配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webstorm中配置JavaScript库+自动补全库函数">
+<meta property="og:url" content="http://yoursite.com/2019/05/07/Webstorm中配置JavaScript库-自动补全库函数/index.html">
 <meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个  费了九牛二虎之力终于搞明白了如何解决 直接上干货！ 到顶部let x = require(&amp;#39;xxxx&amp;#39;)双击要引入的库函数xxxx  点击旁边的小灯泡或者按下 opt + return (Win下为  Alt + Enter) 点击Install TypeScript definit">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.jetbrains.com/help/img/idea/2019.1/ws_js_configure_libraries_node_express_symbols_not_resolved_without_d_ts.png">
+<meta property="og:updated_time" content="2019-05-07T15:44:47.580Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hytonight云息">
+<meta name="twitter:title" content="Webstorm中配置JavaScript库+自动补全库函数">
+<meta name="twitter:description" content="使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个  费了九牛二虎之力终于搞明白了如何解决 直接上干货！ 到顶部let x = require(&amp;#39;xxxx&amp;#39;)双击要引入的库函数xxxx  点击旁边的小灯泡或者按下 opt + return (Win下为  Alt + Enter) 点击Install TypeScript definit">
+<meta name="twitter:image" content="https://www.jetbrains.com/help/img/idea/2019.1/ws_js_configure_libraries_node_express_symbols_not_resolved_without_d_ts.png">
   
     <link rel="alternative" href="/atom.xml" title="Hytonight云息" type="application/atom+xml">
   
@@ -146,87 +153,176 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Webstorm中配置JavaScript库-自动补全库函数" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/23/记录代码灵感-Gist/" class="archive-article-date">
-  	<time datetime="2019-04-23T10:35:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-23</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/23/记录代码灵感-Gist/">记录代码灵感--Gist</a>
+    <h1 class="article-title" itemprop="name">
+      Webstorm中配置JavaScript库+自动补全库函数
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/05/07/Webstorm中配置JavaScript库-自动补全库函数/" class="archive-article-date">
+  	<time datetime="2019-05-07T15:27:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个</p>
+<p><img src="https://www.jetbrains.com/help/img/idea/2019.1/ws_js_configure_libraries_node_express_symbols_not_resolved_without_d_ts.png" alt="ws_js_configure_libraries_node_express_symbols_not_resolved_without_d_ts.png"></p>
+<p>费了九牛二虎之力终于搞明白了如何解决</p>
+<h3 id="直接上干货！"><a href="#直接上干货！" class="headerlink" title="直接上干货！"></a>直接上干货！</h3><ul>
+<li>到顶部<code>let x = require(&#39;xxxx&#39;)</code>双击要引入的库函数<code>xxxx</code> </li>
+<li>点击<strong>旁边的小灯泡</strong>或者按下 <code>opt + return</code> (Win下为  <code>Alt + Enter</code>)</li>
+<li>点击<code>Install TypeScript definitions for better type information</code> </li>
+<li>过一会儿，这个库中所有的函数都能识别到并且补全了有没有！</li>
+</ul>
+<h3 id="原理？这个没有原理"><a href="#原理？这个没有原理" class="headerlink" title="原理？这个没有原理"></a>原理？这个没有原理</h3><p>送上<a href="https://www.jetbrains.com/help/webstorm/configuring-javascript-libraries.html" target="_blank" rel="noopener">官方文档</a>，还是官方文档最靠谱了 （扶墙….</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你ya~ (゜-゜)つロ 干杯~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">配置</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/07/Webstorm中配置JavaScript库-自动补全库函数/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/22/hello-world/" class="archive-article-date">
-  	<time datetime="2019-04-22T11:45:21.964Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-22</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/23/记录代码灵感-Gist/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记录代码灵感--Gist</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/22/hello-world/">Hello World</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -249,8 +345,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

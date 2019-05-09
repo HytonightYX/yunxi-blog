@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Hytonight云息</title>
+  <title>[JavaScript]高阶函数——reduce()用法总结 | Hytonight云息</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hytonight云息">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： 123456789array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);/*  accumulator:  必需。累计器  currentValue: 必需。当">
+<meta name="keywords" content="JavaScript,进阶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JavaScript]高阶函数——reduce()用法总结">
+<meta property="og:url" content="http://yoursite.com/2019/05/09/JavaScript-高阶函数——reduce-总结/index.html">
 <meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： 123456789array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);/*  accumulator:  必需。累计器  currentValue: 必需。当">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://javascript.info/article/array-methods/reduce.png">
+<meta property="og:image" content="https://engineering.khanacademy.org/images/lets-reduce/visualization.gif">
+<meta property="og:updated_time" content="2019-05-09T11:40:03.972Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hytonight云息">
+<meta name="twitter:title" content="[JavaScript]高阶函数——reduce()用法总结">
+<meta name="twitter:description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： 123456789array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);/*  accumulator:  必需。累计器  currentValue: 必需。当">
+<meta name="twitter:image" content="http://javascript.info/article/array-methods/reduce.png">
   
     <link rel="alternative" href="/atom.xml" title="Hytonight云息" type="application/atom+xml">
   
@@ -146,36 +154,75 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-JavaScript-高阶函数——reduce-总结" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/09/JavaScript-高阶函数——reduce-总结/" class="archive-article-date">
-  	<time datetime="2019-05-09T10:33:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-09</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/09/JavaScript-高阶函数——reduce-总结/">[JavaScript]高阶函数——reduce()用法总结</a>
+    <h1 class="article-title" itemprop="name">
+      [JavaScript]高阶函数——reduce()用法总结
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/05/09/JavaScript-高阶函数——reduce-总结/" class="archive-article-date">
+  	<time datetime="2019-05-09T10:33:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><code>reduce()</code>方法对数组中的每个元素执行一个由您提供的<code>reducer</code>函数(升序执行)，将其结果汇总为单个返回值。语法为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">array.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">accumulator, currentValue, currentIndex, arr</span>), <span class="title">initialValue</span>);</span></span><br><span class="line"><span class="function">/*</span></span><br><span class="line"><span class="function">  <span class="title">accumulator</span>:  必需。累计器</span></span><br><span class="line"><span class="function">  <span class="title">currentValue</span>: 必需。当前元素</span></span><br><span class="line"><span class="function">  </span></span><br><span class="line"><span class="function">  <span class="title">currentIndex</span>: 可选。当前元素的索引；                    </span></span><br><span class="line"><span class="function">  <span class="title">arr</span>: 					可选。要处理的数组</span></span><br><span class="line"><span class="function">  <span class="title">initialValue</span>: 可选。传递给函数的初始值，相当于<span class="title">total</span>的初始值</span></span><br><span class="line"><span class="function">*/</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>###解释</p>
+<p>简单来说就是对一个<code>array</code>执行<code>reduce()</code>方法，就是把其中的<code>function()</code>挨个地作用于<code>array</code>中的元素上，<strong>而且上一次的输出会作为下一次的一个输入</strong>。例如下面这个对<code>array</code>求和的例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> array = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line">array.reduce(<span class="function">(<span class="params">sum, curr</span>) =&gt;</span> sum + curr, <span class="number">0</span>); <span class="comment">// 得到15</span></span><br></pre></td></tr></table></figure>
+<p>执行流程图如下：</p>
+<p><img src="http://javascript.info/article/array-methods/reduce.png" alt="reduce"></p>
+<p>令<code>f（a, b）= a + b</code>， 也可以一次性写为：</p>
+<p><code>array.reduce = f( f( f( f( f(0, 1) ,2) ,3), 4) ,5)</code></p>
+<p><strong>奉上一个GIF</strong></p>
+<p><img src="https://engineering.khanacademy.org/images/lets-reduce/visualization.gif" alt="Alt Text"></p>
+<h3 id="常见用法"><a href="#常见用法" class="headerlink" title="常见用法"></a>常见用法</h3><h4 id="求加法（乘法同理）"><a href="#求加法（乘法同理）" class="headerlink" title="求加法（乘法同理）"></a>求加法（乘法同理）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line">arr.reduce(<span class="function">(<span class="params">sum, curr</span>) =&gt;</span> sum + curr, <span class="number">0</span>); 			<span class="comment">// 得到15</span></span><br></pre></td></tr></table></figure>
+<p>此基础上还可以求平均值</p>
+<h4 id="求最大值（最小值同理）"><a href="#求最大值（最小值同理）" class="headerlink" title="求最大值（最小值同理）"></a>求最大值（最小值同理）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">23</span>,<span class="number">123</span>,<span class="number">342</span>,<span class="number">12</span>];</span><br><span class="line"><span class="keyword">let</span> max = arr.reduce(<span class="function">(<span class="params">pre,cur,index,arr</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> pre &gt; cur ? pre : cur</span><br><span class="line">&#125;); 																							<span class="comment">// 得到 342</span></span><br></pre></td></tr></table></figure>
+<h4 id="将字符串转换为整数"><a href="#将字符串转换为整数" class="headerlink" title="将字符串转换为整数"></a>将字符串转换为整数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">"4321"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> strParseInt = str.split(<span class="string">''</span>)										<span class="comment">// 得到 ['4', '3', '2', '1', '4']</span></span><br><span class="line">		.map(<span class="function"><span class="params">item</span> =&gt;</span> &#123;<span class="keyword">return</span> item.charCodeAt() - <span class="number">48</span>&#125;)	<span class="comment">// 得到 [4, 3, 2, 1, 4]</span></span><br><span class="line">		.reduce(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123;<span class="keyword">return</span> a * <span class="number">10</span> + b&#125;)				<span class="comment">// 得到 43214</span></span><br></pre></td></tr></table></figure>
+<h4 id="字符统计-单词统计同理"><a href="#字符统计-单词统计同理" class="headerlink" title="字符统计/单词统计同理"></a>字符统计/单词统计同理</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'abcdaabc'</span>;</span><br><span class="line"></span><br><span class="line">str.split(<span class="string">''</span>).reduce(<span class="function">(<span class="params">res, cur</span>) =&gt;</span> &#123;</span><br><span class="line">    res[cur] ? res[cur] ++ : res[cur] = <span class="number">1</span> <span class="comment">// 如果cur第一次出现，记为1</span></span><br><span class="line">    <span class="keyword">return</span> res;														<span class="comment">// 否则记录数+1</span></span><br><span class="line">&#125;, &#123;&#125;)																		<span class="comment">// 得到 &#123;a: 3, b: 2, c: 2, d: 1&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">1</span>]</span><br><span class="line"><span class="keyword">let</span> newArr = arr.reduce(<span class="function">(<span class="params">pre,cur</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(!pre.includes(cur))&#123;</span><br><span class="line">      <span class="keyword">return</span> pre.concat(cur)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> pre</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,[])																			<span class="comment">// 得到 [1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure>
+<h4 id="数组维度转换"><a href="#数组维度转换" class="headerlink" title="数组维度转换"></a>数组维度转换</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [[<span class="number">0</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>]]			<span class="comment">// 二维数组</span></span><br><span class="line"><span class="keyword">let</span> newArr = arr.reduce(<span class="function">(<span class="params">pre,cur</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> pre.concat(cur)							<span class="comment">// 合并pre 与 cur, 并返回一个新数组</span></span><br><span class="line">&#125;,[])</span><br><span class="line"><span class="built_in">console</span>.log(newArr); 										<span class="comment">// 一维数组 [0, 1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+<p>发现新的用法会继续更新——</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你ya~ (゜-゜)つロ 干杯~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,168 +238,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/09/JavaScript-高阶函数——reduce-总结/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/08/【React】基于antd的登陆-首页，使用cookie保存登陆信息/" class="archive-article-date">
-  	<time datetime="2019-05-08T07:37:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-08</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/05/08/【React】基于antd的登陆-首页，使用cookie保存登陆信息/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【React】基于AntD的登陆+首页，使用cookie保存登陆信息</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/08/【React】基于antd的登陆-首页，使用cookie保存登陆信息/">【React】基于AntD的登陆+首页，使用cookie保存登陆信息</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Demo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">React</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">AntD</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/07/Webstorm中配置JavaScript库-自动补全库函数/" class="archive-article-date">
-  	<time datetime="2019-05-07T15:27:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/07/Webstorm中配置JavaScript库-自动补全库函数/">Webstorm中配置JavaScript库+自动补全库函数</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">配置</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/23/记录代码灵感-Gist/" class="archive-article-date">
-  	<time datetime="2019-04-23T10:35:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/23/记录代码灵感-Gist/">记录代码灵感--Gist</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/22/hello-world/" class="archive-article-date">
-  	<time datetime="2019-04-22T11:45:21.964Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/22/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -375,8 +360,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

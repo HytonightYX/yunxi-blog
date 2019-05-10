@@ -17,8 +17,8 @@
 <meta property="og:description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： 123456789array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);/*  accumulator:  必需。累计器  currentValue: 必需。当">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://javascript.info/article/array-methods/reduce.png">
-<meta property="og:image" content="https://engineering.khanacademy.org/images/lets-reduce/visualization.gif">
-<meta property="og:updated_time" content="2019-05-09T11:56:57.888Z">
+<meta property="og:image" content="http://yoursite.com/Users/husiyuan/Desktop/visualization.gif">
+<meta property="og:updated_time" content="2019-05-09T12:40:19.114Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS高阶函数——reduce()用法总结">
 <meta name="twitter:description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： 123456789array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);/*  accumulator:  必需。累计器  currentValue: 必需。当">
@@ -184,7 +184,7 @@
 <p>令<code>f（a, b）= a + b</code>， 也可以一次性写为：</p>
 <p><code>array.reduce = f( f( f( f( f(0, 1) ,2) ,3), 4) ,5)</code></p>
 <p><strong>奉上一个GIF</strong></p>
-<p><img src="https://engineering.khanacademy.org/images/lets-reduce/visualization.gif" alt="Alt Text"></p>
+<p><img src="/Users/husiyuan/Desktop/visualization.gif" alt="Alt Text"></p>
 <h3 id="常见用法"><a href="#常见用法" class="headerlink" title="常见用法"></a>常见用法</h3><h4 id="求加法（乘法同理）"><a href="#求加法（乘法同理）" class="headerlink" title="求加法（乘法同理）"></a>求加法（乘法同理）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line">arr.reduce(<span class="function">(<span class="params">sum, curr</span>) =&gt;</span> sum + curr, <span class="number">0</span>); 			<span class="comment">// 得到15</span></span><br></pre></td></tr></table></figure>
 <p>此基础上还可以求平均值</p>
 <h4 id="求最大值（最小值同理）"><a href="#求最大值（最小值同理）" class="headerlink" title="求最大值（最小值同理）"></a>求最大值（最小值同理）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">23</span>,<span class="number">123</span>,<span class="number">342</span>,<span class="number">12</span>];</span><br><span class="line"><span class="keyword">let</span> max = arr.reduce(<span class="function">(<span class="params">pre,cur,index,arr</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> pre &gt; cur ? pre : cur</span><br><span class="line">&#125;); 																							<span class="comment">// 得到 342</span></span><br></pre></td></tr></table></figure>
@@ -303,6 +303,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/05/10/Leetcode-152改——乘积最大连续子串/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          [Leetcode] 152改——乘积最大连续子串
+        
+      </div>
+    </a>
   
   
     <a href="/2019/05/08/【React】基于antd的登陆-首页，使用cookie保存登陆信息/" id="article-nav-older" class="article-nav-link-wrap">
@@ -440,10 +449,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Demo</a>
               </li>
              
@@ -453,6 +458,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">AntD</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">leetcode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">配置</a>
               </li>
              
               <li class="article-tag-list-item">

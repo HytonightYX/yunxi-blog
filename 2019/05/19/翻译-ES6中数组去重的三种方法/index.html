@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>[ 翻译 ] ES6中数组去重的三种方法 | Hytonight云息</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="原文：How to Remove Array Duplicates in ES6  翻译：Hytonight云息  有三种方法可以过滤掉一个数组的重复元素并且返回去重后的新数组。我最喜欢使用Set，因为它最精简。 123456789101112131415const array = [&apos;🐑&apos;, 1,  2, &apos;🐑&apos;,&apos;🐑&apos;, 3];// 1: &quot;Set&quot;[...new Set(array)]">
+  <meta name="description" content="原文：How to Remove Array Duplicates in ES6  翻译：Hytonight云息 有三种方法可以过滤掉一个数组的重复元素并且返回去重后的新数组。我最喜欢使用Set，因为它最精简。 123456789101112131415const array = [&apos;🐑&apos;, 1,  2, &apos;🐑&apos;,&apos;🐑&apos;, 3];// 1: &quot;Set&quot;[...new Set(array)];">
 <meta name="keywords" content="JavaScript,翻译">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[ 翻译 ] ES6中数组去重的三种方法">
 <meta property="og:url" content="http://yoursite.com/2019/05/19/翻译-ES6中数组去重的三种方法/index.html">
 <meta property="og:site_name" content="Hytonight云息">
-<meta property="og:description" content="原文：How to Remove Array Duplicates in ES6  翻译：Hytonight云息  有三种方法可以过滤掉一个数组的重复元素并且返回去重后的新数组。我最喜欢使用Set，因为它最精简。 123456789101112131415const array = [&apos;🐑&apos;, 1,  2, &apos;🐑&apos;,&apos;🐑&apos;, 3];// 1: &quot;Set&quot;[...new Set(array)]">
+<meta property="og:description" content="原文：How to Remove Array Duplicates in ES6  翻译：Hytonight云息 有三种方法可以过滤掉一个数组的重复元素并且返回去重后的新数组。我最喜欢使用Set，因为它最精简。 123456789101112131415const array = [&apos;🐑&apos;, 1,  2, &apos;🐑&apos;,&apos;🐑&apos;, 3];// 1: &quot;Set&quot;[...new Set(array)];">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*Z1SU1atGbGMgY_jHaDyMGA.png">
-<meta property="og:updated_time" content="2019-05-19T14:30:24.448Z">
+<meta property="og:updated_time" content="2019-05-19T14:33:39.891Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[ 翻译 ] ES6中数组去重的三种方法">
-<meta name="twitter:description" content="原文：How to Remove Array Duplicates in ES6  翻译：Hytonight云息  有三种方法可以过滤掉一个数组的重复元素并且返回去重后的新数组。我最喜欢使用Set，因为它最精简。 123456789101112131415const array = [&apos;🐑&apos;, 1,  2, &apos;🐑&apos;,&apos;🐑&apos;, 3];// 1: &quot;Set&quot;[...new Set(array)]">
+<meta name="twitter:description" content="原文：How to Remove Array Duplicates in ES6  翻译：Hytonight云息 有三种方法可以过滤掉一个数组的重复元素并且返回去重后的新数组。我最喜欢使用Set，因为它最精简。 123456789101112131415const array = [&apos;🐑&apos;, 1,  2, &apos;🐑&apos;,&apos;🐑&apos;, 3];// 1: &quot;Set&quot;[...new Set(array)];">
 <meta name="twitter:image" content="https://cdn-images-1.medium.com/max/800/1*Z1SU1atGbGMgY_jHaDyMGA.png">
   
     <link rel="alternative" href="/atom.xml" title="Hytonight云息" type="application/atom+xml">
@@ -175,9 +175,10 @@
       
         <p><a href="https://www.samanthaming.com/tidbits/43-3-ways-to-remove-array-duplicates" target="_blank" rel="noopener">原文</a>：<em>How to Remove Array Duplicates in ES6</em> </p>
 <p>翻译：Hytonight云息</p>
-<p><img src="https://cdn-images-1.medium.com/max/800/1*Z1SU1atGbGMgY_jHaDyMGA.png" alt="img"></p>
 <p>有三种方法可以过滤掉一个数组的重复元素并且返回去重后的新数组。我最喜欢使用<code>Set</code>，因为它最精简。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> array = [<span class="string">'🐑'</span>, <span class="number">1</span>,  <span class="number">2</span>, <span class="string">'🐑'</span>,<span class="string">'🐑'</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1: "Set"</span></span><br><span class="line">[...new <span class="built_in">Set</span>(array)];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2: "Filter"</span></span><br><span class="line">array.filter(<span class="function">(<span class="params">item, index</span>) =&gt;</span> array.indexOf(item) === index);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3: "Reduce"</span></span><br><span class="line">array.reduce(<span class="function">(<span class="params">unique, item</span>) =&gt;</span> </span><br><span class="line">  unique.includes(item) ? unique : [...unique, item], []);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// RESULT:</span></span><br><span class="line"><span class="comment">// ['🐑', 1, 2, 3];</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*Z1SU1atGbGMgY_jHaDyMGA.png" alt="img"></p>
 <h3 id="1-使用-Set"><a href="#1-使用-Set" class="headerlink" title="1. 使用 Set"></a>1. 使用 <code>Set</code></h3><p><em><code>set</code>是ES6中引入的新的数据类型。<code>set</code>只允许存储不重复的值，所以当你放入一个数组，它会自动去掉重复的值。</em></p>
 <p>OK，我们回去将代码分解开来看，其实就做了两件事情：</p>
 <ul>
@@ -353,6 +354,7 @@
 <li><a href="https://gist.github.com/telekosmos/3b62a31a5c43f40849bb" target="_blank" rel="noopener">GitHubGist: Remove duplicates from JS array</a></li>
 <li><a href="https://codehandbook.org/how-to-remove-duplicates-from-javascript-array/" target="_blank" rel="noopener">CodeHandbook: How to Remove Duplicates from JavaScript Array</a></li>
 </ul>
+<p>作者写的一个<a href="http://jsben.ch/ziS3i" target="_blank" rel="noopener">在线测试</a></p>
 
       
 
@@ -589,19 +591,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">进阶</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">leetcode</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">进阶</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -617,15 +619,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">翻译</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Demo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">AntD</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">翻译</a>
               </li>
              
               <li class="article-tag-list-item">

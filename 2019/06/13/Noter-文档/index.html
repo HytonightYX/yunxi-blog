@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>Noter-文档 - Hytonight云息</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="想法&amp;amp;相关介绍 作为一名IT学习者，向来以开源为荣。每逢期末就有种分享自己的笔记的冲动，对于弱势学科也特别想要看看学霸们的笔记。因此萌生了这个知识共享平台的想法 自己平时喜欢用markdown来写点文章，真心觉得这是一种很高效的记录方式，而且结构统一，书面美观，对工科生来说非常好用 在网上找了一番，感觉同类产品比较少。类似的比如腾讯在线文档这类产品，感觉不够轻量，而且文档类型大多是巨硬的o">
+<meta name="keywords" content="文档">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Noter-文档">
+<meta property="og:url" content="http://yunxi.site/2019/06/13/Noter-文档/index.html">
+<meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="想法&amp;amp;相关介绍 作为一名IT学习者，向来以开源为荣。每逢期末就有种分享自己的笔记的冲动，对于弱势学科也特别想要看看学霸们的笔记。因此萌生了这个知识共享平台的想法 自己平时喜欢用markdown来写点文章，真心觉得这是一种很高效的记录方式，而且结构统一，书面美观，对工科生来说非常好用 在网上找了一番，感觉同类产品比较少。类似的比如腾讯在线文档这类产品，感觉不够轻量，而且文档类型大多是巨硬的o">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yunxi.site/images/og_image.png">
+<meta property="og:updated_time" content="2019-06-13T06:43:09.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Noter-文档">
+<meta name="twitter:description" content="想法&amp;amp;相关介绍 作为一名IT学习者，向来以开源为荣。每逢期末就有种分享自己的笔记的冲动，对于弱势学科也特别想要看看学霸们的笔记。因此萌生了这个知识共享平台的想法 自己平时喜欢用markdown来写点文章，真心觉得这是一种很高效的记录方式，而且结构统一，书面美观，对工科生来说非常好用 在网上找了一番，感觉同类产品比较少。类似的比如腾讯在线文档这类产品，感觉不够轻量，而且文档类型大多是巨硬的o">
+<meta name="twitter:image" content="http://yunxi.site/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/assets/img/avater.png">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/tomorrow.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/assets/img/avater.png" alt="Noter-文档" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives/">Archives</a>
+                
+                <a class="navbar-item" href="/categories/">Categories</a>
+                
+                <a class="navbar-item" href="/tags/">Tags</a>
+                
+                <a class="navbar-item" href="/about/">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="HytonightYX GitHub" href="https://www.github.com/HytonightYX">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Noter-文档
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-06-13T06:41:25.000Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-06-13</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-06-13T06:43:09.375Z"><i class="far fa-calendar-check">&nbsp;</i>2019-06-13</time>
+                
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    7 minutes read (About 1111 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <h2 id="想法-amp-相关介绍"><a href="#想法-amp-相关介绍" class="headerlink" title="想法&amp;相关介绍"></a>想法&amp;相关介绍</h2><ul>
+<li>作为一名IT学习者，向来以开源为荣。每逢期末就有种分享自己的笔记的冲动，对于弱势学科也特别想要看看学霸们的笔记。因此萌生了这个知识共享平台的想法</li>
+<li>自己平时喜欢用markdown来写点文章，真心觉得这是一种很高效的记录方式，而且结构统一，书面美观，对工科生来说非常好用</li>
+<li>在网上找了一番，感觉同类产品比较少。类似的比如<a href="&quot;https://docs.qq.com/desktop&quot;">腾讯在线文档</a>这类产品，感觉不够轻量，而且文档类型大多是巨硬的office，后来找到了<a href="&quot;https://tower.im/&quot;">Tower</a>这一款产品，感觉比较符合我的预期，看起来很清爽，所见即所得，不过同样的，功能太多，产品定位也略有不同，但可以以其为蓝本，精简功能</li>
+</ul>
+<a id="more"></a>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="http://proj.cloudbreath.top/noter" target="_blank" rel="noopener">在线地址</a></p>
+<p><a href="https://github.com/HytonightYX" target="_blank" rel="noopener">Github</a></p>
+<ul>
+<li><a href="https://github.com/HytonightYX/noter-react" target="_blank" rel="noopener">前端</a></li>
+<li><a href="https://github.com/HytonightYX/noter-server" target="_blank" rel="noopener">后端</a></li>
+</ul>
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">技术</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">官网</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">react</td>
+<td style="text-align:left">用于构建UI的 JavaScript 库</td>
+<td style="text-align:left"><a href="https://reactjs.org/" target="_blank" rel="noopener">https://reactjs.org/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">react-router</td>
+<td style="text-align:left">路由管理器</td>
+<td style="text-align:left"><a href="https://github.com/ReactTraining/react-router" target="_blank" rel="noopener">https://github.com/ReactTraining/react-router</a></td>
+</tr>
+<tr>
+<td style="text-align:left">redux</td>
+<td style="text-align:left">全局状态管理模式</td>
+<td style="text-align:left"><a href="https://redux.js.org/" target="_blank" rel="noopener">https://redux.js.org/</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>redux-thunk</strong></td>
+<td style="text-align:left">redux 异步 action 中间件</td>
+<td style="text-align:left"><a href="https://github.com/reduxjs/redux-thunk" target="_blank" rel="noopener">https://github.com/reduxjs/redux-thunk</a></td>
+</tr>
+<tr>
+<td style="text-align:left">axios</td>
+<td style="text-align:left">基于promise 的HTTP 库</td>
+<td style="text-align:left"><a href="https://github.com/axios/axios" target="_blank" rel="noopener">https://github.com/axios/axios</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Ant Design</td>
+<td style="text-align:left">前端UI组件库</td>
+<td style="text-align:left"><a href="https://ant.design/" target="_blank" rel="noopener">https://ant.design</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>react-responsive</strong></td>
+<td style="text-align:left">支持react的响应式组件</td>
+<td style="text-align:left"><a href="https://www.github.com/contra/react-responsive" target="_blank" rel="noopener">https://www.github.com/contra/react-responsive</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>universal-cookie</strong></td>
+<td style="text-align:left">封装了处理cookie的函数</td>
+<td style="text-align:left"><a href="https://github.com/reactivestack/cookies/tree/master/packages/universal-cookie" target="_blank" rel="noopener">https://github.com/reactivestack/cookies/tree/master/packages/universal-cookie</a></td>
+</tr>
+<tr>
+<td style="text-align:left">react-markdown</td>
+<td style="text-align:left">渲染markdown为HTML格式</td>
+<td style="text-align:left"><a href="https://github.com/rexxars/react-markdown" target="_blank" rel="noopener">https://github.com/rexxars/react-markdown</a></td>
+</tr>
+<tr>
+<td style="text-align:left">for-editor</td>
+<td style="text-align:left">支持react的Markdown编辑器</td>
+<td style="text-align:left"><a href="https://github.com/kkfor/for-editor" target="_blank" rel="noopener">https://github.com/kkfor/for-editor</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">技术</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">官网</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Koa2</strong></td>
+<td style="text-align:left">丢弃callback的轻量Web框架</td>
+<td style="text-align:left"><a href="https://github.com/koajs/koa" target="_blank" rel="noopener">https://github.com/koajs/koa</a></td>
+</tr>
+<tr>
+<td style="text-align:left">bcryptjs</td>
+<td style="text-align:left">字符串加密</td>
+<td style="text-align:left"><a href="https://github.com/dcodeIO/bcrypt.js/" target="_blank" rel="noopener">https://github.com/dcodeIO/bcrypt.js/</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>koa-router</strong></td>
+<td style="text-align:left">koa的第三方路由中间件</td>
+<td style="text-align:left"><a href="https://github.com/ZijianHe/koa-router" target="_blank" rel="noopener">https://github.com/ZijianHe/koa-router</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Mongoose</strong></td>
+<td style="text-align:left">异步的 MongoDB 对象建模工具</td>
+<td style="text-align:left"><a href="https://mongoosejs.com/" target="_blank" rel="noopener">https://mongoosejs.com/</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>数据库: <code>MongoDB</code></p>
+<p>登录: <code>OAuth 2</code></p>
+<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><h3 id="前端-1"><a href="#前端-1" class="headerlink" title="前端"></a>前端</h3><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── README.md</span><br><span class="line">├── config-overrides.js		<span class="hljs-comment">// webpack覆写文件</span></span><br><span class="line">├── package.json</span><br><span class="line">├── public</span><br><span class="line">│   ├── favicon.ico</span><br><span class="line">│   ├── index.html</span><br><span class="line">│   └── manifest.json</span><br><span class="line">├── src</span><br><span class="line">│   ├── App.css</span><br><span class="line">│   ├── App.js						<span class="hljs-comment">// 主页</span></span><br><span class="line">│   ├── actions						<span class="hljs-comment">// 定义Redux的各种action</span></span><br><span class="line">│   ├── api								<span class="hljs-comment">// 公用API(CRUD)</span></span><br><span class="line">│   ├── assets						<span class="hljs-comment">// 公用静态资源</span></span><br><span class="line">│   ├── components				<span class="hljs-comment">// 组件</span></span><br><span class="line">│   ├── pages							<span class="hljs-comment">// 完整页面</span></span><br><span class="line">│   ├── configureStore.js <span class="hljs-comment">// Redux的Store配置文件</span></span><br><span class="line">│   ├── constants.js			<span class="hljs-comment">// 存放常量</span></span><br><span class="line">│   ├── history.js				<span class="hljs-comment">// 创建游览器history</span></span><br><span class="line">│   ├── index.js					<span class="hljs-comment">// 入口</span></span><br><span class="line">│   └── reducer						<span class="hljs-comment">// Redux的reducer</span></span><br><span class="line">└── yarn.lock</span><br></pre></td></tr></table></figure>
+<h3 id="后端-1"><a href="#后端-1" class="headerlink" title="后端"></a>后端</h3><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── README.md</span><br><span class="line">├── app.js					<span class="hljs-comment">// 入口</span></span><br><span class="line">├── config					<span class="hljs-comment">// 公共配置文件</span></span><br><span class="line">│   └── keys.js</span><br><span class="line">├── middleware			<span class="hljs-comment">// 自定义的中间件</span></span><br><span class="line">│   └── OAuth.js</span><br><span class="line">├── models					<span class="hljs-comment">// 数据库中的对应实体</span></span><br><span class="line">│   ├── Auth.js	</span><br><span class="line">│   ├── Note.js		</span><br><span class="line">│   └── User.js</span><br><span class="line">├── package.json</span><br><span class="line">├── routes					<span class="hljs-comment">// 定义路由(Restful)</span></span><br><span class="line">│   └── api</span><br><span class="line">└── yarn.lock</span><br></pre></td></tr></table></figure>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><p>全部采用<code>Restful</code>风格,数据传输采用<code>JSON</code>格式</p>
+<h3 id="笔记模块"><a href="#笔记模块" class="headerlink" title="笔记模块"></a>笔记模块</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>请求类型</th>
+<th>路径</th>
+<th>参数类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>笔记测试接口</td>
+<td>GET</td>
+<td>api/notes/test</td>
+<td></td>
+</tr>
+<tr>
+<td>所有笔记</td>
+<td>GET</td>
+<td>api/notes</td>
+<td></td>
+</tr>
+<tr>
+<td>添加笔记</td>
+<td>POST</td>
+<td>api/notes</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>根据id获取笔记</td>
+<td>GET</td>
+<td>api/notes/:id</td>
+<td></td>
+</tr>
+<tr>
+<td>更新笔记</td>
+<td>PATCH</td>
+<td>api/notes</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>根据所有者id获取他的所有笔记</td>
+<td>GET</td>
+<td>Api/notes/owner/:ownerId</td>
+<td></td>
+</tr>
+<tr>
+<td>删除笔记</td>
+<td>DELETE</td>
+<td>api/notes/:id</td>
+</tr>
+</tbody>
+</table>
+<h3 id="用户模块"><a href="#用户模块" class="headerlink" title="用户模块"></a>用户模块</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>请求类型</th>
+<th>路径</th>
+<th>传输类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户测试接口</td>
+<td>GET</td>
+<td>api/users/test</td>
+<td></td>
+</tr>
+<tr>
+<td>获取用户详情</td>
+<td>GET</td>
+<td>api/users/:id</td>
+<td></td>
+</tr>
+<tr>
+<td>新用户注册</td>
+<td>POST</td>
+<td>api/users/register</td>
+<td>暂时废弃</td>
+</tr>
+<tr>
+<td>修改用户信息</td>
+<td>PATCH</td>
+<td>api/users/:id</td>
+<td>{newUser}</td>
+</tr>
+</tbody>
+</table>
+<h2 id="系统功能"><a href="#系统功能" class="headerlink" title="系统功能"></a>系统功能</h2><h4 id="用户个人模块"><a href="#用户个人模块" class="headerlink" title="用户个人模块"></a>用户个人模块</h4><ul>
+<li>修改个人信息</li>
+<li>使用Github账户一键登录</li>
+</ul>
+<h4 id="笔记仓库模块"><a href="#笔记仓库模块" class="headerlink" title="笔记仓库模块"></a>笔记仓库模块</h4><ul>
+<li>对属于自己的笔记的增、删、改操作</li>
+<li>查看笔记</li>
+</ul>
+<h4 id="笔记市场模块"><a href="#笔记市场模块" class="headerlink" title="笔记市场模块"></a>笔记市场模块</h4><ul>
+<li>查看所有用户共享的笔记</li>
+<li>点赞</li>
+</ul>
+<h2 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h2><ul>
+<li>桌面端:上中下三栏式布局</li>
+<li>移动端:已适配</li>
+</ul>
+<h2 id="OAuth2-Github"><a href="#OAuth2-Github" class="headerlink" title="OAuth2 + Github"></a>OAuth2 + Github</h2><p><img src="https://oauth.net/images/oauth-2-sm.png" alt="oauth-2-sm"></p>
+<p><a href="https://oauth.net/2/" target="_blank" rel="noopener">https://oauth.net/2/</a></p>
+<p>原本为了”偷懒”,没想到成了最坑、最费时间的点…</p>
+<p>(菜是原罪)</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2014/bg2014051203.png" alt="bg2014051203"></p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://yunxi.site/2019/06/13/Noter-文档/">Noter-文档</a></li>
+            <li><strong>本文作者：</strong><a href="http://yunxi.site">Hytonight云息</a></li>
+            <li><strong>本文链接：</strong><a href="http://yunxi.site/2019/06/13/Noter-文档/">http://yunxi.site/2019/06/13/Noter-文档/</a></li>
+            <li><strong>发布时间：</strong>2019-06-13</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/文档/">文档</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/05/19/翻译-ES6中数组去重的三种方法/">
+                <span class="level-item">[ 翻译 ] ES6中数组去重的三种方法</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yunxi.site/2019/06/13/Noter-文档/';
+        this.page.identifier = '2019/06/13/Noter-文档/';
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'HytonightYX-blog' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-96x96 has-mb-6" src="/assets/img/avater.png" alt="Hytonight云息">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        Hytonight云息
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        junior
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>HangZhou, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        11
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        0
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        14
+                    </p>
+                </a>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
+                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="QQ" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1044865610&amp;website=www.oicqzone.com">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="ZhiHu" href="https://www.zhihu.com/people/HytonightYX/activities">
+                
+                <i class="fab fa-zhihu"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#想法-amp-相关介绍">
+        <span class="has-mr-6">1</span>
+        <span>想法&amp;相关介绍</span>
+        </a></li><li>
+        <a class="is-flex" href="#项目地址">
+        <span class="has-mr-6">2</span>
+        <span>项目地址</span>
+        </a></li><li>
+        <a class="is-flex" href="#技术选型">
+        <span class="has-mr-6">3</span>
+        <span>技术选型</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#前端">
+        <span class="has-mr-6">3.1</span>
+        <span>前端</span>
+        </a></li><li>
+        <a class="is-flex" href="#后端">
+        <span class="has-mr-6">3.2</span>
+        <span>后端</span>
+        </a></li><li>
+        <a class="is-flex" href="#其他">
+        <span class="has-mr-6">3.3</span>
+        <span>其他</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#文件结构">
+        <span class="has-mr-6">4</span>
+        <span>文件结构</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#前端-1">
+        <span class="has-mr-6">4.1</span>
+        <span>前端</span>
+        </a></li><li>
+        <a class="is-flex" href="#后端-1">
+        <span class="has-mr-6">4.2</span>
+        <span>后端</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#API">
+        <span class="has-mr-6">5</span>
+        <span>API</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#笔记模块">
+        <span class="has-mr-6">5.1</span>
+        <span>笔记模块</span>
+        </a></li><li>
+        <a class="is-flex" href="#用户模块">
+        <span class="has-mr-6">5.2</span>
+        <span>用户模块</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#系统功能">
+        <span class="has-mr-6">6</span>
+        <span>系统功能</span>
+        </a><ul class="menu-list"><ul class="menu-list"><li>
+        <a class="is-flex" href="#用户个人模块">
+        <span class="has-mr-6">6.1.1</span>
+        <span>用户个人模块</span>
+        </a></li><li>
+        <a class="is-flex" href="#笔记仓库模块">
+        <span class="has-mr-6">6.1.2</span>
+        <span>笔记仓库模块</span>
+        </a></li><li>
+        <a class="is-flex" href="#笔记市场模块">
+        <span class="has-mr-6">6.1.3</span>
+        <span>笔记市场模块</span>
+        </a></li></ul></ul></li><li>
+        <a class="is-flex" href="#布局">
+        <span class="has-mr-6">7</span>
+        <span>布局</span>
+        </a></li><li>
+        <a class="is-flex" href="#OAuth2-Github">
+        <span class="has-mr-6">8</span>
+        <span>OAuth2 + Github</span>
+        </a></li></ul>
+        </div>
+    </div>
+</div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/assets/img/avater.png" alt="Noter-文档" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Hytonight云息&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                        
+                        <i class="fab fa-creative-commons"></i>&nbsp;<i class="fab fa-creative-commons-by"></i>&nbsp;<i class="fab fa-creative-commons-nc"></i>&nbsp;<i class="fab fa-creative-commons-sa"></i>&nbsp;
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="HytonightYX GitHub" href="https://www.github.com/HytonightYX">
+                        
+                        <i class="fab fa-github"></i>&nbsp;
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

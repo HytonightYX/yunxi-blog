@@ -5,7 +5,7 @@
 <title>[Leetcode] 152改——乘积最大连续子串 - Hytonight云息</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:500&display=swap&subset=chinese-simplified" rel="stylesheet">
 
     <meta name="description" content="给定一个浮点数数组 nums ，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。可以使用动态规划解题。 示例 1: 123输入: [2,3,-2,4]输出: 6解释: 子数组 [2,3] 有最大乘积 6。">
 <meta name="keywords" content="leetcode,算法">
@@ -91,6 +91,9 @@
 
 
 <link rel="stylesheet" href="/css/style.css">
+
+
+
 </head>
 <body class="is-3-column">
     <nav class="navbar navbar-main">
@@ -110,8 +113,6 @@
                 
                 <a class="navbar-item" href="/archives/">Archives</a>
                 
-                <a class="navbar-item" href="/categories/">Categories</a>
-                
                 <a class="navbar-item" href="/tags/">Tags</a>
                 
                 <a class="navbar-item" href="/about/">About</a>
@@ -130,7 +131,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -250,7 +251,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
 <script>
     var disqus_config = function () {
@@ -312,17 +313,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/archives/">
                     <p class="heading">
-                        Entradas
+                        Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        12
+                        10
                     </p>
                 </a>
             </div>
             <div class="level-item has-text-centered is-marginless">
                 <a href="/categories/">
                     <p class="heading">
-                        Categorias
+                        Categories
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -332,21 +333,27 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/tags/">
                     <p class="heading">
-                        Etiquetas
+                        Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        13
                     </p>
                 </a>
             </div>
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
-                <i class="fab fa-github"></i>&nbsp;&nbsp;SEGUIR</a>
+                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
         </div>
         
         
         <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="WeiXin" href="http://facebook.com">
+                
+                <i class="fas fa-heading"></i>
+                
+            </a>
             
             <a class="level-item button is-white is-marginless" target="_blank" title="QQ" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1044865610&amp;website=www.oicqzone.com">
                 
@@ -357,12 +364,6 @@
             <a class="level-item button is-white is-marginless" target="_blank" title="ZhiHu" href="https://www.zhihu.com/people/HytonightYX/activities">
                 
                 <i class="fab fa-zhihu"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
-                
-                <i class="fas fa-rss"></i>
                 
             </a>
             
@@ -377,7 +378,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Catálogo
+                Catalogue
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#一、暴力求解">
@@ -573,10 +574,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Entradas',
+                POSTS: 'Posts',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',

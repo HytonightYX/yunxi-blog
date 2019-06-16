@@ -5,21 +5,21 @@
 <title>Webstorm中配置JavaScript库+自动补全库函数 - Hytonight云息</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:500&display=swap&subset=chinese-simplified" rel="stylesheet">
 
-
-    <meta name="description" content="使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个  费了九牛二虎之力终于搞明白了如何解决">
+    <meta name="description" content="使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个">
 <meta name="keywords" content="配置">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Webstorm中配置JavaScript库+自动补全库函数">
 <meta property="og:url" content="http://yunxi.site/2019/05/07/Webstorm中配置JavaScript库-自动补全库函数/index.html">
 <meta property="og:site_name" content="Hytonight云息">
-<meta property="og:description" content="使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个  费了九牛二虎之力终于搞明白了如何解决">
+<meta property="og:description" content="使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yunxi.site/images/og_image.png">
-<meta property="og:updated_time" content="2019-05-23T07:08:00.427Z">
+<meta property="og:updated_time" content="2019-06-16T01:40:10.261Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webstorm中配置JavaScript库+自动补全库函数">
-<meta name="twitter:description" content="使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个  费了九牛二虎之力终于搞明白了如何解决">
+<meta name="twitter:description" content="使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个">
 <meta name="twitter:image" content="http://yunxi.site/images/og_image.png">
 
 
@@ -91,6 +91,9 @@
 
 
 <link rel="stylesheet" href="/css/style.css">
+
+
+
 </head>
 <body class="is-3-column">
     <nav class="navbar navbar-main">
@@ -110,8 +113,6 @@
                 
                 <a class="navbar-item" href="/archives/">Archives</a>
                 
-                <a class="navbar-item" href="/categories/">Categories</a>
-                
                 <a class="navbar-item" href="/tags/">Tags</a>
                 
                 <a class="navbar-item" href="/about/">About</a>
@@ -130,7 +131,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -160,7 +161,7 @@
             <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-05-07T15:27:58.000Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-05-07</time>
                 
-                <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-05-23T07:08:00.427Z"><i class="far fa-calendar-check">&nbsp;</i>2019-05-23</time>
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-06-16T01:40:10.261Z"><i class="far fa-calendar-check">&nbsp;</i>2019-06-16</time>
                 
                 
                 
@@ -168,7 +169,7 @@
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    a minute read (About 212 words)
+                    a minute read (About 189 words)
                 </span>
                 
                 
@@ -183,13 +184,12 @@
         <div class="content">
             <p>使用webstorm进行开发时，经常困扰我这个强迫症的就是——自动补全又双叒叕挂了！比如下面这个</p>
 <p><img src="https://www.jetbrains.com/help/img/idea/2019.1/ws_js_configure_libraries_node_express_symbols_not_resolved_without_d_ts.png" alt="ws_js_configure_libraries_node_express_symbols_not_resolved_without_d_ts.png"></p>
-<p>费了九牛二虎之力终于搞明白了如何解决</p>
 <a id="more"></a>
-<h3 id="直接上干货！"><a href="#直接上干货！" class="headerlink" title="直接上干货！"></a>直接上干货！</h3><ul>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><ul>
 <li>到顶部<code>let x = require(&#39;xxxx&#39;)</code>双击要引入的库函数<code>xxxx</code> </li>
 <li>点击<strong>旁边的小灯泡</strong>或者按下 <code>opt + return</code> (Win下为  <code>Alt + Enter</code>)</li>
 <li>点击<code>Install TypeScript definitions for better type information</code> </li>
-<li>过一会儿，这个库中所有的函数都能识别到并且补全了有没有！</li>
+<li>过一会儿，这个库中所有的函数都能识别到并且补全了！</li>
 </ul>
 <h3 id="原理？这个没有原理"><a href="#原理？这个没有原理" class="headerlink" title="原理？这个没有原理"></a>原理？这个没有原理</h3><p>送上<a href="https://www.jetbrains.com/help/webstorm/configuring-javascript-libraries.html" target="_blank" rel="noopener">官方文档</a>，还是官方文档最靠谱了 （扶墙….</p>
 
@@ -235,13 +235,6 @@
         </div>
         
         
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/04/23/记录代码灵感-Gist/">
-                <span class="level-item">记录代码灵感--Gist</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
     </div>
 </div>
 
@@ -249,7 +242,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
 <script>
     var disqus_config = function () {
@@ -311,17 +304,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/archives/">
                     <p class="heading">
-                        Entradas
+                        Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        12
+                        10
                     </p>
                 </a>
             </div>
             <div class="level-item has-text-centered is-marginless">
                 <a href="/categories/">
                     <p class="heading">
-                        Categorias
+                        Categories
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -331,21 +324,27 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/tags/">
                     <p class="heading">
-                        Etiquetas
+                        Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        13
                     </p>
                 </a>
             </div>
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
-                <i class="fab fa-github"></i>&nbsp;&nbsp;SEGUIR</a>
+                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
         </div>
         
         
         <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="WeiXin" href="http://facebook.com">
+                
+                <i class="fas fa-heading"></i>
+                
+            </a>
             
             <a class="level-item button is-white is-marginless" target="_blank" title="QQ" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1044865610&amp;website=www.oicqzone.com">
                 
@@ -356,12 +355,6 @@
             <a class="level-item button is-white is-marginless" target="_blank" title="ZhiHu" href="https://www.zhihu.com/people/HytonightYX/activities">
                 
                 <i class="fab fa-zhihu"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
-                
-                <i class="fas fa-rss"></i>
                 
             </a>
             
@@ -376,12 +369,12 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Catálogo
+                Catalogue
             </h3>
             <ul class="menu-list"><li>
-        <a class="is-flex" href="#直接上干货！">
+        <a class="is-flex" href="#解决方法">
         <span class="has-mr-6">1</span>
-        <span>直接上干货！</span>
+        <span>解决方法</span>
         </a></li><li>
         <a class="is-flex" href="#原理？这个没有原理">
         <span class="has-mr-6">2</span>
@@ -568,10 +561,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Entradas',
+                POSTS: 'Posts',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',

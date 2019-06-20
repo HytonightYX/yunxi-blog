@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:600&display=swap&subset=chinese-simplified" rel="stylesheet">
+
 
     <meta name="description" content="中国美院首页同类模块比较多，非常适合用React来实现 在线地址">
 <meta name="keywords" content="React">
@@ -28,13 +30,13 @@
 
 
 
-<link rel="icon" href="/images/favicon.svg">
+<link rel="icon" href="/assets/img/logo.png">
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/github-gist.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/tomorrow.css">
 
 
     
@@ -91,6 +93,7 @@
 
 
 <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body class="is-3-column">
     <nav class="navbar navbar-main">
@@ -98,7 +101,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="[React] 仿中国美院" height="28">
+                <img src="/assets/img/logo.png" alt="[React] 仿中国美院" height="28">
             
             </a>
         </div>
@@ -109,8 +112,6 @@
                 <a class="navbar-item" href="/">Home</a>
                 
                 <a class="navbar-item" href="/archives/">Archives</a>
-                
-                <a class="navbar-item" href="/categories/">Categories</a>
                 
                 <a class="navbar-item" href="/tags/">Tags</a>
                 
@@ -250,7 +251,7 @@
     };
     (function() {
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'alphalxy-blog' + '.disqus.com/embed.js';
+        s.src = '//' + 'yunxi-blog' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -278,23 +279,18 @@
             <div class="level-item has-text-centered">
                 <div>
                     
-                        <img class="image is-96x96 has-mb-6" src="https://www.gravatar.com/avatar/e0f4032c0f2d1068ffffbaf93c0bef52?s=96" alt="Xinyu Liu">
+                        <img class="image is-96x96 has-mb-6" src="/assets/img/avater.png" alt="Hytonight云息">
                     
                     
                     <p class="is-size-4 is-block">
-                        Xinyu Liu
+                        Hytonight云息
                     </p>
                     
                     
                     <p class="is-size-6 is-block">
-                        Alpha Lxy
+                        Junior
                     </p>
                     
-                    
-                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
-                        <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>Beijing, China</span>
-                    </p>
                     
                 </div>
             </div>
@@ -306,7 +302,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        10
+                        12
                     </p>
                 </a>
             </div>
@@ -326,16 +322,32 @@
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        13
+                        14
                     </p>
                 </a>
             </div>
         </nav>
         <div class="level">
-            <a class="level-item button is-link is-rounded" href="https://www.github.com/AlphaLxy" target="_blank">
+            <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
                 <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
         </div>
         
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="QQ" href="https://www.github.com/AlphaLxy">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="ZhiHu" href="https://www.github.com/AlphaLxy">
+                
+                <i class="fab fa-zhihu"></i>
+                
+            </a>
+            
+        </div>
         
     </div>
 </div>
@@ -344,7 +356,7 @@
         
 <div class="card widget column-left is-sticky" id="toc">
     <div class="card-content">
-        <div class="menu">
+        <div class="menu" style="max-height: 800px; overflow: auto;">
             <h3 class="menu-label">
                 Catalogue
             </h3>
@@ -372,7 +384,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="[React] 仿中国美院" height="28">
+                    <img src="/assets/img/logo.png" alt="[React] 仿中国美院" height="28">
                 
                 </a>
                 <p class="is-size-7">

@@ -12,7 +12,7 @@ button,
 input,
 select,
 textarea {
-  font-family: "Ubuntu", "Roboto", "Open Sans", "Microsoft YaHei", sans-serif;
+  font-family: "Ubuntu", 'Noto Serif SC', "Microsoft YaHei", sans-serif;
 }
 @media screen and (min-width: 1280px) {
   .is-1-column .container,
@@ -232,7 +232,7 @@ img.thumbnail {
   margin-right: 0.5rem;
 }
 .article .content {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   letter-spacing: 0.02rem;
 }
 .article .content blockquote.pullquote {

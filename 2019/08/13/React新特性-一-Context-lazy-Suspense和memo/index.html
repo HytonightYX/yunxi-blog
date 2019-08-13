@@ -18,7 +18,7 @@
 <meta property="og:description" content="React新特性(一) Context,lazy,Suspense和memo React更新到16.8之后，出现了大量的新特性，本系列文章是我作为一名React初学者通过网上资料学习新特性的笔记，而且加入了一些自己的思考，难免会有疏漏。如果发现有错误，恳请告知，不胜感激！ 目前打算分为两个部分，第一部分即这篇文章，第二部分为hooks的学习笔记">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yunxi.site/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-13T09:51:47.315Z">
+<meta property="og:updated_time" content="2019-08-13T10:09:18.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React新特性(一) Context,lazy,Suspense和memo">
 <meta name="twitter:description" content="React新特性(一) Context,lazy,Suspense和memo React更新到16.8之后，出现了大量的新特性，本系列文章是我作为一名React初学者通过网上资料学习新特性的笔记，而且加入了一些自己的思考，难免会有疏漏。如果发现有错误，恳请告知，不胜感激！ 目前打算分为两个部分，第一部分即这篇文章，第二部分为hooks的学习笔记">
@@ -131,7 +131,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -161,7 +161,7 @@
             <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-08-13T09:46:33.000Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-08-13</time>
                 
-                <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-08-13T09:51:47.315Z"><i class="far fa-calendar-check">&nbsp;</i>2019-08-13</time>
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-08-13T10:09:18.245Z"><i class="far fa-calendar-check">&nbsp;</i>2019-08-13</time>
                 
                 
                 
@@ -169,7 +169,7 @@
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    10 minutes read (About 1549 words)
+                    11 minutes read (About 1622 words)
                 </span>
                 
                 
@@ -192,6 +192,8 @@
 <li>类似store？</li>
 <li>滥用会造成组件高耦合</li>
 </ul>
+<p>例子如下：<br><figure class="highlight jsx hljs"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Leaf</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line">	render() &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> (</span><br><span class="line">			&lt;BatteryContext.Consumer&gt;</span><br><span class="line">				&#123;battery =&gt; (</span><br><span class="line">					&lt;OnlineContext.Consumer&gt;</span><br><span class="line">						&#123;</span><br><span class="line">							online =&gt; <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Battery: &#123;battery&#125;, Online: &#123;String(online)&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span></span><br><span class="line">						&#125;</span><br><span class="line">					&lt;<span class="hljs-regexp">/OnlineContext.Consumer&gt;</span></span><br><span class="line"><span class="hljs-regexp">				)&#125;</span></span><br><span class="line"><span class="hljs-regexp">			&lt;/</span>BatteryContext.Consumer&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Middle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	render() &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> (</span><br><span class="line">			&lt;Leaf/&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line">	state = &#123;</span><br><span class="line">		battery: <span class="hljs-number">60</span>,</span><br><span class="line">		isOnline: <span class="hljs-literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	render() &#123;</span><br><span class="line">		<span class="hljs-keyword">const</span> &#123;battery, isOnline&#125; = <span class="hljs-keyword">this</span>.state</span><br><span class="line"></span><br><span class="line">		<span class="hljs-keyword">return</span> (</span><br><span class="line">			&lt;BatteryContext.Provider value=&#123;battery&#125;&gt;</span><br><span class="line">				&lt;OnlineContext.Provider value=&#123;isOnline&#125;&gt;</span><br><span class="line">					&lt;button</span><br><span class="line">						onClick=&#123;() =&gt; &#123;</span><br><span class="line">							<span class="hljs-keyword">this</span>.setState(&#123;<span class="hljs-attr">battery</span>: battery - <span class="hljs-number">1</span>&#125;)</span><br><span class="line">						&#125;&#125;</span><br><span class="line">					&gt;</span><br><span class="line">						减<span class="hljs-number">1</span></span><br><span class="line">					&lt;<span class="hljs-regexp">/button&gt;</span></span><br><span class="line"><span class="hljs-regexp"></span></span><br><span class="line"><span class="hljs-regexp">					&lt;button</span></span><br><span class="line"><span class="hljs-regexp">						onClick=&#123;() =&gt; &#123;</span></span><br><span class="line"><span class="hljs-regexp">							this.setState(&#123;isOnline: !isOnline&#125;)</span></span><br><span class="line"><span class="hljs-regexp">						&#125;&#125;</span></span><br><span class="line"><span class="hljs-regexp">					&gt;</span></span><br><span class="line"><span class="hljs-regexp">						切换联网</span></span><br><span class="line"><span class="hljs-regexp">					&lt;/</span>button&gt;</span><br><span class="line">					&lt;Middle/&gt;</span><br><span class="line">				&lt;<span class="hljs-regexp">/OnlineContext.Provider&gt;</span></span><br><span class="line"><span class="hljs-regexp">			&lt;/</span>BatteryContext.Provider&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用生产者和消费者的模型,实现数据的传递</p>
 <h4 id="ContextType-语法糖"><a href="#ContextType-语法糖" class="headerlink" title="ContextType 语法糖"></a>ContextType 语法糖</h4><p>直接使用Context会有一些<strong>缺点</strong></p>
 <ul>
 <li>大量使用context会使组件很不纯粹</li>
@@ -308,7 +310,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
         
 <script>
     var disqus_config = function () {
@@ -365,7 +367,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/archives/">
                     <p class="heading">
-                        Posts
+                        Entradas
                     </p>
                     <p class="title has-text-weight-normal">
                         13
@@ -375,7 +377,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/categories/">
                     <p class="heading">
-                        Categories
+                        Categorias
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -385,7 +387,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/tags/">
                     <p class="heading">
-                        Tags
+                        Etiquetas
                     </p>
                     <p class="title has-text-weight-normal">
                         13
@@ -395,7 +397,7 @@
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
-                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
+                <i class="fab fa-github"></i>&nbsp;&nbsp;SEGUIR</a>
         </div>
         
         
@@ -424,7 +426,7 @@
     <div class="card-content">
         <div class="menu" style="max-height: 800px; overflow: auto;">
             <h3 class="menu-label">
-                Catalogue
+                Catálogo
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#React新特性-一-Context-lazy-Suspense和memo">
@@ -660,10 +662,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Posts',
+                POSTS: 'Entradas',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categories',
-                TAGS: 'Tags',
+                CATEGORIES: 'Categorias',
+                TAGS: 'Etiquetas',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',

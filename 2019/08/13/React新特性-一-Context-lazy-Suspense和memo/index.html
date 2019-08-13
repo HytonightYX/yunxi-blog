@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>React新特性(一) Context,lazy,Suspense和memo - Hytonight云息</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:600&display=swap&subset=chinese-simplified" rel="stylesheet">
+
+
+    <meta name="description" content="React新特性(一) Context,lazy,Suspense和memo React更新到16.8之后，出现了大量的新特性，本系列文章是我作为一名React初学者通过网上资料学习新特性的笔记，而且加入了一些自己的思考，难免会有疏漏。如果发现有错误，恳请告知，不胜感激！ 目前打算分为两个部分，第一部分即这篇文章，第二部分为hooks的学习笔记">
+<meta name="keywords" content="React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React新特性(一) Context,lazy,Suspense和memo">
+<meta property="og:url" content="http://yunxi.site/2019/08/13/React新特性-一-Context-lazy-Suspense和memo/index.html">
+<meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="React新特性(一) Context,lazy,Suspense和memo React更新到16.8之后，出现了大量的新特性，本系列文章是我作为一名React初学者通过网上资料学习新特性的笔记，而且加入了一些自己的思考，难免会有疏漏。如果发现有错误，恳请告知，不胜感激！ 目前打算分为两个部分，第一部分即这篇文章，第二部分为hooks的学习笔记">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yunxi.site/images/og_image.png">
+<meta property="og:updated_time" content="2019-08-13T09:51:47.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React新特性(一) Context,lazy,Suspense和memo">
+<meta name="twitter:description" content="React新特性(一) Context,lazy,Suspense和memo React更新到16.8之后，出现了大量的新特性，本系列文章是我作为一名React初学者通过网上资料学习新特性的笔记，而且加入了一些自己的思考，难免会有疏漏。如果发现有错误，恳请告知，不胜感激！ 目前打算分为两个部分，第一部分即这篇文章，第二部分为hooks的学习笔记">
+<meta name="twitter:image" content="http://yunxi.site/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/assets/img/logo.png">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/tomorrow.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/assets/img/logo.png" alt="React新特性(一) Context,lazy,Suspense和memo" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives/">Archives</a>
+                
+                <a class="navbar-item" href="/tags/">Tags</a>
+                
+                <a class="navbar-item" href="/about/">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="AlphaLxy GitHub" href="https://www.github.com/AlphaLxy">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <i class="fas fa-angle-double-right"></i>React新特性(一) Context,lazy,Suspense和memo
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-08-13T09:46:33.000Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-08-13</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-08-13T09:51:47.315Z"><i class="far fa-calendar-check">&nbsp;</i>2019-08-13</time>
+                
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    10 minutes read (About 1549 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <h3 id="React新特性-一-Context-lazy-Suspense和memo"><a href="#React新特性-一-Context-lazy-Suspense和memo" class="headerlink" title="React新特性(一) Context,lazy,Suspense和memo"></a>React新特性(一) Context,lazy,Suspense和memo</h3><blockquote>
+<p>React更新到16.8之后，出现了大量的新特性，本系列文章是我作为一名React初学者通过网上资料学习新特性的笔记，而且加入了一些自己的思考，难免会有疏漏。如果发现有错误，恳请告知，不胜感激！</p>
+<p>目前打算分为两个部分，第一部分即这篇文章，第二部分为hooks的学习笔记</p>
+</blockquote>
+<a id="more"></a>
+<h4 id="Context-上下文"><a href="#Context-上下文" class="headerlink" title="Context 上下文"></a>Context 上下文</h4><ul>
+<li>提供了一种能让数据在组件树中传递而不必通过props一层层手动向下传递</li>
+<li>类似store？</li>
+<li>滥用会造成组件高耦合</li>
+</ul>
+<h4 id="ContextType-语法糖"><a href="#ContextType-语法糖" class="headerlink" title="ContextType 语法糖"></a>ContextType 语法糖</h4><p>直接使用Context会有一些<strong>缺点</strong></p>
+<ul>
+<li>大量使用context会使组件很不纯粹</li>
+<li>使用是不是太麻烦了？比如要获取一个数据（例如电量信息battery）要先写一个Consumer标签包裹住代码，然后其中写一个函数来获取</li>
+</ul>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;BatteryContext.Consumer&gt;</span><br><span class="line">				&#123;battery =&gt; (</span><br><span class="line">					&lt;OnlineContext.Consumer&gt;</span><br><span class="line">						&#123;</span><br><span class="line">							online =&gt; <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Battery: &#123;battery&#125;, Online: &#123;String(online)&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span></span><br><span class="line">						&#125;</span><br><span class="line">					&lt;<span class="hljs-regexp">/OnlineContext.Consumer&gt;</span></span><br><span class="line"><span class="hljs-regexp">				)&#125;</span></span><br><span class="line"><span class="hljs-regexp">&lt;/</span>BatteryContext.Consumer&gt;</span><br></pre></td></tr></table></figure>
+<p>于是，我们可以用<code>ContextType</code>在<code>render</code>方法之前提前获取好context</p>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Leaf</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="hljs-keyword">static</span> contextType = BatteryContext</span><br><span class="line"></span><br><span class="line"> render() &#123;</span><br><span class="line">  <span class="hljs-keyword">const</span> battery = <span class="hljs-keyword">this</span>.context</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">   &lt;h1&gt;Battery: &#123;battery&#125;&lt;<span class="hljs-regexp">/h1&gt;</span></span><br><span class="line"><span class="hljs-regexp">  )</span></span><br><span class="line"><span class="hljs-regexp"> &#125;</span></span><br><span class="line"><span class="hljs-regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>但是，这种方法只能订阅单一context。</p>
+<p>要使用多个Context，可以参考<a href="https://zh-hans.reactjs.org/docs/context.html#consuming-multiple-contexts" target="_blank" rel="noopener">官网</a>，其实还是上面那种略复杂的方法</p>
+<h4 id="Lazy-懒加载"><a href="#Lazy-懒加载" class="headerlink" title="Lazy 懒加载"></a>Lazy 懒加载</h4><ul>
+<li>要用时再加载</li>
+<li>途径</li>
+<li>import 切分</li>
+</ul>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 懒加载</span></span><br><span class="line"><span class="hljs-comment"> * lazy的返回就是一个 React组件</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">const</span> About = lazy(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./About.jsx'</span>))</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line">	render() &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> (</span><br><span class="line">			&lt;About/&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，这样会报错</p>
+<blockquote>
+<p>Error: A React component suspended while rendering, but no fallback UI was specified.</p>
+</blockquote>
+<p>因为Lazy懒加载期间会有一个loading的过程，React便不知道在loading时该渲染些什么，因此，就要用到下面这个Suspense</p>
+<h4 id="Suspense-填充Lazy时的loading空挡"><a href="#Suspense-填充Lazy时的loading空挡" class="headerlink" title="Suspense 填充Lazy时的loading空挡"></a>Suspense 填充Lazy时的loading空挡</h4><ul>
+<li>内置组件，专门用来配合Lazy</li>
+<li>将lazy进来的组件包起来，并设置好fallback属性即可</li>
+</ul>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> About = lazy(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./About.jsx'</span>))</span><br><span class="line"><span class="hljs-keyword">const</span> Loading = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &lt;h1&gt;Loading...&lt;<span class="hljs-regexp">/h1&gt;</span></span><br><span class="line"><span class="hljs-regexp">class App extends Component &#123;</span></span><br><span class="line"><span class="hljs-regexp">	render() &#123;</span></span><br><span class="line"><span class="hljs-regexp">		return (</span></span><br><span class="line"><span class="hljs-regexp">			&lt;Suspense fallback=&#123;&lt;Loading/</span>&gt;&#125;&gt;</span><br><span class="line">				&lt;About/&gt;</span><br><span class="line">			&lt;<span class="hljs-regexp">/Suspense&gt;</span></span><br><span class="line"><span class="hljs-regexp">		)</span></span><br><span class="line"><span class="hljs-regexp">	&#125;</span></span><br><span class="line"><span class="hljs-regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>刷新后，可以很明显的看到先出现“Loading…”一闪而过，然后再渲染出About组件了。</p>
+<p>打开Chorme开发者工具的Network面板，你看，About组件就变为一个单独的请求了。</p>
+<p><img src="https://i.loli.net/2019/08/13/cjZ4rpqCENXnuKx.png" alt="image.png"></p>
+<p>当然，如果webpack默认命名不好辨认，你也可以加一行注释，来自定义文件名</p>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> About = lazy(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">import</span>(</span><br><span class="line">	<span class="hljs-comment">/* webpackChunkName: "about" */</span></span><br><span class="line">	<span class="hljs-string">'./About.jsx'</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/08/13/gtYskNjrJAHQRcK.png" alt="image.png"></p>
+<h5 id="Wait，发生错误怎么办？"><a href="#Wait，发生错误怎么办？" class="headerlink" title="Wait，发生错误怎么办？"></a>Wait，发生错误怎么办？</h5><p>是的，既然是单独的网络请求，那么这个网络请求就有可能失败。那么这个组件的错误将会导致整个应用崩溃。所以我们要用到<a href="https://zh-hans.reactjs.org/docs/error-boundaries.html" target="_blank" rel="noopener">错误边界(Error Boundaries)</a></p>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">static</span> getDerivedStateFormError() &#123;</span><br><span class="line"> <span class="hljs-keyword">return</span> &#123;</span><br><span class="line">  hasError: <span class="hljs-literal">true</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">render() &#123;</span><br><span class="line"> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.hasError) &#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Error<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="hljs-keyword">return</span> (</span><br><span class="line">  &lt;Suspense fallback=&#123;&lt;Loading/&gt;&#125;&gt;</span><br><span class="line">   &lt;About/&gt;</span><br><span class="line">  &lt;<span class="hljs-regexp">/Suspense&gt;</span></span><br><span class="line"><span class="hljs-regexp"> )</span></span><br><span class="line"><span class="hljs-regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h5 id="进一步，可不可以在加载错误后自动重试？"><a href="#进一步，可不可以在加载错误后自动重试？" class="headerlink" title="进一步，可不可以在加载错误后自动重试？"></a>进一步，可不可以在加载错误后自动重试？</h5><h4 id="memo-优化渲染性能"><a href="#memo-优化渲染性能" class="headerlink" title="memo 优化渲染性能"></a>memo 优化渲染性能</h4><p>React的做了个什么事情呢，用数学公式来表达，就是$UI=f(data)$</p>
+<p>例如：</p>
+<p><code>{data: 1}</code> =&gt; <code>&lt;div&gt;1&lt;/div&gt;</code></p>
+<p>如果<code>data</code>变为2呢？这时便重新<code>render</code>，</p>
+<p><code>{data: 2}</code> ==<code>render</code> ==&gt; <code>&lt;div&gt;2&lt;/div&gt;</code></p>
+<p>那么，会不会有这个情况，<code>data</code>没改变，但是也会触发组件的重新渲染呢？如果是，那么这是不是一种性能的浪费呢？答案是肯定的。</p>
+<p>思考一个常见的父子组件场景。App为父组件，其下有一个子组件Foo，如果App重新渲染了，Foo会不会也重新渲染呢？写个代码来模拟一下</p>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line"> render() &#123;</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Foo rendered'</span>)</span><br><span class="line">  <span class="hljs-keyword">return</span> </span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line"> state = &#123;</span><br><span class="line">  count: <span class="hljs-number">0</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> render() &#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">   &lt;div&gt;</span><br><span class="line">    &#123;<span class="hljs-comment">/*这个按钮一定会让App重新渲染*/</span>&#125;</span><br><span class="line">    &lt;button onClick=&#123;</span><br><span class="line">     () =&gt; &#123;</span><br><span class="line">      <span class="hljs-keyword">this</span>.setState(&#123;</span><br><span class="line">       count: <span class="hljs-keyword">this</span>.state.count + <span class="hljs-number">1</span></span><br><span class="line">      &#125;)</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;&gt;Re-Render App&lt;<span class="hljs-regexp">/button&gt;</span></span><br><span class="line"><span class="hljs-regexp">    &lt;Foo name=&#123;'YunXi'&#125;/</span>&gt;</span><br><span class="line">   &lt;<span class="hljs-regexp">/div&gt;</span></span><br><span class="line"><span class="hljs-regexp">  )</span></span><br><span class="line"><span class="hljs-regexp"> &#125;</span></span><br><span class="line"><span class="hljs-regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>由于按下按钮后改变了<code>App</code>组件的<code>state</code>，因此一定会让<code>App</code>重新渲染</p>
+<p>而<code>Foo</code>组件每次渲染都会在控制台打印一句话”Foo rendered”，运行代码后是这样的</p>
+<p><img src="https://i.loli.net/2019/08/13/YTAPCO5HQnZwEot.png" alt="image.png"></p>
+<p>你看，第一次打印是首次渲染，第二次打印则证明了父组件的<code>Re-Render</code>也会导致子组件的<code>Re-Render</code>，但是子组件其实没有必要渲染。下面给出两种方案</p>
+<h4 id="1-生命周期函数-shouldComponentUpdate"><a href="#1-生命周期函数-shouldComponentUpdate" class="headerlink" title="1.生命周期函数 shouldComponentUpdate"></a>1.生命周期函数 shouldComponentUpdate</h4><figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line"> shouldComponentUpdate(nextProps) &#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> nextProps.name !== <span class="hljs-keyword">this</span>.props.name;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> render() &#123;</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Foo rendered'</span>)</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>I'm Foo<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>意思是，只有当传入的<code>props</code>的<code>name</code>属性改变了，才触发<code>Foo</code>的重渲染。如果你试过，你会发现控制台确实只打印一次“Foo rendered”了</p>
+<h4 id="2-PureComponent"><a href="#2-PureComponent" class="headerlink" title="2.PureComponent"></a>2.PureComponent</h4><blockquote>
+<p><code>React.PureComponent</code> 与 <a href="https://zh-hans.reactjs.org/docs/react-api.html#reactcomponent" target="_blank" rel="noopener"><code>React.Component</code></a> 很相似。两者的区别在于 <a href="https://zh-hans.reactjs.org/docs/react-api.html#reactcomponent" target="_blank" rel="noopener"><code>React.Component</code></a>并未实现 <a href="https://zh-hans.reactjs.org/docs/react-component.html#shouldcomponentupdate" target="_blank" rel="noopener"><code>shouldComponentUpdate()</code></a>，而 <code>React.PureComponent</code> 中以<strong>浅层对比</strong> prop 和 state 的方式来实现了该函数。</p>
+</blockquote>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">PureComponent</span> </span>&#123;</span><br><span class="line"> render() &#123;</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Foo rendered'</span>)</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>I'm Foo<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方式会有<strong>两个陷阱</strong>，关键就是<strong>浅层对比</strong>四个字</p>
+<h5 id="陷阱一：传入对象"><a href="#陷阱一：传入对象" class="headerlink" title="陷阱一：传入对象"></a>陷阱一：传入对象</h5><p>比如传入的props是一个复杂的对象，例如一个user信息</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">user = &#123;</span><br><span class="line">  name: <span class="hljs-string">'YunXi'</span>,</span><br><span class="line">  age: <span class="hljs-number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么，如果按下按钮，会将user的年龄加1，那你需要这么做</p>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">PureComponent</span> </span>&#123;</span><br><span class="line">	render() &#123;</span><br><span class="line">		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Foo rendered'</span>)</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;this.props.user.age&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line">	state = &#123;</span><br><span class="line">		count: <span class="hljs-number">0</span>,</span><br><span class="line">		user: &#123;</span><br><span class="line">			name: <span class="hljs-string">'YunXi'</span>,</span><br><span class="line">			age: <span class="hljs-number">20</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	render() &#123;</span><br><span class="line">		<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">this</span>.state.user</span><br><span class="line">		<span class="hljs-keyword">return</span> (</span><br><span class="line">			&lt;div&gt;</span><br><span class="line">				&lt;button onClick=&#123;</span><br><span class="line">					() =&gt; &#123;</span><br><span class="line">						<span class="hljs-keyword">const</span> _user = <span class="hljs-built_in">JSON</span>.parse(<span class="hljs-built_in">JSON</span>.stringify(<span class="hljs-keyword">this</span>.state.user))</span><br><span class="line">						user.age++</span><br><span class="line">						<span class="hljs-keyword">this</span>.setState(&#123;<span class="hljs-attr">user</span>: _user&#125;)</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;&gt;Re-Render App&lt;<span class="hljs-regexp">/button&gt;</span></span><br><span class="line"><span class="hljs-regexp">				&lt;Foo user=&#123;user&#125;/</span>&gt;</span><br><span class="line">			&lt;<span class="hljs-regexp">/div&gt;</span></span><br><span class="line"><span class="hljs-regexp">		)</span></span><br><span class="line"><span class="hljs-regexp">	&#125;</span></span><br><span class="line"><span class="hljs-regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h5 id="陷阱二：传入function"><a href="#陷阱二：传入function" class="headerlink" title="陷阱二：传入function"></a>陷阱二：传入function</h5><figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;</span><br><span class="line">	state = &#123;</span><br><span class="line">		count: <span class="hljs-number">0</span>,</span><br><span class="line">		user: &#123;</span><br><span class="line">			name: <span class="hljs-string">'YunXi'</span>,</span><br><span class="line">			age: <span class="hljs-number">20</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">// 箭头函数</span></span><br><span class="line">	callback = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">	render() &#123;</span><br><span class="line">		<span class="hljs-keyword">return</span> (</span><br><span class="line">			&lt;div&gt;</span><br><span class="line">				&lt;button onClick=&#123;</span><br><span class="line">					() =&gt; &#123;</span><br><span class="line">						<span class="hljs-keyword">this</span>.setState(&#123;<span class="hljs-attr">count</span>: <span class="hljs-keyword">this</span>.state.count + <span class="hljs-number">1</span>&#125;)</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;&gt;Re-Render App&lt;<span class="hljs-regexp">/button&gt;</span></span><br><span class="line"><span class="hljs-regexp">				&#123;/</span>* 如下这样不会触发Foo的重新渲染 *<span class="hljs-regexp">/&#125;</span></span><br><span class="line"><span class="hljs-regexp">				&lt;Foo user=&#123;this.state.user&#125; cb=&#123;this.callback&#125;/</span>&gt;</span><br><span class="line">			&lt;<span class="hljs-regexp">/div&gt;</span></span><br><span class="line"><span class="hljs-regexp">		)</span></span><br><span class="line"><span class="hljs-regexp">	&#125;</span></span><br><span class="line"><span class="hljs-regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-memo"><a href="#3-memo" class="headerlink" title="3.memo"></a>3.memo</h4><p>首先，将<code>Foo</code>改写为函数组件</p>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Foo</span>(<span class="hljs-params">props</span>) </span>&#123;</span><br><span class="line"> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Foo rendered'</span>)</span><br><span class="line"> <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;props.user.name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>引入<code>memo</code></p>
+<figure class="highlight js hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> React, &#123; Component, memo &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br></pre></td></tr></table></figure>
+<p>用<code>memo</code>将<code>Foo</code>包裹起来，这里我做简化处理，用箭头函数直接取代掉原先<code>Foo</code>了</p>
+<figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> Foo = memo(</span><br><span class="line">	(props) =&gt; &#123;</span><br><span class="line">		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Foo rendered'</span>)</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;props.user.name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">	&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>这样，Foo便不会做无意义的重渲染了</p>
+<p>over~</p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://yunxi.site/2019/08/13/React新特性-一-Context-lazy-Suspense和memo/">React新特性(一) Context,lazy,Suspense和memo</a></li>
+            <li><strong>本文作者：</strong><a href="http://yunxi.site">Hytonight云息</a></li>
+            <li><strong>本文链接：</strong><a href="http://yunxi.site/2019/08/13/React新特性-一-Context-lazy-Suspense和memo/">http://yunxi.site/2019/08/13/React新特性-一-Context-lazy-Suspense和memo/</a></li>
+            <li><strong>发布时间：</strong>2019-08-13</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/React/">React</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/07/02/记录一次导入bcryptjs后，Webstorm出现-Property-module-is-not-defined-in-type-module-的错误/">
+                <span class="level-item">记录一次导入bcryptjs后，Webstorm出现&#39;Property module is not defined in type module&#39;的错误</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yunxi.site/2019/08/13/React新特性-一-Context-lazy-Suspense和memo/';
+        this.page.identifier = '2019/08/13/React新特性-一-Context-lazy-Suspense和memo/';
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'yunxi-blog' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-96x96 has-mb-6" src="/assets/img/avater.png" alt="Hytonight云息">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        Hytonight云息
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Junior
+                    </p>
+                    
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/archives/">
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        13
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/categories/">
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        0
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/tags/">
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        13
+                    </p>
+                </a>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
+                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="QQ" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1044865610">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="ZhiHu" href="https://www.zhihu.com/people/HytonightYX">
+                
+                <i class="fab fa-zhihu"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu" style="max-height: 800px; overflow: auto;">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#React新特性-一-Context-lazy-Suspense和memo">
+        <span class="has-mr-6">1</span>
+        <span>React新特性(一) Context,lazy,Suspense和memo</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Context-上下文">
+        <span class="has-mr-6">1.1</span>
+        <span>Context 上下文</span>
+        </a></li><li>
+        <a class="is-flex" href="#ContextType-语法糖">
+        <span class="has-mr-6">1.2</span>
+        <span>ContextType 语法糖</span>
+        </a></li><li>
+        <a class="is-flex" href="#Lazy-懒加载">
+        <span class="has-mr-6">1.3</span>
+        <span>Lazy 懒加载</span>
+        </a></li><li>
+        <a class="is-flex" href="#Suspense-填充Lazy时的loading空挡">
+        <span class="has-mr-6">1.4</span>
+        <span>Suspense 填充Lazy时的loading空挡</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Wait，发生错误怎么办？">
+        <span class="has-mr-6">1.4.1</span>
+        <span>Wait，发生错误怎么办？</span>
+        </a></li><li>
+        <a class="is-flex" href="#进一步，可不可以在加载错误后自动重试？">
+        <span class="has-mr-6">1.4.2</span>
+        <span>进一步，可不可以在加载错误后自动重试？</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#memo-优化渲染性能">
+        <span class="has-mr-6">1.5</span>
+        <span>memo 优化渲染性能</span>
+        </a></li><li>
+        <a class="is-flex" href="#1-生命周期函数-shouldComponentUpdate">
+        <span class="has-mr-6">1.6</span>
+        <span>1.生命周期函数 shouldComponentUpdate</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-PureComponent">
+        <span class="has-mr-6">1.7</span>
+        <span>2.PureComponent</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#陷阱一：传入对象">
+        <span class="has-mr-6">1.7.1</span>
+        <span>陷阱一：传入对象</span>
+        </a></li><li>
+        <a class="is-flex" href="#陷阱二：传入function">
+        <span class="has-mr-6">1.7.2</span>
+        <span>陷阱二：传入function</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#3-memo">
+        <span class="has-mr-6">1.8</span>
+        <span>3.memo</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/assets/img/logo.png" alt="React新特性(一) Context,lazy,Suspense和memo" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 Hytonight云息&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                        
+                        <i class="fab fa-creative-commons"></i>&nbsp;<i class="fab fa-creative-commons-by"></i>&nbsp;<i class="fab fa-creative-commons-nc"></i>&nbsp;<i class="fab fa-creative-commons-sa"></i>&nbsp;
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="AlphaLxy GitHub" href="https://www.github.com/AlphaLxy">
+                        
+                        <i class="fab fa-github"></i>&nbsp;
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

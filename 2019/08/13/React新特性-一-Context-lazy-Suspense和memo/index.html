@@ -18,7 +18,7 @@
 <meta property="og:description" content="React新特性(一) Context,lazy,Suspense和memo React更新到16.8之后，出现了大量的新特性，本系列文章是我作为一名React初学者通过网上资料学习新特性的笔记，而且加入了一些自己的思考，难免会有疏漏。如果发现有错误，恳请告知，不胜感激！ 目前打算分为两个部分，第一部分即这篇文章，第二部分为hooks的学习笔记">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yunxi.site/images/og_image.png">
-<meta property="og:updated_time" content="2019-08-13T10:09:18.245Z">
+<meta property="og:updated_time" content="2019-08-13T12:30:59.515Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React新特性(一) Context,lazy,Suspense和memo">
 <meta name="twitter:description" content="React新特性(一) Context,lazy,Suspense和memo React更新到16.8之后，出现了大量的新特性，本系列文章是我作为一名React初学者通过网上资料学习新特性的笔记，而且加入了一些自己的思考，难免会有疏漏。如果发现有错误，恳请告知，不胜感激！ 目前打算分为两个部分，第一部分即这篇文章，第二部分为hooks的学习笔记">
@@ -131,7 +131,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -161,7 +161,7 @@
             <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-08-13T09:46:33.000Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-08-13</time>
                 
-                <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-08-13T10:09:18.245Z"><i class="far fa-calendar-check">&nbsp;</i>2019-08-13</time>
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2019-08-13T12:30:59.515Z"><i class="far fa-calendar-check">&nbsp;</i>2019-08-13</time>
                 
                 
                 
@@ -169,7 +169,7 @@
                     <i class="far fa-clock"></i>&nbsp;
                     
                     
-                    11 minutes read (About 1622 words)
+                    11 minutes read (About 1621 words)
                 </span>
                 
                 
@@ -259,7 +259,6 @@
 <p>用<code>memo</code>将<code>Foo</code>包裹起来，这里我做简化处理，用箭头函数直接取代掉原先<code>Foo</code>了</p>
 <figure class="highlight jsx hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> Foo = memo(</span><br><span class="line">	(props) =&gt; &#123;</span><br><span class="line">		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Foo rendered'</span>)</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;props.user.name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">	&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p>这样，Foo便不会做无意义的重渲染了</p>
-<p>over~</p>
 
         </div>
         
@@ -310,7 +309,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
 <script>
     var disqus_config = function () {
@@ -367,17 +366,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/archives/">
                     <p class="heading">
-                        Entradas
+                        Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        13
+                        14
                     </p>
                 </a>
             </div>
             <div class="level-item has-text-centered is-marginless">
                 <a href="/categories/">
                     <p class="heading">
-                        Categorias
+                        Categories
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -387,17 +386,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/tags/">
                     <p class="heading">
-                        Etiquetas
+                        Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        13
+                        14
                     </p>
                 </a>
             </div>
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
-                <i class="fab fa-github"></i>&nbsp;&nbsp;SEGUIR</a>
+                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
         </div>
         
         
@@ -426,7 +425,7 @@
     <div class="card-content">
         <div class="menu" style="max-height: 800px; overflow: auto;">
             <h3 class="menu-label">
-                Catálogo
+                Catalogue
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#React新特性-一-Context-lazy-Suspense和memo">
@@ -662,10 +661,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Entradas',
+                POSTS: 'Posts',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',

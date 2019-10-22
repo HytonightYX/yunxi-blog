@@ -131,7 +131,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -175,7 +175,7 @@
                 
                 <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
                     <i class="far fa-eye"></i>
-                    <span id="busuanzi_value_page_pv">0</span> Bạn đọc
+                    <span id="busuanzi_value_page_pv">0</span> visits
                 </span>
                 
             </div>
@@ -206,21 +206,102 @@
 <li>如果$f(n)$多项式大于<img src="https://math.jianshu.com/math?formula=n%5E%7B%5Clog_ba%7D" alt="n^{\log_ba}">，且 <img src="https://math.jianshu.com/math?formula=af(n%2Fb" alt="af(n/b)\leq cf(n)">%5Cleq%20cf(n))，其中<img src="https://math.jianshu.com/math?formula=c%3C1" alt="c&lt;1">，则<img src="https://math.jianshu.com/math?formula=T(n" alt="T(n)">)的上限就是的上限就是$f(n)$</li>
 <li>如果$f(n)$跟<img src="https://math.jianshu.com/math?formula=n%5E%7B%5Clog_ba%7D" alt="n^{\log_ba}">有相同的增长阶，则<img src="https://math.jianshu.com/math?formula=T(n" alt="T(n)">)的上限就是<img src="https://math.jianshu.com/math?formula=n%5E%7B%5Clog_ba%7D%5Clog%20n" alt="n^{\log_ba}\log n"></li>
 </ul>
-<h2 id="第三章-蛮力法"><a href="#第三章-蛮力法" class="headerlink" title="第三章 蛮力法"></a>第三章 蛮力法</h2><h3 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h3><figure class="highlight oxygene hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">DFS(G)</span><br><span class="line"></span><br><span class="line">count ← <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-keyword">for</span> <span class="hljs-keyword">each</span> vertex v <span class="hljs-keyword">in</span> V <span class="hljs-keyword">do</span></span><br><span class="line">	<span class="hljs-keyword">if</span> v <span class="hljs-keyword">is</span> marked <span class="hljs-keyword">with</span> <span class="hljs-number">0</span></span><br><span class="line">		dfs(v)</span><br><span class="line"></span><br><span class="line">dfs(v)</span><br><span class="line">   count ← count + <span class="hljs-number">1</span></span><br><span class="line">   mark v <span class="hljs-keyword">with</span> <span class="hljs-number">0</span></span><br><span class="line">   <span class="hljs-keyword">for</span> <span class="hljs-keyword">each</span> vertex w <span class="hljs-keyword">in</span> V adjacent <span class="hljs-keyword">to</span> v <span class="hljs-keyword">do</span></span><br><span class="line">     <span class="hljs-keyword">if</span> w <span class="hljs-keyword">is</span> marked <span class="hljs-keyword">with</span> <span class="hljs-number">0</span></span><br><span class="line">       dfs(w)</span><br></pre></td></tr></table></figure>
-<p>邻接表 O(|V|+|E|)</p>
+<h2 id="第三章-蛮力法"><a href="#第三章-蛮力法" class="headerlink" title="第三章 蛮力法"></a>第三章 蛮力法</h2><h3 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h3><pre><code>DFS(G)
+
+count ← 0
+for each vertex v in V do
+    if v is marked with 0
+        dfs(v)
+
+dfs(v)
+   count ← count + 1
+   mark v with 0
+   for each vertex w in V adjacent to v do
+     if w is marked with 0
+       dfs(w)
+</code></pre><p>邻接表 O(|V|+|E|)</p>
 <p>邻接矩阵 O(|V|^2)</p>
-<h3 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h3><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">BFS(G)</span><br><span class="line"></span><br><span class="line">count ← <span class="hljs-number">0</span>;</span><br><span class="line"><span class="hljs-keyword">for</span> each vertex v in V <span class="hljs-keyword">do</span></span><br><span class="line">  <span class="hljs-keyword">if</span> v is marked with <span class="hljs-number">0</span></span><br><span class="line">    bfs(v);</span><br><span class="line">    </span><br><span class="line">count ← count + <span class="hljs-number">1</span>;</span><br><span class="line">mark v with count <span class="hljs-keyword">and</span> initialize a <span class="hljs-built_in">queue</span> with v;</span><br><span class="line"><span class="hljs-keyword">while</span> the <span class="hljs-built_in">queue</span> is <span class="hljs-keyword">not</span> empty <span class="hljs-keyword">do</span></span><br><span class="line">  <span class="hljs-keyword">for</span> each vertex w in V adjacent to the front vertex <span class="hljs-keyword">do</span></span><br><span class="line">    <span class="hljs-keyword">if</span> w is marked with <span class="hljs-number">0</span></span><br><span class="line">      count ← count + <span class="hljs-number">1</span>;</span><br><span class="line">			mark w with count</span><br><span class="line">			add w to the <span class="hljs-built_in">queue</span>;</span><br><span class="line">	remove the front vertex from the <span class="hljs-built_in">queue</span></span><br></pre></td></tr></table></figure>
+<h3 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h3><pre><code class="C">BFS(G)
+
+count ← 0;
+for each vertex v in V do
+  if v is marked with 0
+    bfs(v);
+
+count ← count + 1;
+mark v with count and initialize a queue with v;
+while the queue is not empty do
+  for each vertex w in V adjacent to the front vertex do
+    if w is marked with 0
+      count ← count + 1;
+            mark w with count
+            add w to the queue;
+    remove the front vertex from the queue
+</code></pre>
 <p>邻接表 O(|V|+|E|)</p>
 <p>邻接矩阵 O(|V|^2)</p>
 <h2 id="第四章-减治法"><a href="#第四章-减治法" class="headerlink" title="第四章 减治法"></a>第四章 减治法</h2><h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p><a href="https://zhuanlan.zhihu.com/p/35328552" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/35328552</a></p>
 <p><img src="https://pic3.zhimg.com/v2-91b76e8e4dab9b0cad9a017d7dd431e2_b.gif" alt="v2-91b76e8e4dab9b0cad9a017d7dd431e2_b"></p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insertSort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (arr || len) <span class="hljs-keyword">return</span>;</span><br><span class="line">  	</span><br><span class="line">    <span class="hljs-comment">// 从第二个元素开始往前比较</span></span><br><span class="line">  	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> (arr[i] &lt; arr[i - <span class="hljs-number">1</span>]) &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> temp = arr[i];</span><br><span class="line">          </span><br><span class="line">            <span class="hljs-keyword">int</span> index = i;</span><br><span class="line">            <span class="hljs-comment">// 图示里看上去是要交换，但是其实让后一个元素直接等于前一个即可</span></span><br><span class="line">            <span class="hljs-comment">// 也就是让后一个被前一个“覆盖”掉</span></span><br><span class="line">            <span class="hljs-keyword">while</span> (index &gt; <span class="hljs-number">0</span> &amp;&amp; temp &lt; <span class="hljs-built_in">array</span>[index - <span class="hljs-number">1</span>]) &#123;</span><br><span class="line">                arr[index] = arr[index - <span class="hljs-number">1</span>];</span><br><span class="line">                index--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-comment">// index这个位置自然而然就会空出来</span></span><br><span class="line">            arr[index] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="c++">void insertSort(int arr[], int len) {
+    if (arr || len) return;
+
+    // 从第二个元素开始往前比较
+      for (int i = 1; i &lt; len; i++) {
+        if (arr[i] &lt; arr[i - 1]) {
+            int temp = arr[i];
+
+            int index = i;
+            // 图示里看上去是要交换，但是其实让后一个元素直接等于前一个即可
+            // 也就是让后一个被前一个“覆盖”掉
+            while (index &gt; 0 &amp;&amp; temp &lt; array[index - 1]) {
+                arr[index] = arr[index - 1];
+                index--;
+            }
+            // index这个位置自然而然就会空出来
+            arr[index] = temp;
+        }
+    }
+}
+</code></pre>
 <h3 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h3><p><a href="https://www.jianshu.com/p/b59db381561a" target="_blank" rel="noopener">https://www.jianshu.com/p/b59db381561a</a></p>
 <ul>
 <li>一个有向无环图可以有一个或多个拓扑排序序列</li>
 <li>O(N+E)</li>
 </ul>
-<h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 非递归</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end, <span class="hljs-keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> ret = <span class="hljs-number">-1</span>;       <span class="hljs-comment">// 未搜索到数据返回-1下标</span></span><br><span class="line">    </span><br><span class="line">	<span class="hljs-keyword">int</span> mid;</span><br><span class="line">	<span class="hljs-keyword">while</span> (start &lt;= end) &#123;</span><br><span class="line">		mid = start + (end - start) / <span class="hljs-number">2</span>; <span class="hljs-comment">//直接平均可能會溢位，所以用此算法</span></span><br><span class="line">		<span class="hljs-keyword">if</span> (arr[mid] &lt; key)</span><br><span class="line">			start = mid + <span class="hljs-number">1</span>;</span><br><span class="line">		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (arr[mid] &gt; key)</span><br><span class="line">			end = mid - <span class="hljs-number">1</span>;</span><br><span class="line">		<span class="hljs-keyword">else</span> &#123;            <span class="hljs-comment">// 最後檢測相等是因為多數搜尋狀況不是大於要不就小於</span></span><br><span class="line">			ret = mid;  </span><br><span class="line">            <span class="hljs-keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="hljs-keyword">return</span> ret;     <span class="hljs-comment">// 单一出口</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 递归</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end, <span class="hljs-keyword">int</span> khey)</span> </span>&#123;</span><br><span class="line">	<span class="hljs-keyword">if</span> (start &gt; end)</span><br><span class="line">		<span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-keyword">int</span> mid = start + (end - start) / <span class="hljs-number">2</span>;    <span class="hljs-comment">//直接平均可能會溢位，所以用此算法</span></span><br><span class="line">	<span class="hljs-keyword">if</span> (arr[mid] &gt; khey)</span><br><span class="line">		<span class="hljs-keyword">return</span> binary_search(arr, start, mid - <span class="hljs-number">1</span>, khey);</span><br><span class="line">	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (arr[mid] &lt; khey)</span><br><span class="line">		<span class="hljs-keyword">return</span> binary_search(arr, mid + <span class="hljs-number">1</span>, end, khey);</span><br><span class="line">	<span class="hljs-keyword">else</span></span><br><span class="line">	    <span class="hljs-keyword">return</span> mid;        <span class="hljs-comment">//最後檢測相等是因為多數搜尋狀況不是大於要不就小於</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><pre><code class="C">// 非递归
+int binary_search(const int arr[], int start, int end, int key) {
+    int ret = -1;       // 未搜索到数据返回-1下标
+
+    int mid;
+    while (start &lt;= end) {
+        mid = start + (end - start) / 2; //直接平均可能會溢位，所以用此算法
+        if (arr[mid] &lt; key)
+            start = mid + 1;
+        else if (arr[mid] &gt; key)
+            end = mid - 1;
+        else {            // 最後檢測相等是因為多數搜尋狀況不是大於要不就小於
+            ret = mid;  
+            break;
+        }
+    }
+
+    return ret;     // 单一出口
+}
+
+// 递归
+int binary_search(const int arr[], int start, int end, int khey) {
+    if (start &gt; end)
+        return -1;
+
+    int mid = start + (end - start) / 2;    //直接平均可能會溢位，所以用此算法
+    if (arr[mid] &gt; khey)
+        return binary_search(arr, start, mid - 1, khey);
+    else if (arr[mid] &lt; khey)
+        return binary_search(arr, mid + 1, end, khey);
+    else
+        return mid;        //最後檢測相等是因為多數搜尋狀況不是大於要不就小於
+}
+</code></pre>
 <p>伪代码书本P116</p>
 <h4 id="找大于L小于R的所有数字的范围"><a href="#找大于L小于R的所有数字的范围" class="headerlink" title="找大于L小于R的所有数字的范围"></a>找大于L小于R的所有数字的范围</h4><p><a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" target="_blank" rel="noopener">https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/</a></p>
 <p>解答在<strong>Solution</strong>里</p>
@@ -228,22 +309,167 @@
 <p>只需要两次二分找到L和R，然后一次性输出即可。这样是严格意义上的O(logN)算法</p>
 <h2 id="第五章-分治法"><a href="#第五章-分治法" class="headerlink" title="第五章 分治法"></a>第五章 分治法</h2><h3 id="合并排序"><a href="#合并排序" class="headerlink" title="合并排序"></a>合并排序</h3><p><a href="https://www.geeksforgeeks.org/merge-sort/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/merge-sort/</a></p>
 <h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p><a href="https://mp.weixin.qq.com/s/PQLC7qFjb74kt6PdExP8mw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/PQLC7qFjb74kt6PdExP8mw</a></p>
-<h4 id="挖坑法"><a href="#挖坑法" class="headerlink" title="挖坑法"></a>挖坑法</h4><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* 快速排序——挖坑法</span></span><br><span class="line"><span class="hljs-comment"> * 代码改自</span></span><br><span class="line"><span class="hljs-comment"> *    https://mp.weixin.qq.com/s/PQLC7qFjb74kt6PdExP8mw</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">partition</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> startIndex, <span class="hljs-keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">// 选取第一个元素为基准元素</span></span><br><span class="line">    <span class="hljs-keyword">int</span> pivot = arr[startIndex];</span><br><span class="line">    <span class="hljs-keyword">int</span> left = startIndex;</span><br><span class="line">    <span class="hljs-keyword">int</span> right = endIndex;</span><br><span class="line">    <span class="hljs-comment">// 坑的位置，初始化为pivot的位置</span></span><br><span class="line">    <span class="hljs-keyword">int</span> index = startIndex;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 大循环在左右指针重合或者交错时结束</span></span><br><span class="line">    <span class="hljs-keyword">while</span> (right &gt;= left) &#123;</span><br><span class="line">        <span class="hljs-comment">// right指针从右向左比较</span></span><br><span class="line">        <span class="hljs-keyword">while</span> (right &gt;= left) &#123;</span><br><span class="line">	          <span class="hljs-keyword">if</span> (arr[right] &lt; pivot) &#123;</span><br><span class="line">                arr[left] = arr[right];</span><br><span class="line">                index = right;</span><br><span class="line">                left++;</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            right--;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// left指针从左向右比较</span></span><br><span class="line">        <span class="hljs-keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> (arr[left] &gt; pivot) &#123;</span><br><span class="line">                arr[right] = arr[left];</span><br><span class="line">                index = left;</span><br><span class="line">                right--;</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            left++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    arr[index] = pivot;</span><br><span class="line">    <span class="hljs-keyword">return</span> index;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">quickSort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> startIndex, <span class="hljs-keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (startIndex &gt;= endIndex)</span><br><span class="line">        <span class="hljs-keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">// 得到基准位置</span></span><br><span class="line">    <span class="hljs-keyword">int</span> pivotIndex = partition(arr, startIndex, endIndex);</span><br><span class="line">    quickSort(arr, startIndex, pivotIndex - <span class="hljs-number">1</span>);</span><br><span class="line">    quickSort(arr, pivotIndex + <span class="hljs-number">1</span>, endIndex);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> arr[] = &#123;<span class="hljs-number">4</span>,<span class="hljs-number">7</span>,<span class="hljs-number">6</span>,<span class="hljs-number">5</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">1</span>&#125;;</span><br><span class="line">    quickSort(arr, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>);</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++)</span><br><span class="line">        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>, arr[i]);</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="指针交换法-书上方法"><a href="#指针交换法-书上方法" class="headerlink" title="指针交换法 (书上方法)"></a>指针交换法 (书上方法)</h4><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* 快速排序——指针交换法(仅partition部分)</span></span><br><span class="line"><span class="hljs-comment"> * 代码改自</span></span><br><span class="line"><span class="hljs-comment"> *    https://mp.weixin.qq.com/s/PQLC7qFjb74kt6PdExP8mw</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">partition</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> startIndex, <span class="hljs-keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">// 选取第一个元素为基准元素</span></span><br><span class="line">    <span class="hljs-keyword">int</span> pivot = arr[startIndex];</span><br><span class="line">    <span class="hljs-keyword">int</span> left = startIndex;</span><br><span class="line">    <span class="hljs-keyword">int</span> right = endIndex;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">while</span> (left != right) &#123;</span><br><span class="line">        <span class="hljs-comment">// 控制right指针比较并左移</span></span><br><span class="line">        <span class="hljs-keyword">while</span> (left &lt; right &amp;&amp; arr[right] &gt; pivot) </span><br><span class="line">            right--;</span><br><span class="line">        <span class="hljs-comment">// 控制left指针右移</span></span><br><span class="line">        <span class="hljs-keyword">while</span> (left &lt; right &amp;&amp; arr[left] &lt; pivot)</span><br><span class="line">            left++;</span><br><span class="line">        <span class="hljs-comment">// 交换left和right指向的元素</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (left &lt; right) &#123;</span><br><span class="line">          <span class="hljs-keyword">int</span> p = arr[left];</span><br><span class="line">          arr[left] = arr[right];</span><br><span class="line">          arr[right] = p;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">// 交换pivot和left最终位置</span></span><br><span class="line">    <span class="hljs-keyword">int</span> p = arr[left];</span><br><span class="line">    arr[left] = arr[startIndex];</span><br><span class="line">    arr[startIndex] = p;</span><br><span class="line">  </span><br><span class="line">    <span class="hljs-keyword">return</span> left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="挖坑法"><a href="#挖坑法" class="headerlink" title="挖坑法"></a>挖坑法</h4><pre><code class="c++">/* 快速排序——挖坑法
+ * 代码改自
+ *    https://mp.weixin.qq.com/s/PQLC7qFjb74kt6PdExP8mw
+ */
+int partition(int arr[], int startIndex, int endIndex) {
+    // 选取第一个元素为基准元素
+    int pivot = arr[startIndex];
+    int left = startIndex;
+    int right = endIndex;
+    // 坑的位置，初始化为pivot的位置
+    int index = startIndex;
+
+    // 大循环在左右指针重合或者交错时结束
+    while (right &gt;= left) {
+        // right指针从右向左比较
+        while (right &gt;= left) {
+              if (arr[right] &lt; pivot) {
+                arr[left] = arr[right];
+                index = right;
+                left++;
+                break;
+            }
+            right--;
+        }
+
+        // left指针从左向右比较
+        while (left &lt;= right) {
+            if (arr[left] &gt; pivot) {
+                arr[right] = arr[left];
+                index = left;
+                right--;
+                break;
+            }
+            left++;
+        }
+    }
+    arr[index] = pivot;
+    return index;
+}
+
+void quickSort(int arr[], int startIndex, int endIndex) {
+    if (startIndex &gt;= endIndex)
+        return;
+
+    // 得到基准位置
+    int pivotIndex = partition(arr, startIndex, endIndex);
+    quickSort(arr, startIndex, pivotIndex - 1);
+    quickSort(arr, pivotIndex + 1, endIndex);
+}
+
+int main() {
+    int arr[] = {4,7,6,5,3,2,8,1};
+    quickSort(arr, 0, 7);
+    for (int i = 0; i &lt; 8; i++)
+        printf(&quot;%d &quot;, arr[i]);
+    return 0;
+}
+</code></pre>
+<h4 id="指针交换法-书上方法"><a href="#指针交换法-书上方法" class="headerlink" title="指针交换法 (书上方法)"></a>指针交换法 (书上方法)</h4><pre><code class="c++">/* 快速排序——指针交换法(仅partition部分)
+ * 代码改自
+ *    https://mp.weixin.qq.com/s/PQLC7qFjb74kt6PdExP8mw
+ */
+int partition(int arr[], int startIndex, int endIndex) {
+    // 选取第一个元素为基准元素
+    int pivot = arr[startIndex];
+    int left = startIndex;
+    int right = endIndex;
+
+    while (left != right) {
+        // 控制right指针比较并左移
+        while (left &lt; right &amp;&amp; arr[right] &gt; pivot) 
+            right--;
+        // 控制left指针右移
+        while (left &lt; right &amp;&amp; arr[left] &lt; pivot)
+            left++;
+        // 交换left和right指向的元素
+        if (left &lt; right) {
+          int p = arr[left];
+          arr[left] = arr[right];
+          arr[right] = p;
+        }
+    }
+
+    // 交换pivot和left最终位置
+    int p = arr[left];
+    arr[left] = arr[startIndex];
+    arr[startIndex] = p;
+
+    return left;
+}
+</code></pre>
 <blockquote>
 <p>和挖坑法相比，指针交换法在partition方法中进行的元素交换次数更少</p>
 </blockquote>
 <h2 id="第六章-变治法"><a href="#第六章-变治法" class="headerlink" title="第六章 变治法"></a>第六章 变治法</h2><h3 id="AVL树"><a href="#AVL树" class="headerlink" title="AVL树"></a>AVL树</h3><h3 id="二三树"><a href="#二三树" class="headerlink" title="二三树"></a>二三树</h3><p><a href="https://mp.weixin.qq.com/s/qqugzuLxJ8ja7oyMgn7bEQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/qqugzuLxJ8ja7oyMgn7bEQ</a></p>
 <p>查找、<strong>插入（4种情况）</strong>——关键：中键上移</p>
 <h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p><a href="https://mp.weixin.qq.com/s/Och3KXhbm1mq-ce4Yp0hRg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/Och3KXhbm1mq-ce4Yp0hRg</a></p>
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* </span></span><br><span class="line"><span class="hljs-comment"> * 堆排序</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">max_heapify</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">// 建立父節點指標和子節點指標</span></span><br><span class="line">    <span class="hljs-keyword">int</span> dad = start;</span><br><span class="line">    <span class="hljs-keyword">int</span> son = dad * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>;</span><br><span class="line">    <span class="hljs-keyword">while</span> (son &lt;= end) &#123; <span class="hljs-comment">// 若子節點指標在範圍內才做比較</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (son + <span class="hljs-number">1</span> &lt;= end &amp;&amp; arr[son] &lt; arr[son + <span class="hljs-number">1</span>]) <span class="hljs-comment">// 先比較兩個子節點大小，選擇最大的</span></span><br><span class="line">            son++;</span><br><span class="line">        <span class="hljs-keyword">if</span> (arr[dad] &gt; arr[son]) <span class="hljs-comment">//如果父節點大於子節點代表調整完畢，直接跳出函數</span></span><br><span class="line">            <span class="hljs-keyword">return</span>;</span><br><span class="line">        <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">// 否則交換父子內容再繼續子節點和孫節點比較</span></span><br><span class="line">            swap(&amp;arr[dad], &amp;arr[son]);</span><br><span class="line">            dad = son;</span><br><span class="line">            son = dad * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">heap_sort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">// 初始化，i從最後一個父節點開始調整</span></span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = len / <span class="hljs-number">2</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">        max_heapify(arr, i, len - <span class="hljs-number">1</span>);</span><br><span class="line">    <span class="hljs-comment">// 先將第一個元素和已经排好的元素前一位做交換，再從新調整(刚调整的元素之前的元素)，直到排序完畢</span></span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = len - <span class="hljs-number">1</span>; i &gt; <span class="hljs-number">0</span>; i--) &#123;</span><br><span class="line">        swap(arr[<span class="hljs-number">0</span>], arr[i]);</span><br><span class="line">        max_heapify(arr, <span class="hljs-number">0</span>, i - <span class="hljs-number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="C">/* 
+ * 堆排序
+ */
+void max_heapify(int arr[], int start, int end) {
+    // 建立父節點指標和子節點指標
+    int dad = start;
+    int son = dad * 2 + 1;
+    while (son &lt;= end) { // 若子節點指標在範圍內才做比較
+        if (son + 1 &lt;= end &amp;&amp; arr[son] &lt; arr[son + 1]) // 先比較兩個子節點大小，選擇最大的
+            son++;
+        if (arr[dad] &gt; arr[son]) //如果父節點大於子節點代表調整完畢，直接跳出函數
+            return;
+        else { // 否則交換父子內容再繼續子節點和孫節點比較
+            swap(&amp;arr[dad], &amp;arr[son]);
+            dad = son;
+            son = dad * 2 + 1;
+        }
+    }
+}
+
+void heap_sort(int arr[], int len) {
+    // 初始化，i從最後一個父節點開始調整
+    for (int i = len / 2 - 1; i &gt;= 0; i--)
+        max_heapify(arr, i, len - 1);
+    // 先將第一個元素和已经排好的元素前一位做交換，再從新調整(刚调整的元素之前的元素)，直到排序完畢
+    for (int i = len - 1; i &gt; 0; i--) {
+        swap(arr[0], arr[i]);
+        max_heapify(arr, 0, i - 1);
+    }
+}
+</code></pre>
 <h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><p>出队、入队复杂度为$Ologn$</p>
 <h2 id="第七章-时空权衡"><a href="#第七章-时空权衡" class="headerlink" title="第七章 时空权衡"></a>第七章 时空权衡</h2><h3 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h3><p><a href="https://mp.weixin.qq.com/s/WGqndkwLlzyVOHOdGK7X4Q" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/WGqndkwLlzyVOHOdGK7X4Q</a></p>
 <ul>
 <li>不需要通过比较（ O(logN) ），而是通过元素下标来确定元素位置</li>
 <li>取值范围不能很大——空间复杂度</li>
 </ul>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">countSort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> <span class="hljs-built_in">array</span>[], <span class="hljs-keyword">int</span> sorted[], <span class="hljs-keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">  	<span class="hljs-comment">// 1 得到数组最大值</span></span><br><span class="line">    <span class="hljs-keyword">int</span> max = <span class="hljs-built_in">array</span>[<span class="hljs-number">0</span>];</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; len, i++) &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">array</span>[i] &gt; max) &#123;</span><br><span class="line">         	 max = <span class="hljs-built_in">array</span>[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">// 2 根据数组最大值确定统计数组的长度</span></span><br><span class="line">    <span class="hljs-keyword">int</span> *countArray = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>) * (max + <span class="hljs-number">1</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">// 3 遍历数组，填充统计数组</span></span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        countArray[<span class="hljs-built_in">array</span>[i]]++;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">// 4 遍历统计数组，输出结果</span></span><br><span class="line">    <span class="hljs-keyword">int</span> index = <span class="hljs-number">0</span>;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; max + <span class="hljs-number">1</span>; i++) &#123;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; countArray[i]; j++) &#123;</span><br><span class="line">            sorted[index++] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-built_in">free</span>(countArray);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="C++">void countSort(int array[], int sorted[], int len) {
+      // 1 得到数组最大值
+    int max = array[0];
+    for (int i = 1; i &lt; len, i++) {
+        if (array[i] &gt; max) {
+              max = array[i];
+        }
+    }
+
+    // 2 根据数组最大值确定统计数组的长度
+    int *countArray = (int *)malloc(sizeof(int) * (max + 1));
+
+    // 3 遍历数组，填充统计数组
+    for (int i = 0; i &lt; len; i++) {
+        countArray[array[i]]++;
+    }
+
+    // 4 遍历统计数组，输出结果
+    int index = 0;
+    for (int i = 0; i &lt; max + 1; i++) {
+        for (int j = 0; j &lt; countArray[i]; j++) {
+            sorted[index++] = i;
+        }
+    }
+    free(countArray);
+}
+</code></pre>
 <h2 id="第八章-动态规划"><a href="#第八章-动态规划" class="headerlink" title="第八章 动态规划"></a>第八章 动态规划</h2><h3 id="动态规划性质-amp-amp-适用范围？"><a href="#动态规划性质-amp-amp-适用范围？" class="headerlink" title="动态规划性质&amp;&amp;适用范围？"></a>动态规划性质&amp;&amp;适用范围？</h3><p>满足以下三个性质，就适合采用DP来解决：</p>
 <ul>
 <li><p><strong>（必需）最优化原理</strong>：如果问题的最优解所包含的子问题的解也是最优的，就称该问题具有最优子结构，即满足最优化原理。</p>
@@ -272,7 +498,25 @@
 </li>
 </ul>
 <p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/89950a9ac122ea7e0bf1c669ae1313a749661063" alt="3"></p>
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> let dist be a |V| × |V| <span class="hljs-built_in">array</span> of minimum distances initialized to ∞ (infinity)</span><br><span class="line"> <span class="hljs-keyword">for</span> each vertex v</span><br><span class="line">    dist[v][v] ← <span class="hljs-number">0</span></span><br><span class="line"> <span class="hljs-function"><span class="hljs-keyword">for</span> each <span class="hljs-title">edge</span> <span class="hljs-params">(u,v)</span></span></span><br><span class="line">    dist[u][v] ← w(u,v)  // the weight of the edge (u,v)</span><br><span class="line">   </span><br><span class="line"><span class="hljs-keyword">for</span> k ← <span class="hljs-number">1</span> to n <span class="hljs-keyword">do</span></span><br><span class="line">  <span class="hljs-keyword">for</span> i ← <span class="hljs-number">1</span> to n <span class="hljs-keyword">do</span></span><br><span class="line">    <span class="hljs-keyword">for</span> j ← <span class="hljs-number">1</span> to n <span class="hljs-keyword">do</span> </span><br><span class="line">      D[i, j] ← min&#123;D[i, j], D[i, k] + D[k, j]&#125;</span><br><span class="line">           </span><br><span class="line">           </span><br><span class="line"><span class="hljs-comment">// 核心代码</span></span><br><span class="line"><span class="hljs-keyword">for</span>(k=<span class="hljs-number">1</span>;k&lt;=n;k++)  </span><br><span class="line">	<span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;=n;i++)  </span><br><span class="line">  	<span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;j&lt;=n;j++)  </span><br><span class="line">    	<span class="hljs-keyword">if</span>(e[i][j]&gt;e[i][k]+e[k][j])  </span><br><span class="line">        e[i][j]=e[i][k]+e[k][j];</span><br></pre></td></tr></table></figure>
+<pre><code class="c"> let dist be a |V| × |V| array of minimum distances initialized to ∞ (infinity)
+ for each vertex v
+    dist[v][v] ← 0
+ for each edge (u,v)
+    dist[u][v] ← w(u,v)  // the weight of the edge (u,v)
+
+for k ← 1 to n do
+  for i ← 1 to n do
+    for j ← 1 to n do 
+      D[i, j] ← min{D[i, j], D[i, k] + D[k, j]}
+
+
+// 核心代码
+for(k=1;k&lt;=n;k++)  
+    for(i=1;i&lt;=n;i++)  
+      for(j=1;j&lt;=n;j++)  
+        if(e[i][j]&gt;e[i][k]+e[k][j])  
+        e[i][j]=e[i][k]+e[k][j];
+</code></pre>
 <h3 id="和分治法的异同？"><a href="#和分治法的异同？" class="headerlink" title="和分治法的异同？"></a>和分治法的异同？</h3><table>
 <thead>
 <tr>
@@ -302,7 +546,99 @@
 <h3 id="单源最短路—Dijkstra算法"><a href="#单源最短路—Dijkstra算法" class="headerlink" title="单源最短路—Dijkstra算法"></a>单源最短路—Dijkstra算法</h3><p><a href="https://mp.weixin.qq.com/s/gjjrsj95X4w7QdWBlAKnaA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/gjjrsj95X4w7QdWBlAKnaA</a></p>
 <p><a href="https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/</a></p>
 <p>C++实现</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// A C++ program for Dijkstra's single source shortest path algorithm. </span></span><br><span class="line"><span class="hljs-comment">// The program is for adjacency matrix representation of the graph </span></span><br><span class="line">   </span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;limits.h&gt; </span></span></span><br><span class="line">   </span><br><span class="line"><span class="hljs-comment">// Number of vertices in the graph </span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> V 9 </span></span><br><span class="line">   </span><br><span class="line"><span class="hljs-comment">// A utility function to find the vertex with minimum distance value, from </span></span><br><span class="line"><span class="hljs-comment">// the set of vertices not yet included in shortest path tree </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minDistance</span><span class="hljs-params">(<span class="hljs-keyword">int</span> dist[], <span class="hljs-keyword">bool</span> sptSet[])</span> </span></span><br><span class="line"><span class="hljs-function"></span>&#123; </span><br><span class="line">   <span class="hljs-comment">// Initialize min value </span></span><br><span class="line">   <span class="hljs-keyword">int</span> min = INT_MAX, min_index; </span><br><span class="line">   </span><br><span class="line">   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> v = <span class="hljs-number">0</span>; v &lt; V; v++) </span><br><span class="line">     <span class="hljs-keyword">if</span> (sptSet[v] == <span class="hljs-literal">false</span> &amp;&amp; dist[v] &lt;= min) </span><br><span class="line">         min = dist[v], min_index = v; </span><br><span class="line">   </span><br><span class="line">   <span class="hljs-keyword">return</span> min_index; </span><br><span class="line">&#125; </span><br><span class="line">   </span><br><span class="line"><span class="hljs-comment">// A utility function to print the constructed distance array </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">printSolution</span><span class="hljs-params">(<span class="hljs-keyword">int</span> dist[], <span class="hljs-keyword">int</span> n)</span> </span></span><br><span class="line"><span class="hljs-function"></span>&#123; </span><br><span class="line">   <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Vertex   Distance from Source\n"</span>); </span><br><span class="line">   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; V; i++) </span><br><span class="line">      <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d tt %d\n"</span>, i, dist[i]); </span><br><span class="line">&#125; </span><br><span class="line">   </span><br><span class="line"><span class="hljs-comment">// Function that implements Dijkstra's single source shortest path algorithm </span></span><br><span class="line"><span class="hljs-comment">// for a graph represented using adjacency matrix representation </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">(<span class="hljs-keyword">int</span> graph[V][V], <span class="hljs-keyword">int</span> src)</span> </span></span><br><span class="line"><span class="hljs-function"></span>&#123; </span><br><span class="line">     <span class="hljs-keyword">int</span> dist[V];     <span class="hljs-comment">// The output array.  dist[i] will hold the shortest </span></span><br><span class="line">                      <span class="hljs-comment">// distance from src to i </span></span><br><span class="line">   </span><br><span class="line">     <span class="hljs-keyword">bool</span> sptSet[V]; <span class="hljs-comment">// sptSet[i] will be true if vertex i is included in shortest </span></span><br><span class="line">                     <span class="hljs-comment">// path tree or shortest distance from src to i is finalized </span></span><br><span class="line">   </span><br><span class="line">     <span class="hljs-comment">// Initialize all distances as INFINITE and stpSet[] as false </span></span><br><span class="line">     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; V; i++) </span><br><span class="line">        dist[i] = INT_MAX, sptSet[i] = <span class="hljs-literal">false</span>; </span><br><span class="line">   </span><br><span class="line">     <span class="hljs-comment">// Distance of source vertex from itself is always 0 </span></span><br><span class="line">     dist[src] = <span class="hljs-number">0</span>; </span><br><span class="line">   </span><br><span class="line">     <span class="hljs-comment">// Find shortest path for all vertices </span></span><br><span class="line">     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>; count &lt; V<span class="hljs-number">-1</span>; count++) </span><br><span class="line">     &#123; </span><br><span class="line">       <span class="hljs-comment">// Pick the minimum distance vertex from the set of vertices not </span></span><br><span class="line">       <span class="hljs-comment">// yet processed. u is always equal to src in the first iteration. </span></span><br><span class="line">       <span class="hljs-keyword">int</span> u = minDistance(dist, sptSet); </span><br><span class="line">   </span><br><span class="line">       <span class="hljs-comment">// Mark the picked vertex as processed </span></span><br><span class="line">       sptSet[u] = <span class="hljs-literal">true</span>; </span><br><span class="line">   </span><br><span class="line">       <span class="hljs-comment">// Update dist value of the adjacent vertices of the picked vertex. </span></span><br><span class="line">       <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> v = <span class="hljs-number">0</span>; v &lt; V; v++) </span><br><span class="line">   </span><br><span class="line">         <span class="hljs-comment">// Update dist[v] only if is not in sptSet, there is an edge from  </span></span><br><span class="line">         <span class="hljs-comment">// u to v, and total weight of path from src to  v through u is  </span></span><br><span class="line">         <span class="hljs-comment">// smaller than current value of dist[v] </span></span><br><span class="line">         <span class="hljs-keyword">if</span> (!sptSet[v] &amp;&amp; graph[u][v] &amp;&amp; dist[u] != INT_MAX  </span><br><span class="line">                                       &amp;&amp; dist[u]+graph[u][v] &lt; dist[v]) </span><br><span class="line">            dist[v] = dist[u] + graph[u][v]; </span><br><span class="line">     &#125; </span><br><span class="line">   </span><br><span class="line">     <span class="hljs-comment">// print the constructed distance array </span></span><br><span class="line">     printSolution(dist, V); </span><br><span class="line">&#125; </span><br><span class="line">   </span><br><span class="line"><span class="hljs-comment">// driver program to test above function </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span></span><br><span class="line"><span class="hljs-function"></span>&#123; </span><br><span class="line">   <span class="hljs-comment">/* Let us create the example graph discussed above */</span></span><br><span class="line">   <span class="hljs-keyword">int</span> graph[V][V] = &#123;&#123;<span class="hljs-number">0</span>, <span class="hljs-number">4</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">8</span>, <span class="hljs-number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="hljs-number">4</span>, <span class="hljs-number">0</span>, <span class="hljs-number">8</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">11</span>, <span class="hljs-number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="hljs-number">0</span>, <span class="hljs-number">8</span>, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>&#125;, </span><br><span class="line">                      &#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>, <span class="hljs-number">0</span>, <span class="hljs-number">9</span>, <span class="hljs-number">14</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">9</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>, <span class="hljs-number">14</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;, </span><br><span class="line">                      &#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">6</span>&#125;, </span><br><span class="line">                      &#123;<span class="hljs-number">8</span>, <span class="hljs-number">11</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>&#125;, </span><br><span class="line">                      &#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">0</span>&#125; </span><br><span class="line">                     &#125;; </span><br><span class="line">   </span><br><span class="line">    dijkstra(graph, <span class="hljs-number">0</span>); </span><br><span class="line">   </span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="C++">// A C++ program for Dijkstra&#39;s single source shortest path algorithm. 
+// The program is for adjacency matrix representation of the graph 
+
+#include &lt;stdio.h&gt; 
+#include &lt;limits.h&gt; 
+
+// Number of vertices in the graph 
+#define V 9 
+
+// A utility function to find the vertex with minimum distance value, from 
+// the set of vertices not yet included in shortest path tree 
+int minDistance(int dist[], bool sptSet[]) 
+{ 
+   // Initialize min value 
+   int min = INT_MAX, min_index; 
+
+   for (int v = 0; v &lt; V; v++) 
+     if (sptSet[v] == false &amp;&amp; dist[v] &lt;= min) 
+         min = dist[v], min_index = v; 
+
+   return min_index; 
+} 
+
+// A utility function to print the constructed distance array 
+int printSolution(int dist[], int n) 
+{ 
+   printf(&quot;Vertex   Distance from Source\n&quot;); 
+   for (int i = 0; i &lt; V; i++) 
+      printf(&quot;%d tt %d\n&quot;, i, dist[i]); 
+} 
+
+// Function that implements Dijkstra&#39;s single source shortest path algorithm 
+// for a graph represented using adjacency matrix representation 
+void dijkstra(int graph[V][V], int src) 
+{ 
+     int dist[V];     // The output array.  dist[i] will hold the shortest 
+                      // distance from src to i 
+
+     bool sptSet[V]; // sptSet[i] will be true if vertex i is included in shortest 
+                     // path tree or shortest distance from src to i is finalized 
+
+     // Initialize all distances as INFINITE and stpSet[] as false 
+     for (int i = 0; i &lt; V; i++) 
+        dist[i] = INT_MAX, sptSet[i] = false; 
+
+     // Distance of source vertex from itself is always 0 
+     dist[src] = 0; 
+
+     // Find shortest path for all vertices 
+     for (int count = 0; count &lt; V-1; count++) 
+     { 
+       // Pick the minimum distance vertex from the set of vertices not 
+       // yet processed. u is always equal to src in the first iteration. 
+       int u = minDistance(dist, sptSet); 
+
+       // Mark the picked vertex as processed 
+       sptSet[u] = true; 
+
+       // Update dist value of the adjacent vertices of the picked vertex. 
+       for (int v = 0; v &lt; V; v++) 
+
+         // Update dist[v] only if is not in sptSet, there is an edge from  
+         // u to v, and total weight of path from src to  v through u is  
+         // smaller than current value of dist[v] 
+         if (!sptSet[v] &amp;&amp; graph[u][v] &amp;&amp; dist[u] != INT_MAX  
+                                       &amp;&amp; dist[u]+graph[u][v] &lt; dist[v]) 
+            dist[v] = dist[u] + graph[u][v]; 
+     } 
+
+     // print the constructed distance array 
+     printSolution(dist, V); 
+} 
+
+// driver program to test above function 
+int main() 
+{ 
+   /* Let us create the example graph discussed above */
+   int graph[V][V] = {{0, 4, 0, 0, 0, 0, 0, 8, 0}, 
+                      {4, 0, 8, 0, 0, 0, 0, 11, 0}, 
+                      {0, 8, 0, 7, 0, 4, 0, 0, 2}, 
+                      {0, 0, 7, 0, 9, 14, 0, 0, 0}, 
+                      {0, 0, 0, 9, 0, 10, 0, 0, 0}, 
+                      {0, 0, 4, 14, 10, 0, 2, 0, 0}, 
+                      {0, 0, 0, 0, 0, 2, 0, 1, 6}, 
+                      {8, 11, 0, 0, 0, 0, 1, 0, 7}, 
+                      {0, 0, 2, 0, 0, 0, 6, 7, 0} 
+                     }; 
+
+    dijkstra(graph, 0); 
+
+    return 0; 
+} 
+</code></pre>
 <h3 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h3><p><a href="https://mp.weixin.qq.com/s/8bTMRprI_SOCLm_zOTjnKw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/8bTMRprI_SOCLm_zOTjnKw</a></p>
 <h4 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h4><ul>
 <li>加点法</li>
@@ -319,9 +655,57 @@
 <li>从性价比高的物品开始选择</li>
 </ul>
 <h3 id="哈夫曼编码"><a href="#哈夫曼编码" class="headerlink" title="哈夫曼编码"></a>哈夫曼编码</h3><h2 id="第十二章-超越算法能力的极限"><a href="#第十二章-超越算法能力的极限" class="headerlink" title="第十二章 超越算法能力的极限"></a>第十二章 超越算法能力的极限</h2><h3 id="回溯法-DFS思想"><a href="#回溯法-DFS思想" class="headerlink" title="回溯法(DFS思想)"></a>回溯法(DFS思想)</h3><p><a href="https://www.cnblogs.com/steven_oyj/archive/2010/05/22/1741376.html" target="_blank" rel="noopener">https://www.cnblogs.com/steven_oyj/archive/2010/05/22/1741376.html </a></p>
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment"> * 针对N叉树的递归回溯法代码模板</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">BackTrace</span><span class="hljs-params">(<span class="hljs-keyword">int</span> t)</span> </span>&#123;</span><br><span class="line">		<span class="hljs-keyword">if</span>(t&gt;n)</span><br><span class="line">				Output(x);</span><br><span class="line">		<span class="hljs-keyword">else</span></span><br><span class="line">				<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = f (n, t); i &lt;= g (n, t); i++ ) &#123;</span><br><span class="line"> 						x[t] = h(i);</span><br><span class="line">						<span class="hljs-keyword">if</span>(Constraint(t) &amp;&amp; Bound (t))</span><br><span class="line">								BackTrace(t+<span class="hljs-number">1</span>);</span><br><span class="line">				&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="C">/*
+ * 针对N叉树的递归回溯法代码模板
+ */
+void BackTrace(int t) {
+        if(t&gt;n)
+                Output(x);
+        else
+                for(int i = f (n, t); i &lt;= g (n, t); i++ ) {
+                         x[t] = h(i);
+                        if(Constraint(t) &amp;&amp; Bound (t))
+                                BackTrace(t+1);
+                }
+}
+
+</code></pre>
 <h4 id="N皇后"><a href="#N皇后" class="headerlink" title="N皇后"></a>N皇后</h4><p><a href="https://mp.weixin.qq.com/s/AxGaKZQZ8HjlZaF4ifQRTQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/AxGaKZQZ8HjlZaF4ifQRTQ</a></p>
-<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-keyword">int</span> curRow)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">//放当前行的皇后时，只需要检查跟前面那些行的皇后有没有冲突</span></span><br><span class="line">    <span class="hljs-comment">//不需要考虑后几行，因为后几行的皇后还没放上去呢</span></span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> preRow = <span class="hljs-number">0</span>; preRow != curRow; preRow++) &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(c[curRow] == c[preRow] ||</span><br><span class="line">           curRow - c[curRow] == preRow - c[preRow] ||</span><br><span class="line">           curRow + c[curRow] == preRow + c[preRow]) &#123;</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">queen</span><span class="hljs-params">(<span class="hljs-keyword">int</span> row)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span>(row == n) &#123;</span><br><span class="line">        <span class="hljs-comment">// 从0到n-1行，全部都已经放上皇后了，所以答案+1</span></span><br><span class="line">        total++;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 打印出n个皇后具体放在0~n-1行的第几列</span></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i&lt;n; i++) &#123;</span><br><span class="line">            <span class="hljs-built_in">cout</span> &lt;&lt; c[i] &lt;&lt; <span class="hljs-string">" "</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-built_in">endl</span>;</span><br><span class="line">    &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> col = <span class="hljs-number">0</span>; col != n; col++) &#123;</span><br><span class="line">            c[row] = col;</span><br><span class="line">            <span class="hljs-keyword">if</span>(check(row)) &#123;</span><br><span class="line">                queen(row + <span class="hljs-number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="C">bool check(int curRow) {
+    //放当前行的皇后时，只需要检查跟前面那些行的皇后有没有冲突
+    //不需要考虑后几行，因为后几行的皇后还没放上去呢
+    for(int preRow = 0; preRow != curRow; preRow++) {
+        if(c[curRow] == c[preRow] ||
+           curRow - c[curRow] == preRow - c[preRow] ||
+           curRow + c[curRow] == preRow + c[preRow]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void queen(int row) {
+    if(row == n) {
+        // 从0到n-1行，全部都已经放上皇后了，所以答案+1
+        total++;
+
+        // 打印出n个皇后具体放在0~n-1行的第几列
+        for(int i = 0; i&lt;n; i++) {
+            cout &lt;&lt; c[i] &lt;&lt; &quot; &quot;;
+        }
+        cout &lt;&lt; endl;
+    } else {
+        for(int col = 0; col != n; col++) {
+            c[row] = col;
+            if(check(row)) {
+                queen(row + 1);
+            }
+        }
+    }
+}
+
+</code></pre>
 <h4 id="哈密顿回路"><a href="#哈密顿回路" class="headerlink" title="哈密顿回路"></a>哈密顿回路</h4><p>书本P328</p>
 <h4 id="DFS-1"><a href="#DFS-1" class="headerlink" title="DFS"></a>DFS</h4><p>和回溯法的关系</p>
 <p><a href="https://stackoverflow.com/questions/1294720/whats-the-difference-between-backtracking-and-depth-first-search" target="_blank" rel="noopener">https://stackoverflow.com/questions/1294720/whats-the-difference-between-backtracking-and-depth-first-search</a></p>
@@ -466,7 +850,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
 <script>
     var disqus_config = function () {
@@ -523,17 +907,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/archives/">
                     <p class="heading">
-                        Entradas
+                        Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        15
                     </p>
                 </a>
             </div>
             <div class="level-item has-text-centered is-marginless">
                 <a href="/categories/">
                     <p class="heading">
-                        Categorias
+                        Categories
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -543,17 +927,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/tags/">
                     <p class="heading">
-                        Etiquetas
+                        Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        16
                     </p>
                 </a>
             </div>
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
-                <i class="fab fa-github"></i>&nbsp;&nbsp;SEGUIR</a>
+                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
         </div>
         
         
@@ -582,7 +966,7 @@
     <div class="card-content">
         <div class="menu" style="max-height: 800px; overflow: auto;">
             <h3 class="menu-label">
-                Catálogo
+                Catalogue
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#第一章-绪论">
@@ -837,7 +1221,7 @@
                 
                 <br>
                 <span id="busuanzi_container_site_uv">
-                Thăm bởi <span id="busuanzi_value_site_uv">0</span> bạn đọc
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
                 </span>
                 
                 </p>
@@ -938,7 +1322,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
 
-<a id="back-to-top" title="Kembali ke atas" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
@@ -986,10 +1370,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Entradas',
+                POSTS: 'Posts',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',

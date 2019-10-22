@@ -2,7 +2,7 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Etiqueta: JavaScript - Hytonight云息</title>
+<title>Tag: JavaScript - Hytonight云息</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -143,7 +143,7 @@
     <div class="card-content">
         <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
-            <li><a href="/tags">Etiquetas</a></li>
+            <li><a href="/tags">Tags</a></li>
             <li class="is-active"><a href="#" aria-current="page">JavaScript</a></li>
         </ul>
         </nav>
@@ -182,7 +182,22 @@
             <p><a href="https://www.samanthaming.com/tidbits/43-3-ways-to-remove-array-duplicates" target="_blank" rel="noopener">原文</a>：<em>How to Remove Array Duplicates in ES6</em> </p>
 <p>翻译：Hytonight云息</p>
 <p>有三种方法可以过滤掉一个数组的重复元素并且返回去重后的新数组。我最喜欢使用<code>Set</code>，因为它最精简。</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> array = [<span class="hljs-string">'🐑'</span>, <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>, <span class="hljs-string">'🐑'</span>,<span class="hljs-string">'🐑'</span>, <span class="hljs-number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 1: "Set"</span></span><br><span class="line">[...new <span class="hljs-built_in">Set</span>(array)];</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 2: "Filter"</span></span><br><span class="line">array.filter(<span class="hljs-function">(<span class="hljs-params">item, index</span>) =&gt;</span> array.indexOf(item) === index);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 3: "Reduce"</span></span><br><span class="line">array.reduce(<span class="hljs-function">(<span class="hljs-params">unique, item</span>) =&gt;</span> </span><br><span class="line">  unique.includes(item) ? unique : [...unique, item], []);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// RESULT:</span></span><br><span class="line"><span class="hljs-comment">// ['🐑', 1, 2, 3];</span></span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">const array = [&#39;🐑&#39;, 1,  2, &#39;🐑&#39;,&#39;🐑&#39;, 3];
+
+// 1: &quot;Set&quot;
+[...new Set(array)];
+
+// 2: &quot;Filter&quot;
+array.filter((item, index) =&gt; array.indexOf(item) === index);
+
+// 3: &quot;Reduce&quot;
+array.reduce((unique, item) =&gt; 
+  unique.includes(item) ? unique : [...unique, item], []);
+
+
+// RESULT:
+// [&#39;🐑&#39;, 1, 2, 3];
+</code></pre>
         </div>
         
         
@@ -246,7 +261,16 @@
         
         <div class="content">
             <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><code>reduce()</code>方法对数组中的每个元素执行一个由您提供的<code>reducer</code>函数(升序执行)，将其结果汇总为单个返回值。语法为：</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">array.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">accumulator, currentValue, currentIndex, arr</span>), <span class="hljs-title">initialValue</span>);</span></span><br><span class="line"><span class="hljs-function">/*</span></span><br><span class="line"><span class="hljs-function">  <span class="hljs-title">accumulator</span>:  必需。累计器</span></span><br><span class="line"><span class="hljs-function">  <span class="hljs-title">currentValue</span>: 必需。当前元素</span></span><br><span class="line"><span class="hljs-function">  </span></span><br><span class="line"><span class="hljs-function">  <span class="hljs-title">currentIndex</span>: 可选。当前元素的索引；                    </span></span><br><span class="line"><span class="hljs-function">  <span class="hljs-title">arr</span>:          可选。要处理的数组</span></span><br><span class="line"><span class="hljs-function">  <span class="hljs-title">initialValue</span>: 可选。传递给函数的初始值，相当于<span class="hljs-title">accumulator</span>的初始值</span></span><br><span class="line"><span class="hljs-function">*/</span></span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);
+/*
+  accumulator:  必需。累计器
+  currentValue: 必需。当前元素
+
+  currentIndex: 可选。当前元素的索引；                    
+  arr:          可选。要处理的数组
+  initialValue: 可选。传递给函数的初始值，相当于accumulator的初始值
+*/
+</code></pre>
         </div>
         
         
@@ -315,17 +339,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/archives/">
                     <p class="heading">
-                        Entradas
+                        Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        15
                     </p>
                 </a>
             </div>
             <div class="level-item has-text-centered is-marginless">
                 <a href="/categories/">
                     <p class="heading">
-                        Categorias
+                        Categories
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -335,17 +359,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/tags/">
                     <p class="heading">
-                        Etiquetas
+                        Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        16
                     </p>
                 </a>
             </div>
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
-                <i class="fab fa-github"></i>&nbsp;&nbsp;SEGUIR</a>
+                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
         </div>
         
         
@@ -376,9 +400,9 @@
 <div class="card widget is-hidden-mobile">
     <div class="card-content">
         <h3 class="menu-label">
-            Nube de etiquetas
+            Tag Cloud
         </h3>
-        <a href="/tags/AntD/" style="font-size: 10px;">AntD</a> <a href="/tags/Demo/" style="font-size: 10px;">Demo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/复习/" style="font-size: 10px;">复习</a> <a href="/tags/文档/" style="font-size: 10px;">文档</a> <a href="/tags/方法论/" style="font-size: 15px;">方法论</a> <a href="/tags/时间管理/" style="font-size: 10px;">时间管理</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/进阶/" style="font-size: 10px;">进阶</a> <a href="/tags/配置/" style="font-size: 15px;">配置</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+        <a href="/tags/AntD/" style="font-size: 10px;">AntD</a> <a href="/tags/Demo/" style="font-size: 10px;">Demo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/复习/" style="font-size: 10px;">复习</a> <a href="/tags/掘金翻译计划/" style="font-size: 10px;">掘金翻译计划</a> <a href="/tags/文档/" style="font-size: 10px;">文档</a> <a href="/tags/方法论/" style="font-size: 15px;">方法论</a> <a href="/tags/时间管理/" style="font-size: 10px;">时间管理</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/翻译/" style="font-size: 15px;">翻译</a> <a href="/tags/设计/" style="font-size: 10px;">设计</a> <a href="/tags/进阶/" style="font-size: 10px;">进阶</a> <a href="/tags/配置/" style="font-size: 15px;">配置</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     </div>
 </div>
 
@@ -388,9 +412,20 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            Archivos
+            Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2019/08/">
@@ -468,7 +503,7 @@
                 
                 <br>
                 <span id="busuanzi_container_site_uv">
-                Thăm bởi <span id="busuanzi_value_site_uv">0</span> bạn đọc
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
                 </span>
                 
                 </p>
@@ -569,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
 
-<a id="back-to-top" title="Kembali ke atas" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
@@ -617,10 +652,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Entradas',
+                POSTS: 'Posts',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',

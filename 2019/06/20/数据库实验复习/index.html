@@ -131,7 +131,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -175,7 +175,7 @@
                 
                 <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
                     <i class="far fa-eye"></i>
-                    <span id="busuanzi_value_page_pv">0</span> Bạn đọc
+                    <span id="busuanzi_value_page_pv">0</span> visits
                 </span>
                 
             </div>
@@ -183,10 +183,169 @@
         
         <div class="content">
             <h1 id="数据库原理实验"><a href="#数据库原理实验" class="headerlink" title="数据库原理实验"></a>数据库原理实验</h1><a id="more"></a>
-<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">创建数据库</span><br><span class="line">create database DBLab;</span><br><span class="line"></span><br><span class="line">使用数据库</span><br><span class="line">use DBLab;</span><br><span class="line"></span><br><span class="line">创建表</span><br><span class="line">DROP TABLE IF EXISTS `student`;</span><br><span class="line">CREATE TABLE `student` (</span><br><span class="line">  `ID` varchar(5) NOT NULL,</span><br><span class="line">  `name` varchar(20) NOT NULL,</span><br><span class="line">  `dept_name` varchar(20) DEFAULT NULL,</span><br><span class="line">  `tot_cred` decimal(3,0) DEFAULT NULL,</span><br><span class="line">  `birthday` date DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`ID`),</span><br><span class="line">  KEY `dept_name` (`dept_name`),</span><br><span class="line">  CONSTRAINT `student_ibfk_1` FOREIGN KEY (`dept_name`) REFERENCES `department` (`dept_name`) ON DELETE SET NULL</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line">删除数据表</span><br><span class="line">drop table student;</span><br><span class="line"></span><br><span class="line">删除数据库</span><br><span class="line">drop database DBLab;</span><br><span class="line"></span><br><span class="line">导入SQL(必须先use DBLab)</span><br><span class="line">source /Users/husiyuan/dev/dblab/SqlFIle/DDL.sql;</span><br></pre></td></tr></table></figure>
-<h3 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h3><h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">1.查询所有计算机系课程</span><br><span class="line">select * </span><br><span class="line">from course </span><br><span class="line">where dept_name=&apos;Comp. Sci&apos;;</span><br><span class="line"></span><br><span class="line">2.列出所有计算机系绩点在50以上的学生姓名和绩点</span><br><span class="line">select name, tot_cred </span><br><span class="line">from student </span><br><span class="line">where dept_name=&apos;Comp. Sci&apos; and tot_cred &gt;= 50;</span><br><span class="line"></span><br><span class="line">3.列出所有介绍性课程(以Intro开头,结尾,包含)</span><br><span class="line">select * from course where title like &apos;Intro%&apos;;</span><br><span class="line">select * from course where title like &apos;%Intro&apos;;</span><br><span class="line">select * from course where title like &apos;%Intro%&apos;;</span><br><span class="line"></span><br><span class="line">4.包含正好6个字符的学生名字</span><br><span class="line">select ID, name, dept_name </span><br><span class="line">from student </span><br><span class="line">where name like &apos;______&apos;;</span><br><span class="line"></span><br><span class="line">	以r为第2个字符的6个字符的学生名字</span><br><span class="line">select ID, name, dept_name </span><br><span class="line">from student </span><br><span class="line">where name like &apos;_r____&apos;;</span><br><span class="line"></span><br><span class="line">5.选了CS-101没选CS-190的学生学号</span><br><span class="line">select distinct ID </span><br><span class="line">from takes </span><br><span class="line">where course_id=&apos;CS-101&apos; and ID not in </span><br><span class="line">	(select ID from takes where course_id=&apos;CS-190&apos;);</span><br><span class="line"></span><br><span class="line">6.查询所有学生每一门课的成绩并且按照学号排序</span><br><span class="line">select ID, course_id, grade from takes order by ID;</span><br><span class="line"></span><br><span class="line">7.查询所有学生每一门课成绩,打印学号,学生姓名,课程号和成绩,按照课程名/学号(逆序)排序</span><br><span class="line">select takes.ID, student.name, takes.course_id, takes.grade </span><br><span class="line">from takes, student </span><br><span class="line">where takes.ID = student.ID;</span><br><span class="line"></span><br><span class="line">8.查询所有学生每一门课成绩,打印学号,学生姓名,课程号和成绩,按照课程名/学号(逆序)排序</span><br><span class="line">select takes.ID, student.name, course.title, takes.grade </span><br><span class="line">from takes, student, course </span><br><span class="line">where takes.ID = student.ID and takes.course_id = course.course_id </span><br><span class="line">order by course.title, takes.ID desc;</span><br></pre></td></tr></table></figure>
-<h3 id="考试题"><a href="#考试题" class="headerlink" title="考试题"></a>考试题</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">3.查询不及格人次数最多的系</span><br><span class="line">select dept_name</span><br><span class="line">from ( takes as T</span><br><span class="line">	left join student as S</span><br><span class="line">	on T.ID = S.ID)</span><br><span class="line">where (grade = &apos;A&apos;or grade = &apos;A-&apos;)</span><br><span class="line">group by dept_name</span><br><span class="line">order by count(*) desc</span><br><span class="line">limit 1;</span><br><span class="line"></span><br><span class="line">4.查询所有介绍性课程（课程名以Intro开头）</span><br><span class="line">select title from course where title like &apos;Intro%&apos;;</span><br><span class="line"></span><br><span class="line">5.查询所有学生每一门课程的成绩，打印出学号、学生姓名、课程名称和成绩，并首先按课程名排序，再按学号排序</span><br><span class="line">select S.ID, S.name, C.title, T.grade</span><br><span class="line">from student as S, course as C, takes as T</span><br><span class="line">where S.ID = T.ID and C.course_id = T.course_id</span><br><span class="line">order by C.title, S.ID;</span><br><span class="line"></span><br><span class="line">6.创建一个视图，内容包含所有课程成绩合格（成绩不为F或空）的学生姓名、课程名称、成绩</span><br><span class="line">create view v as </span><br><span class="line">select S.name, C.title, T.grade</span><br><span class="line">from student as S, takes as T, course as C</span><br><span class="line">where S.ID = T.ID</span><br><span class="line">    and (T.grade &gt; &apos;F&apos; or T.grade &lt; &apos;F&apos;)</span><br><span class="line">    and (T.course_id = C.course_id);</span><br><span class="line">    </span><br><span class="line">8.按以下规则修改学生tot_cred:如果学生tot_cred&lt;100,则加5分，但是增加后的分数不能超过100分</span><br><span class="line">update student set tot_cred=</span><br><span class="line">case</span><br><span class="line">when tot_cred+5&lt;100 then tot_cred+5</span><br><span class="line">when tot_cred&lt;100 and tot_cred+5&gt;=100 then 100</span><br><span class="line">when tot_cred&gt;=100 then tot_cred</span><br><span class="line">end;</span><br><span class="line"></span><br><span class="line">9.查询所有上了“计算机科学导论”（Intro. to Comp. Sci.）课程的学生的平均绩点(tot_cred)</span><br><span class="line">select avg(S.tot_cred)</span><br><span class="line">from student as S, course as C, takes as T</span><br><span class="line">where S.ID = T.ID</span><br><span class="line">      and T.course_id = C.course_id</span><br><span class="line">      and C.title = &apos;Intro. to Computer Science&apos;;</span><br><span class="line">      </span><br><span class="line">10.查询每个系的平均成绩，只打印出平均成绩大于80的系的名称和平均成绩，并按平均成绩从大到小排序</span><br><span class="line">select dept_name,avg(tot_cred)</span><br><span class="line">from student</span><br><span class="line">group by dept_name</span><br><span class="line">having avg(tot_cred)&gt;80</span><br><span class="line">order by avg(tot_cred) desc;</span><br></pre></td></tr></table></figure>
-<h3 id="考前搏一搏-单车变摩托"><a href="#考前搏一搏-单车变摩托" class="headerlink" title="考前搏一搏,单车变摩托"></a>考前搏一搏,单车变摩托</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">分别用IN和EXISTS查询上了CS-101和CS-190两门课的所有学生学号和姓名</span><br><span class="line">简单....</span><br><span class="line"></span><br><span class="line">权限管理</span><br><span class="line">create user &apos;abc&apos;@&apos;localhost&apos;;</span><br><span class="line">grant create on DBExam.student to &apos;abc&apos;@&apos;localhost&apos;;</span><br><span class="line"></span><br><span class="line">8.使用root登录mysql并取消abc查询student表的权限</span><br><span class="line">revoke all on dblab.student from &apos;cba&apos;@&apos;localhost&apos;;</span><br><span class="line"></span><br><span class="line">查找生日相同的老师和学生,打印老师和学生的姓名以及他们的出生年月</span><br><span class="line">****</span><br><span class="line">where Month(S.birthday) = Month(I.birthday)</span><br><span class="line"></span><br><span class="line">2.在上面的视图中查找所有至少有一门课程成绩为A或A-的学生姓名</span><br><span class="line">select distinct name</span><br><span class="line">from v</span><br><span class="line">where grade = &apos;A&apos; or grade = &apos;A-&apos;;</span><br><span class="line"></span><br><span class="line">有些课程会被不同系的学生学习，查询上课学生所属的系个数最多的课程。</span><br><span class="line">select title</span><br><span class="line">from course</span><br><span class="line">where course_id = (</span><br><span class="line">  select course_id</span><br><span class="line">  from takes as T, student as S</span><br><span class="line">  where T.ID = S.ID </span><br><span class="line">  group by course_id</span><br><span class="line">  order by count(distinct dept_name) desc</span><br><span class="line">  limit 1</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">查询“Introduction to Comp. Sci.”课程每个成绩的学生数</span><br><span class="line">select grade as &apos;成绩&apos;, count(*) as &apos;人数&apos;</span><br><span class="line">from takes as T, course as C</span><br><span class="line">where T.course_id = C.course_id</span><br><span class="line">  and C.title = &apos;Intro. to Computer Science&apos;</span><br><span class="line">group by grade;</span><br></pre></td></tr></table></figure>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><pre><code class="mysql">创建数据库
+create database DBLab;
+
+使用数据库
+use DBLab;
+
+创建表
+DROP TABLE IF EXISTS `student`;
+CREATE TABLE `student` (
+  `ID` varchar(5) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `dept_name` varchar(20) DEFAULT NULL,
+  `tot_cred` decimal(3,0) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `dept_name` (`dept_name`),
+  CONSTRAINT `student_ibfk_1` FOREIGN KEY (`dept_name`) REFERENCES `department` (`dept_name`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+删除数据表
+drop table student;
+
+删除数据库
+drop database DBLab;
+
+导入SQL(必须先use DBLab)
+source /Users/husiyuan/dev/dblab/SqlFIle/DDL.sql;
+</code></pre>
+<h3 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h3><h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><pre><code class="mysql">1.查询所有计算机系课程
+select * 
+from course 
+where dept_name=&#39;Comp. Sci&#39;;
+
+2.列出所有计算机系绩点在50以上的学生姓名和绩点
+select name, tot_cred 
+from student 
+where dept_name=&#39;Comp. Sci&#39; and tot_cred &gt;= 50;
+
+3.列出所有介绍性课程(以Intro开头,结尾,包含)
+select * from course where title like &#39;Intro%&#39;;
+select * from course where title like &#39;%Intro&#39;;
+select * from course where title like &#39;%Intro%&#39;;
+
+4.包含正好6个字符的学生名字
+select ID, name, dept_name 
+from student 
+where name like &#39;______&#39;;
+
+    以r为第2个字符的6个字符的学生名字
+select ID, name, dept_name 
+from student 
+where name like &#39;_r____&#39;;
+
+5.选了CS-101没选CS-190的学生学号
+select distinct ID 
+from takes 
+where course_id=&#39;CS-101&#39; and ID not in 
+    (select ID from takes where course_id=&#39;CS-190&#39;);
+
+6.查询所有学生每一门课的成绩并且按照学号排序
+select ID, course_id, grade from takes order by ID;
+
+7.查询所有学生每一门课成绩,打印学号,学生姓名,课程号和成绩,按照课程名/学号(逆序)排序
+select takes.ID, student.name, takes.course_id, takes.grade 
+from takes, student 
+where takes.ID = student.ID;
+
+8.查询所有学生每一门课成绩,打印学号,学生姓名,课程号和成绩,按照课程名/学号(逆序)排序
+select takes.ID, student.name, course.title, takes.grade 
+from takes, student, course 
+where takes.ID = student.ID and takes.course_id = course.course_id 
+order by course.title, takes.ID desc;
+
+
+
+</code></pre>
+<h3 id="考试题"><a href="#考试题" class="headerlink" title="考试题"></a>考试题</h3><pre><code class="mysql">3.查询不及格人次数最多的系
+select dept_name
+from ( takes as T
+    left join student as S
+    on T.ID = S.ID)
+where (grade = &#39;A&#39;or grade = &#39;A-&#39;)
+group by dept_name
+order by count(*) desc
+limit 1;
+
+4.查询所有介绍性课程（课程名以Intro开头）
+select title from course where title like &#39;Intro%&#39;;
+
+5.查询所有学生每一门课程的成绩，打印出学号、学生姓名、课程名称和成绩，并首先按课程名排序，再按学号排序
+select S.ID, S.name, C.title, T.grade
+from student as S, course as C, takes as T
+where S.ID = T.ID and C.course_id = T.course_id
+order by C.title, S.ID;
+
+6.创建一个视图，内容包含所有课程成绩合格（成绩不为F或空）的学生姓名、课程名称、成绩
+create view v as 
+select S.name, C.title, T.grade
+from student as S, takes as T, course as C
+where S.ID = T.ID
+    and (T.grade &gt; &#39;F&#39; or T.grade &lt; &#39;F&#39;)
+    and (T.course_id = C.course_id);
+
+8.按以下规则修改学生tot_cred:如果学生tot_cred&lt;100,则加5分，但是增加后的分数不能超过100分
+update student set tot_cred=
+case
+when tot_cred+5&lt;100 then tot_cred+5
+when tot_cred&lt;100 and tot_cred+5&gt;=100 then 100
+when tot_cred&gt;=100 then tot_cred
+end;
+
+9.查询所有上了“计算机科学导论”（Intro. to Comp. Sci.）课程的学生的平均绩点(tot_cred)
+select avg(S.tot_cred)
+from student as S, course as C, takes as T
+where S.ID = T.ID
+      and T.course_id = C.course_id
+      and C.title = &#39;Intro. to Computer Science&#39;;
+
+10.查询每个系的平均成绩，只打印出平均成绩大于80的系的名称和平均成绩，并按平均成绩从大到小排序
+select dept_name,avg(tot_cred)
+from student
+group by dept_name
+having avg(tot_cred)&gt;80
+order by avg(tot_cred) desc;
+</code></pre>
+<h3 id="考前搏一搏-单车变摩托"><a href="#考前搏一搏-单车变摩托" class="headerlink" title="考前搏一搏,单车变摩托"></a>考前搏一搏,单车变摩托</h3><pre><code class="mysql">分别用IN和EXISTS查询上了CS-101和CS-190两门课的所有学生学号和姓名
+简单....
+
+权限管理
+create user &#39;abc&#39;@&#39;localhost&#39;;
+grant create on DBExam.student to &#39;abc&#39;@&#39;localhost&#39;;
+
+8.使用root登录mysql并取消abc查询student表的权限
+revoke all on dblab.student from &#39;cba&#39;@&#39;localhost&#39;;
+
+查找生日相同的老师和学生,打印老师和学生的姓名以及他们的出生年月
+****
+where Month(S.birthday) = Month(I.birthday)
+
+2.在上面的视图中查找所有至少有一门课程成绩为A或A-的学生姓名
+select distinct name
+from v
+where grade = &#39;A&#39; or grade = &#39;A-&#39;;
+
+有些课程会被不同系的学生学习，查询上课学生所属的系个数最多的课程。
+select title
+from course
+where course_id = (
+  select course_id
+  from takes as T, student as S
+  where T.ID = S.ID 
+  group by course_id
+  order by count(distinct dept_name) desc
+  limit 1
+);
+
+查询“Introduction to Comp. Sci.”课程每个成绩的学生数
+select grade as &#39;成绩&#39;, count(*) as &#39;人数&#39;
+from takes as T, course as C
+where T.course_id = C.course_id
+  and C.title = &#39;Intro. to Computer Science&#39;
+group by grade;  
+</code></pre>
 
         </div>
         
@@ -244,7 +403,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
 <script>
     var disqus_config = function () {
@@ -301,17 +460,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/archives/">
                     <p class="heading">
-                        Entradas
+                        Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        15
                     </p>
                 </a>
             </div>
             <div class="level-item has-text-centered is-marginless">
                 <a href="/categories/">
                     <p class="heading">
-                        Categorias
+                        Categories
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -321,17 +480,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/tags/">
                     <p class="heading">
-                        Etiquetas
+                        Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        16
                     </p>
                 </a>
             </div>
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
-                <i class="fab fa-github"></i>&nbsp;&nbsp;SEGUIR</a>
+                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
         </div>
         
         
@@ -360,7 +519,7 @@
     <div class="card-content">
         <div class="menu" style="max-height: 800px; overflow: auto;">
             <h3 class="menu-label">
-                Catálogo
+                Catalogue
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#数据库原理实验">
@@ -419,7 +578,7 @@
                 
                 <br>
                 <span id="busuanzi_container_site_uv">
-                Thăm bởi <span id="busuanzi_value_site_uv">0</span> bạn đọc
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
                 </span>
                 
                 </p>
@@ -520,7 +679,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
 
-<a id="back-to-top" title="Kembali ke atas" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
@@ -568,10 +727,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Entradas',
+                POSTS: 'Posts',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',

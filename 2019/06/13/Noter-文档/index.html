@@ -131,7 +131,7 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
@@ -175,7 +175,7 @@
                 
                 <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
                     <i class="far fa-eye"></i>
-                    <span id="busuanzi_value_page_pv">0</span> Bạn đọc
+                    <span id="busuanzi_value_page_pv">0</span> visits
                 </span>
                 
             </div>
@@ -277,7 +277,29 @@
 </table>
 <h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>数据库: <code>MongoDB</code></p>
 <p>登录: <code>OAuth 2</code></p>
-<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><h3 id="前端-1"><a href="#前端-1" class="headerlink" title="前端"></a>前端</h3><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── README.md</span><br><span class="line">├── config-overrides.js		<span class="hljs-comment">// webpack覆写文件</span></span><br><span class="line">├── package.json</span><br><span class="line">├── public</span><br><span class="line">│   ├── favicon.ico</span><br><span class="line">│   ├── index.html</span><br><span class="line">│   └── manifest.json</span><br><span class="line">├── src</span><br><span class="line">│   ├── App.css</span><br><span class="line">│   ├── App.js						<span class="hljs-comment">// 主页</span></span><br><span class="line">│   ├── actions						<span class="hljs-comment">// 定义Redux的各种action</span></span><br><span class="line">│   ├── api								<span class="hljs-comment">// 公用API(CRUD)</span></span><br><span class="line">│   ├── assets						<span class="hljs-comment">// 公用静态资源</span></span><br><span class="line">│   ├── components				<span class="hljs-comment">// 组件</span></span><br><span class="line">│   ├── pages							<span class="hljs-comment">// 完整页面</span></span><br><span class="line">│   ├── configureStore.js <span class="hljs-comment">// Redux的Store配置文件</span></span><br><span class="line">│   ├── constants.js			<span class="hljs-comment">// 存放常量</span></span><br><span class="line">│   ├── history.js				<span class="hljs-comment">// 创建游览器history</span></span><br><span class="line">│   ├── index.js					<span class="hljs-comment">// 入口</span></span><br><span class="line">│   └── reducer						<span class="hljs-comment">// Redux的reducer</span></span><br><span class="line">└── yarn.lock</span><br></pre></td></tr></table></figure>
+<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><h3 id="前端-1"><a href="#前端-1" class="headerlink" title="前端"></a>前端</h3><pre><code class="javascript">.
+├── README.md
+├── config-overrides.js        // webpack覆写文件
+├── package.json
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+├── src
+│   ├── App.css
+│   ├── App.js                        // 主页
+│   ├── actions                        // 定义Redux的各种action
+│   ├── api                                // 公用API(CRUD)
+│   ├── assets                        // 公用静态资源
+│   ├── components                // 组件
+│   ├── pages                            // 完整页面
+│   ├── configureStore.js // Redux的Store配置文件
+│   ├── constants.js            // 存放常量
+│   ├── history.js                // 创建游览器history
+│   ├── index.js                    // 入口
+│   └── reducer                        // Redux的reducer
+└── yarn.lock
+</code></pre>
 <p>ME.md<br>├── app.js                    // 入口<br>├── config                    // 公共配置文件<br>│   └── keys.js<br>├── middleware            // 自定义的中间件<br>│   └── OAuth.js<br>├── models                    // 数据库中的对应实体<br>│   ├── Auth.js<br>│   ├── Note.js<br>│   └── User.js<br>├── package.json<br>├── routes                    // 定义路由(Restful)<br>│   └── api<br>└── yarn.lock<br><code>`</code></p>
 <h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><p>全部采用<code>Restful</code>风格,数据传输采用<code>JSON</code>格式</p>
 <h3 id="笔记模块"><a href="#笔记模块" class="headerlink" title="笔记模块"></a>笔记模块</h3><table>
@@ -447,7 +469,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
 <script>
     var disqus_config = function () {
@@ -504,17 +526,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/archives/">
                     <p class="heading">
-                        Entradas
+                        Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        15
                     </p>
                 </a>
             </div>
             <div class="level-item has-text-centered is-marginless">
                 <a href="/categories/">
                     <p class="heading">
-                        Categorias
+                        Categories
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -524,17 +546,17 @@
             <div class="level-item has-text-centered is-marginless">
                 <a href="/tags/">
                     <p class="heading">
-                        Etiquetas
+                        Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        14
+                        16
                     </p>
                 </a>
             </div>
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
-                <i class="fab fa-github"></i>&nbsp;&nbsp;SEGUIR</a>
+                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
         </div>
         
         
@@ -563,7 +585,7 @@
     <div class="card-content">
         <div class="menu" style="max-height: 800px; overflow: auto;">
             <h3 class="menu-label">
-                Catálogo
+                Catalogue
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#想法-amp-相关介绍">
@@ -666,7 +688,7 @@
                 
                 <br>
                 <span id="busuanzi_container_site_uv">
-                Thăm bởi <span id="busuanzi_value_site_uv">0</span> bạn đọc
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
                 </span>
                 
                 </p>
@@ -767,7 +789,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
 
-<a id="back-to-top" title="Kembali ke atas" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
@@ -815,10 +837,10 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Entradas',
+                POSTS: 'Posts',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',

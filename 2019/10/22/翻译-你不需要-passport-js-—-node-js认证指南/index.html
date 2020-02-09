@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>[翻译]你不需要 passport.js — node.js认证指南 - Hytonight云息</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:600&display=swap&subset=chinese-simplified" rel="stylesheet">
+
+
+    <meta name="description" content="原文地址：You don’t need passport.js - Guide to node.js authentication 原文作者：Sam Quinn 译文出自：掘金翻译计划 本文永久链接：https://github.com/xitu/gold-miner/blob/master/TODO1/nodejs-jwt-authentication-oauth.md 译者：Hytonig">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[翻译]你不需要 passport.js — node.js认证指南">
+<meta property="og:url" content="http://yunxi.site/blog/2019/10/22/翻译-你不需要-passport-js-—-node-js认证指南/index.html">
+<meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="原文地址：You don’t need passport.js - Guide to node.js authentication 原文作者：Sam Quinn 译文出自：掘金翻译计划 本文永久链接：https://github.com/xitu/gold-miner/blob/master/TODO1/nodejs-jwt-authentication-oauth.md 译者：Hytonig">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yunxi.site/blog/images/og_image.png">
+<meta property="og:updated_time" content="2020-02-09T07:24:19.996Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[翻译]你不需要 passport.js — node.js认证指南">
+<meta name="twitter:description" content="原文地址：You don’t need passport.js - Guide to node.js authentication 原文作者：Sam Quinn 译文出自：掘金翻译计划 本文永久链接：https://github.com/xitu/gold-miner/blob/master/TODO1/nodejs-jwt-authentication-oauth.md 译者：Hytonig">
+<meta name="twitter:image" content="http://yunxi.site/blog/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/blog/assets/img/logo.png">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/tomorrow.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/blog/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/blog/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/blog/css/style.css">
+
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/blog/">
+            
+                <img src="/blog/assets/img/logo.png" alt="[翻译]你不需要 passport.js — node.js认证指南" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/blog/">Home</a>
+                
+                <a class="navbar-item" href="/blog/archives/">Archives</a>
+                
+                <a class="navbar-item" href="/blog/tags/">Tags</a>
+                
+                <a class="navbar-item" href="/blog/about/">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="HytonightYX GitHub" href="https://github.com/HytonightYX">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                [翻译]你不需要 passport.js — node.js认证指南
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-22T07:23:01.000Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-10-22</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-02-09T07:24:19.996Z"><i class="far fa-calendar-check">&nbsp;</i>2020-02-09</time>
+                
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    21 minutes read (About 3086 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <blockquote>
+<ul>
+<li>原文地址：<a href="https://softwareontheroad.com/nodejs-jwt-authentication-oauth/" target="_blank" rel="noopener">You don’t need passport.js - Guide to node.js authentication</a></li>
+<li>原文作者：<a href="https://softwareontheroad.com/author/santypk-4/" target="_blank" rel="noopener">Sam Quinn</a></li>
+<li>译文出自：<a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a></li>
+<li>本文永久链接：<a href="https://github.com/xitu/gold-miner/blob/master/TODO1/nodejs-jwt-authentication-oauth.md" target="_blank" rel="noopener">https://github.com/xitu/gold-miner/blob/master/TODO1/nodejs-jwt-authentication-oauth.md</a></li>
+<li>译者：<a href="https://github.com/HytonightYX" target="_blank" rel="noopener">HytonightYX</a></li>
+<li>校对者：<a href="https://github.com/HZNU-Qiu" target="_blank" rel="noopener">HZNU-Qiu</a>,<a href="https://github.com/xionglong58" target="_blank" rel="noopener">xionglong58</a></li>
+</ul>
+</blockquote>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>诸如 Google Firebase，AWS Cognito 以及 Auth0 这样的第三方认证服务越来越流行，类似于 passport.js 这样的一站式解决方案也成为了业界标准，但是一个普遍情况是，开发者们其实并不清楚完整的认证流程到底涉及那些部分。</p>
+<p>这一系列关于 node.js 认证的文章，旨在让你搞清楚一些概念，比如 JSON Web Token (JWT)、社交账号登录 (OAuth2)、用户模仿（一个管理员无需密码便能作为特定用户登录）。</p>
+<p>当然，文末也给你准备好了一个完整的 node.js 认证流程的代码库，放在GitHub上了，你可以作为你自己项目的基础来使用。</p>
+<a id="more"></a>
+<h1 id="前置知识-✍️"><a href="#前置知识-✍️" class="headerlink" title="前置知识 ✍️"></a>前置知识 ✍️</h1><p>在阅读之前，你需要先了解：</p>
+<ul>
+<li>数据库中如何存储用户的 email 和密码，或者客户端ID和客户端密钥，或者其他的密钥对。</li>
+<li>至少一种健壮且高效的加密算法。</li>
+</ul>
+<p>在我写下这篇文章之时，我认为 Argon2 是目前最好的加密算法，请不要用 SHA256，SHA512 或者 MD5 这类简单的加密算法了。</p>
+<p>有关这点，有兴趣的话可以去看看这篇非常棒的文章 <a href="https://medium.com/@mpreziuso/password-hashing-pbkdf2-scrypt-bcrypt-and-argon2-e25aaf41598e" target="_blank" rel="noopener">choosing a password hashing algorithm（如何选择密码哈希算法）</a>。</p>
+<h2 id="写一个注册程序-🥇"><a href="#写一个注册程序-🥇" class="headerlink" title="写一个注册程序 🥇"></a>写一个注册程序 🥇</h2><p>新用户创建账户时，必须对密码进行哈希处理并将其与电子邮件和其他详细信息（比如用户配置文件、时间戳等等）一起存储在数据库中。 </p>
+<p><strong>提示:你可以去之前的文章了解 node.js 的项目结构 <a href="https://softwareontheroad.com/ideal-nodejs-project-structure" target="_blank" rel="noopener">Bulletproof node.js project architecture 🛡️</a></strong></p>
+<pre><code class="javascript">import * as argon2 from &#39;argon2&#39;;
+
+class AuthService {
+  public async SignUp(email, password, name): Promise&lt;any&gt; {
+    const passwordHashed = await argon2.hash(password);
+
+    const userRecord = await UserModel.create({
+      password: passwordHashed,
+      email,
+      name,
+    });
+    return {
+      // 绝对不要返回用户的密码!!!!
+      user: {
+        email: userRecord.email,
+        name: userRecord.name,
+      },
+    }
+  }
+}
+</code></pre>
+<p>数据库中，这名用户的记录看起来就是这样：</p>
+<p> <img src="https://user-gold-cdn.xitu.io/2019/12/27/16f4786e85559909?w=876&amp;h=237&amp;f=jpeg&amp;s=35571" alt="User record - Database MongoDB"> <strong>Robo3T for MongoDB</strong></p>
+<h2 id="再来写一个登录程序-🥈"><a href="#再来写一个登录程序-🥈" class="headerlink" title="再来写一个登录程序 🥈"></a>再来写一个登录程序 🥈</h2><p> <img src="https://user-gold-cdn.xitu.io/2019/12/27/16f47875bce9c545?w=1680&amp;h=800&amp;f=jpeg&amp;s=52198" alt="Sign-In Diagram"> </p>
+<p>当一名用户想要登录时，会发生下面的事情：</p>
+<p>客户端发送成对的<strong>公共标识（Public Identification）</strong>和<strong>私钥（Private key）</strong></p>
+<ul>
+<li><p>服务端根据发来的 email 去数据库查找用户记录。</p>
+</li>
+<li><p>如果找到了，服务端会将收到的密码进行哈希，然后和数据库中已经哈希过的密码进行比对。</p>
+</li>
+<li><p>如果这两个哈希值对上了，那么服务端就发一个 JSON Web Token (JWT)。</p>
+</li>
+</ul>
+<p>这个 JWT 就是一个临时 key，客户端每次发器请求都需要带上这个 Token</p>
+<pre><code class="javascript">import * as argon2 from &#39;argon2&#39;;
+
+class AuthService {
+  public async Login(email, password): Promise&lt;any&gt; {
+    const userRecord = await UserModel.findOne({ email });
+    if (!userRecord) {
+      throw new Error(&#39;User not found&#39;)
+    } else {
+      const correctPassword = await argon2.verify(userRecord.password, password);
+      if (!correctPassword) {
+        throw new Error(&#39;Incorrect password&#39;)
+      }
+    }
+
+    return {
+      user: {
+        email: userRecord.email,
+        name: userRecord.name,
+      },
+      token: this.generateJWT(userRecord),
+    }
+  }
+}
+</code></pre>
+<p>这里密码认证使用了 argon2 库来防止时序攻击（timing-based attacks），也就是说，当攻击者试图靠蛮力破解口令时需要严格遵循<a href="https://en.wikipedia.org/wiki/Timing_attack" target="_blank" rel="noopener">服务器响应时间</a>的相关准则。</p>
+<p>接下来我们将讨论一下如何生成 JWT。</p>
+<h1 id="但是，JWT到底是啥？-👩‍🏫"><a href="#但是，JWT到底是啥？-👩‍🏫" class="headerlink" title="但是，JWT到底是啥？ 👩‍🏫"></a>但是，JWT到底是啥？ 👩‍🏫</h1><p>一个 JSON Web Token or JWT 是一个以字符串或者 Token 形式存储的、经过编码的 JSON 对象。</p>
+<p>你可以认为它是 cookie 的替代者。</p>
+<p>Token 有下面三个部分（不同颜色标注）</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/12/27/16f4788494504f1c?w=572&amp;h=160&amp;f=jpeg&amp;s=19098" alt="JSON Web Token example"> </p>
+<p>JWT 中的数据可以无需<strong>密钥（Secret）</strong>或<strong>签名（Signature)</strong>在客户端解码。</p>
+<p>因此对于用户角色信息、配置文件、令牌过期时间等这些前端领域常见的信息或元数据（metadata）来说，编码在 JWT 中一起传输就变得很方便。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/12/27/16f4788fce870bbf?w=584&amp;h=616&amp;f=jpeg&amp;s=25245" alt></p>
+<h1 id="node-js-中如何创建-JWT？-🏭"><a href="#node-js-中如何创建-JWT？-🏭" class="headerlink" title="node.js 中如何创建 JWT？ 🏭"></a>node.js 中如何创建 JWT？ 🏭</h1><p>我们实现一个 generateToken 方法来完善我们的认证服务程序吧。</p>
+<p>通过使用 <code>jsonwebtoken</code> 这个库（你可以在 npmjs.com 找到它），我们就能创建一个 JWT 了。</p>
+<pre><code class="javascript">import * as jwt from &#39;jsonwebtoken&#39;
+class AuthService {
+  private generateToken(user) {
+
+    const data =  {
+      _id: user._id,
+      name: user.name,
+      email: user.email
+    };
+    const signature = &#39;MySuP3R_z3kr3t&#39;;
+    const expiration = &#39;6h&#39;;
+
+    return jwt.sign({ data, }, signature, { expiresIn: expiration });
+  }
+}
+</code></pre>
+<p>重要的是，永远不要在编码数据中包含用户的敏感信息。</p>
+<p>上面 signature 变量其实就是用来生成 JWT 的密钥（secret），而且你要确保这个 signature 不会泄漏出去。</p>
+<p>如果攻击者通过某种方法获取了 signature，他就能生成令牌并且伪装成用户从而窃取他们的会话（session）。</p>
+<h2 id="保护端点以及验证-JWT-⚔️"><a href="#保护端点以及验证-JWT-⚔️" class="headerlink" title="保护端点以及验证 JWT ⚔️"></a>保护端点以及验证 JWT ⚔️</h2><p>现在，前端需要在每个请求中带上 JWT 才能访问到安全目标（secure endpoint）了。</p>
+<p>一个比较好的做法是在请求的 header 中附带 JWT，通常是 Authorization 消息头（Authorization header）。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/12/27/16f478a107523508?w=1127&amp;h=191&amp;f=jpeg&amp;s=29633" alt></p>
+<p>现在，我们需要在后端中创建一个 express 的中间件。</p>
+<p><strong>中间件 isAuth</strong></p>
+<pre><code class="javascript">import * as jwt from &#39;express-jwt&#39;;
+
+// 我们假定 JWT 将会在 Authorization 请求头上，但是它也可以放在 req.body 或者 query 参数中，你只要根据业务场景选个合适的就好
+const getTokenFromHeader = (req) =&gt; {
+  if (req.headers.authorization &amp;&amp; req.headers.authorization.split(&#39; &#39;)[0] === &#39;Bearer&#39;) {
+    return req.headers.authorization.split(&#39; &#39;)[1];
+  }
+}
+
+export default jwt({
+  secret: &#39;MySuP3R_z3kr3t&#39;, // 必须和上一节的代码的 signature 一样
+
+  userProperty: &#39;token&#39;, // this is where the next middleware can find the encoded data generated in services/auth:generateToken -&gt; &#39;req.token&#39;
+
+  getToken: getTokenFromHeader, // 从 request 中获取到 auth token 的方法
+})
+</code></pre>
+<p>创建一个能从数据库中获取到完整用户记录的中间件，并且将这些用户信息放进 request 中。</p>
+<pre><code class="javascript">export default (req, res, next) =&gt; {
+ const decodedTokenData = req.tokenData;
+ const userRecord = await UserModel.findOne({ _id: decodedTokenData._id })
+
+ req.currentUser = userRecord;
+
+ if(!userRecord) {
+   return res.status(401).end(&#39;User not found&#39;)
+ } else {
+   return next();
+ }
+}
+</code></pre>
+<p>现在就可以跳转到用户请求的路由了</p>
+<pre><code class="javascript">  import isAuth from &#39;../middlewares/isAuth&#39;;
+  import attachCurrentUser from &#39;../middlewares/attachCurrentUser&#39;;
+  import ItemsModel from &#39;../models/items&#39;;
+
+  export default (app) =&gt; {
+    app.get(&#39;/inventory/personal-items&#39;, isAuth, attachCurrentUser, (req, res) =&gt; {
+      const user = req.currentUser;
+
+      const userItems = await ItemsModel.find({ owner: user._id });
+
+      return res.json(userItems).status(200);
+    })
+  }
+</code></pre>
+<p>经过两个中间件访问到的 inventory/personal-items 路由就是安全的。你需要有效的 JWT 才能访问这个路由，当然喽，路由也需要 JWT 中的用户信息才能去数据库中正确查找相应的信息。</p>
+<h2 id="为什么-JWT-是安全的"><a href="#为什么-JWT-是安全的" class="headerlink" title="为什么 JWT 是安全的 ?"></a>为什么 JWT 是安全的 ?</h2><p>你读到这里，通常会想到这么一个问题：</p>
+<p>Q：如果可以在客户端中解码 JWT 数据的话，别人能否修改其中用户 id 或者其它的数据呢？</p>
+<p>A：虽然你可以轻易地解码 JWT，但是没有 JWT 生成时的密钥（Secret）就无法对修改后的新数据进行编码。</p>
+<p>也是因为这个原因，千万不要泄漏密钥（secret）。</p>
+<p>我们的服务端会在 <code>IsAuth</code> 这个使用了 <code>express-jwt</code> 库的中间件中校验密钥。</p>
+<p>现在我们已经明白了 JWT 是如何工作的，我们接下来去看一个很酷的功能。</p>
+<h2 id="如何模拟一个用户-🕵️"><a href="#如何模拟一个用户-🕵️" class="headerlink" title="如何模拟一个用户 🕵️"></a>如何模拟一个用户 🕵️</h2><p>用户模拟是一种可以在无需用户密码的情况下，以一个特定用户的身份登录的技术。</p>
+<p>对于超级管理员（super admins）来说，这是一个非常有用的功能，能够帮他解决或调试一个仅会话可见的用户的问题。</p>
+<p>没有必要去知道用户的密码，只需要以正确的密钥和必要的用户信息来创建一个 JWT 就可以了。</p>
+<p>我们来创建一个路径，来生成模拟生成特定用户登录的 JWT。这个路径只能被超级管理员账户使用。</p>
+<p>首先，我们需要为超级管理员创建一个更高等级的角色，方法有很多，比较简单的一种就是直接去数据库中给用户记录添加一个“role”字段。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/12/27/16f478aaae779e66?w=977&amp;h=166&amp;f=jpeg&amp;s=28234" alt> </p>
+<p>然后，我们创建一个新的中间件来检查用户角色。</p>
+<pre><code class="js">export default (requiredRole) =&gt; {
+  return (req, res, next) =&gt; {
+    if(req.currentUser.role === requiredRole) {
+      return next();
+    } else {
+      return res.status(401).send(&#39;Action not allowed&#39;);
+    }
+  }
+}
+</code></pre>
+<p>这个中间件需要放在 <code>isAuth</code> 和 <code>attachCurrentUser</code> 之后。</p>
+<p>最后，这个路径将会生成一个能够模拟用户的 JWT 。</p>
+<pre><code class="javascript">  import isAuth from &#39;../middlewares/isAuth&#39;;
+  import attachCurrentUser from &#39;../middlewares/attachCurrentUser&#39;;
+  import roleRequired from &#39;../middlwares/roleRequired&#39;;
+  import UserModel from &#39;../models/user&#39;;
+
+  export default (app) =&gt; {
+    app.post(&#39;/auth/signin-as-user&#39;, isAuth, attachCurrentUser, roleRequired(&#39;super-admin&#39;), (req, res) =&gt; {
+      const userEmail = req.body.email;
+
+      const userRecord = await UserModel.findOne({ email: userEmail });
+
+      if(!userRecord) {
+        return res.status(404).send(&#39;User not found&#39;);
+      }
+
+      return res.json({
+        user: {
+          email: userRecord.email,
+          name: userRecord.name
+        },
+        jwt: this.generateToken(userRecord)
+      })
+      .status(200);
+    })
+  }
+</code></pre>
+<p>所以，这里并没有什么黑魔法，超级管理员只需要知道需要被模拟的用户的Email（并且这里的逻辑与登录十分相似，只是无需检查口令的正确性）就可以模拟这个用户了。</p>
+<p>当然，也正是因为不需要密码，这个路径的安全性就得靠 roleRequired 中间件来保证了。</p>
+<h1 id="结论-🏗️"><a href="#结论-🏗️" class="headerlink" title="结论 🏗️"></a>结论 🏗️</h1><p>虽然依赖第三方认证服务和库很方便，节约了开发时间，但是我们也需要了解认证背后的底层逻辑和原理。</p>
+<p>在这篇文章中我们探讨了 JWT 的功能，为什么选择一个好的加密算法非常重要，以及如何去模拟一个用户，如果你使用的是 passport.js 这样的库，就很难做到这些事。</p>
+<p>在本系列的下一篇文章中，我们将探讨通过使用 OAuth2 协议和更简单的替代方案（如 Firebase 等第三方用于身份验证的库）来为客户提供“社交登录”身份验证的不同方法。</p>
+<h3 id="这里是示例仓库-🔬"><a href="#这里是示例仓库-🔬" class="headerlink" title="这里是示例仓库 🔬"></a><a href="https://github.com/santiq/nodejs-auth" target="_blank" rel="noopener">这里是示例仓库 🔬</a></h3><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://security.stackexchange.com/questions/193351/in-2018-what-is-the-recommended-hash-to-store-passwords-bcrypt-scrypt-argon2" target="_blank" rel="noopener">What is the recommended hash to store passwords: bcrypt, scrypt, Argon2?</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Timing_attack" target="_blank" rel="noopener">Timing attack</a></li>
+</ul>
+<blockquote>
+<p>如果发现译文存在错误或其他需要改进的地方，欢迎到 <a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a> 对译文进行修改并 PR，也可获得相应奖励积分。文章开头的 <strong>本文永久链接</strong> 即为本文在 GitHub 上的 MarkDown 链接。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a> 是一个翻译优质互联网技术文章的社区，文章来源为 <a href="https://juejin.im" target="_blank" rel="noopener">掘金</a> 上的英文分享文章。内容覆盖 <a href="https://github.com/xitu/gold-miner#android" target="_blank" rel="noopener">Android</a>、<a href="https://github.com/xitu/gold-miner#ios" target="_blank" rel="noopener">iOS</a>、<a href="https://github.com/xitu/gold-miner#前端" target="_blank" rel="noopener">前端</a>、<a href="https://github.com/xitu/gold-miner#后端" target="_blank" rel="noopener">后端</a>、<a href="https://github.com/xitu/gold-miner#区块链" target="_blank" rel="noopener">区块链</a>、<a href="https://github.com/xitu/gold-miner#产品" target="_blank" rel="noopener">产品</a>、<a href="https://github.com/xitu/gold-miner#设计" target="_blank" rel="noopener">设计</a>、<a href="https://github.com/xitu/gold-miner#人工智能" target="_blank" rel="noopener">人工智能</a>等领域，想要查看更多优质译文请持续关注 <a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a>、<a href="http://weibo.com/juejinfanyi" target="_blank" rel="noopener">官方微博</a>、<a href="https://zhuanlan.zhihu.com/juejinfanyi" target="_blank" rel="noopener">知乎专栏</a>。</p>
+</blockquote>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://yunxi.site/blog/2019/10/22/翻译-你不需要-passport-js-—-node-js认证指南/">[翻译]你不需要 passport.js — node.js认证指南</a></li>
+            <li><strong>本文作者：</strong><a href="http://yunxi.site/blog">Hytonight云息</a></li>
+            <li><strong>本文链接：</strong><a href="http://yunxi.site/blog/2019/10/22/翻译-你不需要-passport-js-—-node-js认证指南/">http://yunxi.site/blog/2019/10/22/翻译-你不需要-passport-js-—-node-js认证指南/</a></li>
+            <li><strong>发布时间：</strong>2019-10-22</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blog/2019/10/22/【校对】如何设计一款讨人喜欢的暗色主题/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">【校对】如何设计一款讨人喜欢的暗色主题</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog/2019/08/13/React新特性-一-Context-lazy-Suspense和memo/">
+                <span class="level-item">React新特性(一) Context,lazy,Suspense和memo</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yunxi.site/blog/2019/10/22/翻译-你不需要-passport-js-—-node-js认证指南/';
+        this.page.identifier = '2019/10/22/翻译-你不需要-passport-js-—-node-js认证指南/';
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'yunxi-blog' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-96x96 has-mb-6" src="/blog/assets/img/avater.png" alt="Hytonight云息">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        Hytonight云息
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Junior
+                    </p>
+                    
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/blog/archives/">
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        16
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/blog/categories/">
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        0
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/blog/tags/">
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        16
+                    </p>
+                </a>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
+                <i class="fab fa-github"></i>&nbsp;&nbsp;Follow</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="QQ" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1044865610">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="ZhiHu" href="https://www.zhihu.com/people/HytonightYX">
+                
+                <i class="fab fa-zhihu"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu" style="max-height: 800px; overflow: auto;">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#简介">
+        <span class="has-mr-6">1</span>
+        <span>简介</span>
+        </a></li><li>
+        <a class="is-flex" href="#前置知识-✍️">
+        <span class="has-mr-6">2</span>
+        <span>前置知识 ✍️</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#写一个注册程序-🥇">
+        <span class="has-mr-6">2.1</span>
+        <span>写一个注册程序 🥇</span>
+        </a></li><li>
+        <a class="is-flex" href="#再来写一个登录程序-🥈">
+        <span class="has-mr-6">2.2</span>
+        <span>再来写一个登录程序 🥈</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#但是，JWT到底是啥？-👩‍🏫">
+        <span class="has-mr-6">3</span>
+        <span>但是，JWT到底是啥？ 👩‍🏫</span>
+        </a></li><li>
+        <a class="is-flex" href="#node-js-中如何创建-JWT？-🏭">
+        <span class="has-mr-6">4</span>
+        <span>node.js 中如何创建 JWT？ 🏭</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#保护端点以及验证-JWT-⚔️">
+        <span class="has-mr-6">4.1</span>
+        <span>保护端点以及验证 JWT ⚔️</span>
+        </a></li><li>
+        <a class="is-flex" href="#为什么-JWT-是安全的">
+        <span class="has-mr-6">4.2</span>
+        <span>为什么 JWT 是安全的 ?</span>
+        </a></li><li>
+        <a class="is-flex" href="#如何模拟一个用户-🕵️">
+        <span class="has-mr-6">4.3</span>
+        <span>如何模拟一个用户 🕵️</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#结论-🏗️">
+        <span class="has-mr-6">5</span>
+        <span>结论 🏗️</span>
+        </a><ul class="menu-list"><ul class="menu-list"><li>
+        <a class="is-flex" href="#这里是示例仓库-🔬">
+        <span class="has-mr-6">5.1.1</span>
+        <span>这里是示例仓库 🔬</span>
+        </a></li><li>
+        <a class="is-flex" href="#参考资料">
+        <span class="has-mr-6">5.1.2</span>
+        <span>参考资料</span>
+        </a></li></ul></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/blog/">
+                
+                    <img src="/blog/assets/img/logo.png" alt="[翻译]你不需要 passport.js — node.js认证指南" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Hytonight云息&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                        
+                        <i class="fab fa-creative-commons"></i>&nbsp;<i class="fab fa-creative-commons-by"></i>&nbsp;<i class="fab fa-creative-commons-nc"></i>&nbsp;<i class="fab fa-creative-commons-sa"></i>&nbsp;
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="AlphaLxy GitHub" href="https://www.github.com/AlphaLxy">
+                        
+                        <i class="fab fa-github"></i>&nbsp;
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/blog/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/blog/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/blog/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/blog/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/blog/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/blog/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/blog/js/insight.js" defer></script>
+<link rel="stylesheet" href="/blog/css/search.css">
+<link rel="stylesheet" href="/blog/css/insight.css">
+    
+</body>
+</html>

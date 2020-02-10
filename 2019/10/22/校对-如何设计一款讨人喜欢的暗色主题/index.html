@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>【校对】如何设计一款讨人喜欢的暗色主题 - Hytonight云息</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:600&display=swap&subset=chinese-simplified" rel="stylesheet">
+
+
+    <meta name="description" content="原文地址：How to design delightful dark themes 原文作者：Teresa Man 译文出自：掘金翻译计划 本文永久链接：https://github.com/xitu/gold-miner/blob/master/TODO1/how-to-design-delightful-dark-themes.md 译者：Jessica 校对者：药王, Hytonight">
+<meta name="keywords" content="翻译,设计,掘金翻译计划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【校对】如何设计一款讨人喜欢的暗色主题">
+<meta property="og:url" content="http://yunxi.site/blog/2019/10/22/校对-如何设计一款讨人喜欢的暗色主题/index.html">
+<meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="原文地址：How to design delightful dark themes 原文作者：Teresa Man 译文出自：掘金翻译计划 本文永久链接：https://github.com/xitu/gold-miner/blob/master/TODO1/how-to-design-delightful-dark-themes.md 译者：Jessica 校对者：药王, Hytonight">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yunxi.site/blog/images/og_image.png">
+<meta property="og:updated_time" content="2020-02-09T06:59:41.525Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【校对】如何设计一款讨人喜欢的暗色主题">
+<meta name="twitter:description" content="原文地址：How to design delightful dark themes 原文作者：Teresa Man 译文出自：掘金翻译计划 本文永久链接：https://github.com/xitu/gold-miner/blob/master/TODO1/how-to-design-delightful-dark-themes.md 译者：Jessica 校对者：药王, Hytonight">
+<meta name="twitter:image" content="http://yunxi.site/blog/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/blog/assets/img/logo.png">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/tomorrow.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/blog/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/blog/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/blog/css/style.css">
+
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/blog/">
+            
+                <img src="/blog/assets/img/logo.png" alt="【校对】如何设计一款讨人喜欢的暗色主题" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/blog/">Home</a>
+                
+                <a class="navbar-item" href="/blog/archives/">Archives</a>
+                
+                <a class="navbar-item" href="/blog/tags/">Tags</a>
+                
+                <a class="navbar-item" href="/blog/about/">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="HytonightYX GitHub" href="https://github.com/HytonightYX">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                【校对】如何设计一款讨人喜欢的暗色主题
+            
+        </h1>
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-22T08:26:57.000Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-10-22</time>
+                
+                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-02-09T06:59:41.525Z"><i class="far fa-calendar-check">&nbsp;</i>2020-02-09</time>
+                
+                
+                
+                <span class="level-item has-text-grey">
+                    <i class="far fa-clock"></i>&nbsp;
+                    
+                    
+                    22 minutes read (About 3302 words)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            <blockquote>
+<ul>
+<li>原文地址：<a href="https://blog.superhuman.com/how-to-design-delightful-dark-themes-7b3da644ff1f" target="_blank" rel="noopener">How to design delightful dark themes</a></li>
+<li>原文作者：<a href="https://medium.com/@ifbirdsfly" target="_blank" rel="noopener">Teresa Man</a></li>
+<li>译文出自：<a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a></li>
+<li>本文永久链接：<a href="https://github.com/xitu/gold-miner/blob/master/TODO1/how-to-design-delightful-dark-themes.md" target="_blank" rel="noopener">https://github.com/xitu/gold-miner/blob/master/TODO1/how-to-design-delightful-dark-themes.md</a></li>
+<li>译者：<a href="https://github.com/cyz980908" target="_blank" rel="noopener">Jessica</a></li>
+<li>校对者：<a href="https://github.com/ArcherGrey" target="_blank" rel="noopener">药王</a>, <a href="https://github.com/HytonightYX" target="_blank" rel="noopener">HytonightYX</a></li>
+</ul>
+</blockquote>
+<h1 id="如何设计一款讨人喜欢的暗色主题"><a href="#如何设计一款讨人喜欢的暗色主题" class="headerlink" title="如何设计一款讨人喜欢的暗色主题"></a>如何设计一款讨人喜欢的暗色主题</h1><p><img src="https://cdn-images-1.medium.com/max/4800/1*SNt7SUZucQ3r7aHctIM0xw.png" alt></p>
+<p><strong>在 <a href="https://superhuman.com/?utm_source=medium&amp;utm_medium=blog&amp;utm_campaign=delightful-dark-themes" target="_blank" rel="noopener">Superhuman</a>，我们正在打造世界上最快的电子邮件体验。您可以体验到以两倍于以前的速度浏览您的收件箱，并且保持收件箱为零！</strong></p>
+<p>暗色主题是应用程序设计的最新趋势。macOS 去年推出了<a href="https://www.apple.com/newsroom/2018/09/macos-mojave-is-available-today/" target="_blank" rel="noopener">黑暗模式</a>。Android 上月也推出了<a href="https://www.android.com/android-10/" target="_blank" rel="noopener">黑暗主题</a>。在过去的两周中，iOS <a href="https://www.apple.com/ios/ios-13/" target="_blank" rel="noopener">也紧跟而上</a>。</p>
+<p>曾经很少见的暗色主题已成为人们普遍期望的主题。</p>
+<p>如果做得好，暗色主题是有很多好处的。它可以减少眼睛疲劳，在弱光下也更容易阅读。而且，对于 OLED 屏幕来说，暗色主题可以大大降低电量消耗。</p>
+<p>然而，创造一个讨人喜欢的暗色主题可不容易。我们不能简单地重用我们的颜色或颠倒我们的色调。如果我们这样做，往往会<strong>适得其反</strong>：我们将增加眼睛的疲劳，使其在弱光下更难阅读。我们甚至有可能打破我们软件的信息层次结构。</p>
+<p>在这篇文章中，我们将会分享如何设计通俗易懂、和谐且讨人喜欢的暗色主题</p>
+<a id="more"></a>
+<h2 id="1-越远的区域越暗"><a href="#1-越远的区域越暗" class="headerlink" title="1. 越远的区域越暗"></a>1. 越远的区域越暗</h2><p>大多数深色主题的 UI 设计都遵循这一原则：越远的区域越暗。这模拟了一个光源从上方投射的场景，并传达了熟悉且令人安心的实体感。</p>
+<p>当设计一个暗色主题时，我们很容易想当然地将我们的浅色主题直接反转。然而，这样的话，远处的区域会变亮，而近处的区域会变暗。这将破坏真实感，令人感到不自然。</p>
+<p>与此相反，您应该只取您的浅色主题的主要表面颜色。反转此颜色以产生暗色主题的主要颜色。对较近的表面调亮这种颜色，对较远的表面调暗这种颜色。</p>
+<p>在 Superhuman 中，我们的暗色主题是由五种灰色色调构成的。较近的区域使用较浅的灰色，较远的区域使用较深的灰色。</p>
+<p><img src="https://cdn-images-1.medium.com/max/5352/1*9XSo2QMW141R5hXUHrf8kA.png" alt="较近的区域使用较浅的灰色，较远的区域使用较深的灰色。"></p>
+<h2 id="2-重新确定感知对比度"><a href="#2-重新确定感知对比度" class="headerlink" title="2. 重新确定感知对比度"></a>2. 重新确定感知对比度</h2><p>通过原先的浅色主题来设计暗色主题时，很重要的一点是要重新确定感知对比度。注意，是这个元素<strong>看起来的</strong>对比度，而别被所谓的建议或标准所限制。</p>
+<p>例如，在我们的浅色主题中，联系人信息是黑色的，不透明度为 60%。但是在我们的暗色主题中，我们将联系方式设置为白色，不透明度为65%。虽然这两种的对比度超过了 <a href="https://accessible-colors.com" target="_blank" rel="noopener">AA 标准</a>，但额外的 5% 可以防止视觉疲劳，特别是在光线不足的情况下。</p>
+<p>对于这些颜色的补偿并没有严格的规定。我们可以根据文本大小、字体大小和行宽分别调整每个项目，以确保暗色主题与浅色主题一样清晰、易于阅读。</p>
+<p><img src="https://cdn-images-1.medium.com/max/5352/1*hM0hLogOLk0DQzVyqBL-6A.png" alt></p>
+<h2 id="3-减少大块明亮的色彩"><a href="#3-减少大块明亮的色彩" class="headerlink" title="3. 减少大块明亮的色彩"></a>3. 减少大块明亮的色彩</h2><p>在浅色主题中，我们经常使用大块明亮的颜色。这一般来说都是对的：我们最重要的元素可能会更亮。但在暗色主题中，这是行不通的：用户会将焦点集中于大块的颜色反而忽视了我们最重要的元素。</p>
+<p>例如，这是我们的 Remind me 界面。在我们的浅色主题中，粉红色的遮罩层不会分散在更明亮的对话框上的焦点。但是在我们的暗色主题中，同样的遮罩层将我们的注意力分散。我们完全去掉了遮罩层，这样我们就可以快速、方便地聚焦于重要的内容。</p>
+<p><img src="https://cdn-images-1.medium.com/max/5352/1*ixjDo4iN1BgiuNOO_4hadg.png" alt="减少大块明亮的色彩会更容易聚焦于重要的内容"></p>
+<h2 id="4-避免纯黑色或纯白色"><a href="#4-避免纯黑色或纯白色" class="headerlink" title="4. 避免纯黑色或纯白色"></a>4. 避免纯黑色或纯白色</h2><p>在 Superhuman 中，我们没有使用任何纯黑色或纯白色在我们的暗色主题。这样做有四个原因。</p>
+<h4 id="4-1-真实感"><a href="#4-1-真实感" class="headerlink" title="4.1. 真实感"></a>4.1. 真实感</h4><p>在我们的日常环境中并不存在纯黑色（世界上最黑的物体，麻省理工学院开发的一种<a href="http://news.mit.edu/2019/blackest-black-material-cnt-0913" target="_blank" rel="noopener">尚未命名的材料</a>，它离真正的纯黑色还差 0.005%）因此，我们的视觉已经适应了将相对的黑色视为真正的黑色。这就是为什么 <code>#000000</code> 会让我们感觉如此不和谐的原因，尤其是在与较亮的元素对比时。因为它不存在于与我们通常看到的任何东西的颜色上。</p>
+<h4 id="4-2-黑色拖影"><a href="#4-2-黑色拖影" class="headerlink" title="4.2. 黑色拖影"></a>4.2. 黑色拖影</h4><p>黑色拖影是一种视觉失真，出现于当较亮的内容被拖动或滚动在纯黑色背景时。</p>
+<p>这种效果出现在越来越多人使用的 OLED 屏幕上。在这种屏幕上，纯黑色像素被关闭（这就是暗色主题比浅色主题使用更少电量的原因）。然而，这些像素的开启和关闭的速度比颜色改变的速度要慢。这个不同速度的结果造成了拖影效果。</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*eDiI4Yy-K6139EnLaAuSjA.gif" alt="在 iOS 时钟中出现的黑色拖影（必须在 OLED 屏中才能看到）。"></p>
+<p>你可以通过使用深灰色来避免黑色拖影，因为这样像素就不会被关闭。甚至可以使用像 <code>#010101</code> 这样的深灰色，并且还会比浅色主题使用更少的电量！</p>
+<h4 id="4-3-层次感"><a href="#4-3-层次感" class="headerlink" title="4.3. 层次感"></a>4.3. 层次感</h4><p>如果您在背景元素中使用了纯黑色，您会失去一些表现层次深度的技巧。</p>
+<p>例如，想象您的背景是纯黑色的。在此之上，显示一个通知。通知应该浮在背景之上，所以您用阴影来表达深度。只是这样的阴影难以察觉，因为没有什么比纯黑色更暗。</p>
+<p>如果您的背景不是纯黑色的，您可以使用不同不透明度的阴影和模糊来表达深度。例如，考虑 Superhuman 中的通知：</p>
+<p><img src="https://cdn-images-1.medium.com/max/5352/1*N4e5iEguoLP4l6vsWGDYmA.png" alt="如果您的背景不是纯黑色的，您可以使用不同不透明度的阴影和模糊来表达深度。"></p>
+<h4 id="4-4-眩晕"><a href="#4-4-眩晕" class="headerlink" title="4.4. 眩晕"></a>4.4. 眩晕</h4><p>纯白色文本在纯黑色背景下可能产生的最高对比度为：21:1。在 WCAG（Web Content Accessibility Guidelines Web 内容无障碍指南） 中的无障碍说法中，这是理想输出。</p>
+<p>然而，在设计暗色主题时，一定要小心过高的对比度。对比度太高会导致眼睛疲劳和<strong>眩晕</strong>。</p>
+<p>当将非常明亮的文本放置在非常暗的背景下时，文本会看起来渗透在背景之中。这对于我们这些散光的人来说，影响甚至更强。<a href="http://www.cs.ubc.ca/labs/spin/" target="_blank" rel="noopener">感觉感知与互动研究小组</a>的博士后研究员 Jason Harrison 表示：</p>
+<blockquote>
+<p>散光患者（约占总人口的 50% ）在阅读黑底白字内容时比阅读白底黑字内容更困难。这在一定程度上与光线有关：在明亮的显示背景（白色背景）下，虹膜闭合得更紧，减少了角膜（可以理解为可以变形的“镜片”）的影响；在黑色的背景下，虹膜会打开以接收更多的光线，而角膜的变形会使眼睛产生更模糊的焦点。</p>
+</blockquote>
+<p>在 Superhuman 中，由于我们的软件文字很多，所以我们必须特别小心眩晕问题。我们把白色的文字设置为 90% 的不透明度，从而使文字与深色背景融为一体。这就平衡了对比度和亮度，使软件很容易在各种光线条件下阅读。</p>
+<p><img src="https://cdn-images-1.medium.com/max/5352/1*4D5E9fE--h9OMjYN382O5Q.png" alt></p>
+<h2 id="5-加深颜色"><a href="#5-加深颜色" class="headerlink" title="5. 加深颜色"></a>5. 加深颜色</h2><p>由于我们调低了文本的色彩来避免眼睛疲劳和晕眩，因此我们的彩色强调内容和按钮可能显得太亮。现在，我们必须调整这些颜色以在暗色主题中更好地工作。首先，我们降低亮度，使这些颜色不会压制附近的文本。其次，我们增加饱和度，使它们仍然具有颜色特征。</p>
+<p>例如，如果我们直接使用浅色主题中的紫色，对于附近的文本而言，它显得太亮了。所以，在我们实际的暗色主题中，我们加深了紫色，以便用户可以专注于文本内容。</p>
+<p><img src="https://cdn-images-1.medium.com/max/5352/1*CC8IvWLlP3uGqMkq4BQmXg.png" alt="为暗色的主题创造更深的颜色；保持色调，降低亮度，增加饱和度。"></p>
+<hr>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>暗色主题有很多好处，现在正在被广泛期待。然而，做好一个暗色主题可不容易。简单地重用我们的颜色或颠倒我们的色调，将增加眼睛的疲劳，使其在弱光下更难阅读，甚至还有可能打破我们软件的信息层次结构。</p>
+<p>我们找到了一种系统的方式来构建通俗易懂的，和谐且讨人喜欢的暗色主题。只需遵循以下步骤：</p>
+<ol>
+<li>越远的区域越暗</li>
+<li>重新确定感知对比度</li>
+<li>减少大块明亮的色彩</li>
+<li>避免纯黑色或纯白色</li>
+<li>加深颜色</li>
+</ol>
+<p>我希望以上这些有助于您设计讨人喜欢的暗色主题。如果您有任何想法或疑问，可以和我聊聊！<a href="https://twitter.com/ifbirdsfly" target="_blank" rel="noopener">@ifbirdsfly</a>，<a href="mailto:teresa@superhuman.com" target="_blank" rel="noopener">teresa@superhuman.com</a> 👩‍🎨</p>
+<p>— Teresa Man，Superhuman 的首席设计师</p>
+<hr>
+<p><strong>在 Superhuman，我们正在重建针对 web 和移动设备的电子邮件体验。试想一下电子邮箱界的 Vim 或者 Sublime：惊人快速，视觉华丽。</strong></p>
+<p><strong>如果您崇尚用优雅的方式解决有趣的问题 —— 请加入我们！<a href="https://superhuman.com/?utm_source=medium&amp;utm_medium=blog&amp;utm_campaign=delightful-dark-themes" target="_blank" rel="noopener">了解更多信息</a>或者<a href="mailto:teresa@superhuman.com" target="_blank" rel="noopener">给我发电子邮件</a>.</strong></p>
+<p><strong>非常感谢 <a href="https://twitter.com/erondu" target="_blank" rel="noopener">Jared Erondu</a>，<a href="https://twitter.com/diklein" target="_blank" rel="noopener">Dave Klein</a>，<a href="https://twitter.com/jaysonhobby" target="_blank" rel="noopener">Jayson Hobby</a>，<a href="https://twitter.com/_timothee" target="_blank" rel="noopener">Tim Boucher</a>，<a href="https://twitter.com/tamassari" target="_blank" rel="noopener">Tamas Sari</a> 以及 <a href="https://twitter.com/jiholimm" target="_blank" rel="noopener">Jiho Lim</a> 的付出和审查！</strong></p>
+<blockquote>
+<p>如果发现译文存在错误或其他需要改进的地方，欢迎到 <a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a> 对译文进行修改并 PR，也可获得相应奖励积分。文章开头的 <strong>本文永久链接</strong> 即为本文在 GitHub 上的 MarkDown 链接。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a> 是一个翻译优质互联网技术文章的社区，文章来源为 <a href="https://juejin.im" target="_blank" rel="noopener">掘金</a> 上的英文分享文章。内容覆盖 <a href="https://github.com/xitu/gold-miner#android" target="_blank" rel="noopener">Android</a>、<a href="https://github.com/xitu/gold-miner#ios" target="_blank" rel="noopener">iOS</a>、<a href="https://github.com/xitu/gold-miner#前端" target="_blank" rel="noopener">前端</a>、<a href="https://github.com/xitu/gold-miner#后端" target="_blank" rel="noopener">后端</a>、<a href="https://github.com/xitu/gold-miner#区块链" target="_blank" rel="noopener">区块链</a>、<a href="https://github.com/xitu/gold-miner#产品" target="_blank" rel="noopener">产品</a>、<a href="https://github.com/xitu/gold-miner#设计" target="_blank" rel="noopener">设计</a>、<a href="https://github.com/xitu/gold-miner#人工智能" target="_blank" rel="noopener">人工智能</a>等领域，想要查看更多优质译文请持续关注 <a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a>、<a href="http://weibo.com/juejinfanyi" target="_blank" rel="noopener">官方微博</a>、<a href="https://zhuanlan.zhihu.com/juejinfanyi" target="_blank" rel="noopener">知乎专栏</a>。</p>
+</blockquote>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong><a href="http://yunxi.site/blog/2019/10/22/校对-如何设计一款讨人喜欢的暗色主题/">【校对】如何设计一款讨人喜欢的暗色主题</a></li>
+            <li><strong>本文作者：</strong><a href="http://yunxi.site/blog">Hytonight云息</a></li>
+            <li><strong>本文链接：</strong><a href="http://yunxi.site/blog/2019/10/22/校对-如何设计一款讨人喜欢的暗色主题/">http://yunxi.site/blog/2019/10/22/校对-如何设计一款讨人喜欢的暗色主题/</a></li>
+            <li><strong>发布时间：</strong>2019-10-22</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        <hr style="height:1px;margin:1rem 0">
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/blog/tags/掘金翻译计划/">掘金翻译计划</a>,&nbsp;<a class="has-link-grey -link" href="/blog/tags/翻译/">翻译</a>,&nbsp;<a class="has-link-grey -link" href="/blog/tags/设计/">设计</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blog/2019/12/27/翻译-你不需要-passport-js-—-node-js认证指南/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">[翻译]你不需要 passport.js — node.js认证指南</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog/2019/08/13/React新特性-一-Context-lazy-Suspense和memo/">
+                <span class="level-item">React新特性(一) Context,lazy,Suspense和memo</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
+        
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yunxi.site/blog/2019/10/22/校对-如何设计一款讨人喜欢的暗色主题/';
+        this.page.identifier = '2019/10/22/校对-如何设计一款讨人喜欢的暗色主题/';
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'yunxi-blog' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-96x96 has-mb-6" src="/blog/assets/img/avater.png" alt="Hytonight云息">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        Hytonight云息
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Junior
+                    </p>
+                    
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/blog/archives/">
+                    <p class="heading">
+                        Entradas
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        16
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/blog/categories/">
+                    <p class="heading">
+                        Categorias
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        0
+                    </p>
+                </a>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <a href="/blog/tags/">
+                    <p class="heading">
+                        Etiquetas
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        16
+                    </p>
+                </a>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
+                <i class="fab fa-github"></i>&nbsp;&nbsp;SEGUIR</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="QQ" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1044865610">
+                
+                <i class="fab fa-qq"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="ZhiHu" href="https://www.zhihu.com/people/HytonightYX">
+                
+                <i class="fab fa-zhihu"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+    
+        
+<div class="card widget column-left is-sticky" id="toc">
+    <div class="card-content">
+        <div class="menu" style="max-height: 800px; overflow: auto;">
+            <h3 class="menu-label">
+                Catálogo
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#如何设计一款讨人喜欢的暗色主题">
+        <span class="has-mr-6">1</span>
+        <span>如何设计一款讨人喜欢的暗色主题</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#1-越远的区域越暗">
+        <span class="has-mr-6">1.1</span>
+        <span>1. 越远的区域越暗</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-重新确定感知对比度">
+        <span class="has-mr-6">1.2</span>
+        <span>2. 重新确定感知对比度</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-减少大块明亮的色彩">
+        <span class="has-mr-6">1.3</span>
+        <span>3. 减少大块明亮的色彩</span>
+        </a></li><li>
+        <a class="is-flex" href="#4-避免纯黑色或纯白色">
+        <span class="has-mr-6">1.4</span>
+        <span>4. 避免纯黑色或纯白色</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#4-1-真实感">
+        <span class="has-mr-6">1.4.1</span>
+        <span>4.1. 真实感</span>
+        </a></li><li>
+        <a class="is-flex" href="#4-2-黑色拖影">
+        <span class="has-mr-6">1.4.2</span>
+        <span>4.2. 黑色拖影</span>
+        </a></li><li>
+        <a class="is-flex" href="#4-3-层次感">
+        <span class="has-mr-6">1.4.3</span>
+        <span>4.3. 层次感</span>
+        </a></li><li>
+        <a class="is-flex" href="#4-4-眩晕">
+        <span class="has-mr-6">1.4.4</span>
+        <span>4.4. 眩晕</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#5-加深颜色">
+        <span class="has-mr-6">1.5</span>
+        <span>5. 加深颜色</span>
+        </a></li><li>
+        <a class="is-flex" href="#结论">
+        <span class="has-mr-6">1.6</span>
+        <span>结论</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/blog/">
+                
+                    <img src="/blog/assets/img/logo.png" alt="【校对】如何设计一款讨人喜欢的暗色主题" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Hytonight云息&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                Visited by <span id="busuanzi_value_site_uv">0</span> users
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                        
+                        <i class="fab fa-creative-commons"></i>&nbsp;<i class="fab fa-creative-commons-by"></i>&nbsp;<i class="fab fa-creative-commons-nc"></i>&nbsp;<i class="fab fa-creative-commons-sa"></i>&nbsp;
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="AlphaLxy GitHub" href="https://www.github.com/AlphaLxy">
+                        
+                        <i class="fab fa-github"></i>&nbsp;
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+    
+    
+    
+    <script src="/blog/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/blog/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/blog/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/blog/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/blog/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Entradas',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categorias',
+                TAGS: 'Etiquetas',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/blog/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/blog/js/insight.js" defer></script>
+<link rel="stylesheet" href="/blog/css/search.css">
+<link rel="stylesheet" href="/blog/css/insight.css">
+    
+</body>
+</html>

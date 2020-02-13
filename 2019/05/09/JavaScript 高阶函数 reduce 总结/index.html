@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yunxi.site","root":"/blog/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue); /*   accumulator:  必需。累计器   currentValue: 必需。当前元素">
+<meta name="keywords" content="JavaScript,进阶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 高阶函数 reduce 总结">
+<meta property="og:url" content="http://yunxi.site/blog/2019/05/09/JavaScript 高阶函数 reduce 总结/index.html">
+<meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue); /*   accumulator:  必需。累计器   currentValue: 必需。当前元素">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://javascript.info/article/array-methods/reduce.png">
+<meta property="og:updated_time" content="2020-02-13T03:16:58.696Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 高阶函数 reduce 总结">
+<meta name="twitter:description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue); /*   accumulator:  必需。累计器   currentValue: 必需。当前元素">
+<meta name="twitter:image" content="http://javascript.info/article/array-methods/reduce.png">
+
+<link rel="canonical" href="http://yunxi.site/blog/2019/05/09/JavaScript 高阶函数 reduce 总结/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>JavaScript 高阶函数 reduce 总结 | Hytonight云息</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?57d30e6a21aa4345d6c1d19d35e02e03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hytonight云息</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yunxi.site/blog/2019/05/09/JavaScript 高阶函数 reduce 总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="Hytonight云息">
+      <meta itemprop="description" content="云之息，浴乎沂，风乎舞雩，咏而归">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hytonight云息">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript 高阶函数 reduce 总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-05-09 18:33:06" itemprop="dateCreated datePublished" datetime="2019-05-09T18:33:06+08:00">2019-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-13 11:16:58" itemprop="dateModified" datetime="2020-02-13T11:16:58+08:00">2020-02-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><code>reduce()</code>方法对数组中的每个元素执行一个由您提供的<code>reducer</code>函数(升序执行)，将其结果汇总为单个返回值。语法为：</p>
+<pre><code class="javascript">array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);
+/*
+  accumulator:  必需。累计器
+  currentValue: 必需。当前元素
+
+  currentIndex: 可选。当前元素的索引；                    
+  arr:          可选。要处理的数组
+  initialValue: 可选。传递给函数的初始值，相当于accumulator的初始值
+*/
+</code></pre>
+<a id="more"></a>
+<h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3><p>简单来说就是对一个<code>array</code>执行<code>reduce()</code>方法，就是把其中的<code>function()</code>挨个地作用于<code>array</code>中的元素上，<strong>而且上一次的输出会作为下一次的一个输入</strong>。例如下面这个对<code>array</code>求和的例子。</p>
+<pre><code class="javascript">let array = [1, 2, 3, 4, 5];
+array.reduce((sum, curr) =&gt; sum + curr, 0); // 得到15
+</code></pre>
+<p>执行流程图如下：</p>
+<p><img src="http://javascript.info/article/array-methods/reduce.png" alt="reduce"></p>
+<p>令<code>f（a, b）= a + b</code>， 也可以一次性写为：</p>
+<p><code>array.reduce = f( f( f( f( f(0, 1) ,2) ,3), 4) ,5)</code></p>
+<p>奉上一个<a href="http://reduce.surge.sh/" target="_blank" rel="noopener">动画演示</a></p>
+<h3 id="常见用法"><a href="#常见用法" class="headerlink" title="常见用法"></a>常见用法</h3><h4 id="求加法（乘法同理）"><a href="#求加法（乘法同理）" class="headerlink" title="求加法（乘法同理）"></a>求加法（乘法同理）</h4><pre><code class="javascript">let arr = [1, 2, 3, 4, 5];
+arr.reduce((sum, curr) =&gt; sum + curr, 0);             // 得到15
+</code></pre>
+<p>此基础上还可以求平均值</p>
+<h4 id="求最大值（最小值同理）"><a href="#求最大值（最小值同理）" class="headerlink" title="求最大值（最小值同理）"></a>求最大值（最小值同理）</h4><pre><code class="javascript">let arr = [23,123,342,12];
+let max = arr.reduce((pre,cur,index,arr) =&gt; {
+  return pre &gt; cur ? pre : cur
+});                                                                                             // 得到 342
+</code></pre>
+<h4 id="将字符串转换为整数"><a href="#将字符串转换为整数" class="headerlink" title="将字符串转换为整数"></a>将字符串转换为整数</h4><pre><code class="javascript">let str = &quot;4321&quot;
+
+let strParseInt = str.split(&#39;&#39;)                                        // 得到 [&#39;4&#39;, &#39;3&#39;, &#39;2&#39;, &#39;1&#39;, &#39;4&#39;]
+        .map(item =&gt; {return item.charCodeAt() - 48})    // 得到 [4, 3, 2, 1, 4]
+        .reduce((a, b) =&gt; {return a * 10 + b})                // 得到 43214
+</code></pre>
+<h4 id="字符统计-单词统计同理"><a href="#字符统计-单词统计同理" class="headerlink" title="字符统计/单词统计同理"></a>字符统计/单词统计同理</h4><pre><code class="javascript">let str = &#39;abcdaabc&#39;;
+
+str.split(&#39;&#39;).reduce((res, cur) =&gt; {
+    res[cur] ? res[cur] ++ : res[cur] = 1 // 如果cur第一次出现，记为1
+    return res;                                                        // 否则记录数+1
+}, {})                                                                        // 得到 {a: 3, b: 2, c: 2, d: 1}
+</code></pre>
+<h4 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h4><pre><code class="javascript">let arr = [1, 2, 3, 4, 4, 1]
+let newArr = arr.reduce((pre,cur) =&gt; {
+    if(!pre.includes(cur)){
+      return pre.concat(cur)
+    }else{
+      return pre
+    }
+},[])                                                                            // 得到 [1, 2, 3, 4]
+</code></pre>
+<h4 id="数组维度转换"><a href="#数组维度转换" class="headerlink" title="数组维度转换"></a>数组维度转换</h4><pre><code class="javascript">let arr = [[0, 1], [2, 3], [4, 5]]            // 二维数组
+let newArr = arr.reduce((pre,cur) =&gt; {
+    return pre.concat(cur)                            // 合并pre 与 cur, 并返回一个新数组
+},[])
+console.log(newArr);                                         // 一维数组 [0, 1, 2, 3, 4, 5]
+</code></pre>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce" target="_blank" rel="noopener">MDN Array​.prototype​.reduce()</a></p>
+<p><a href="https://segmentfault.com/a/1190000010731933" target="_blank" rel="noopener">JS进阶篇–JS数组reduce()方法详解及高级技巧</a></p>
+<p><a href="https://manqc.site/mooc" target="_blank" rel="noopener">manqc</a></p>
+<p>发现新的用法会继续更新——</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/blog/tags/进阶/" rel="tag"># 进阶</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2019/05/07/Webstorm中配置JavaScript库-自动补全库函数/" rel="prev" title="Webstorm中配置JavaScript库+自动补全库函数">
+      <i class="fa fa-chevron-left"></i> Webstorm中配置JavaScript库+自动补全库函数
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2019/05/10/Leetcode-152改——乘积最大连续子串/" rel="next" title="LeetCode-152改——乘积最大连续子串">
+      LeetCode-152改——乘积最大连续子串 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解释"><span class="nav-number">2.</span> <span class="nav-text">解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见用法"><span class="nav-number">3.</span> <span class="nav-text">常见用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#求加法（乘法同理）"><span class="nav-number">3.1.</span> <span class="nav-text">求加法（乘法同理）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#求最大值（最小值同理）"><span class="nav-number">3.2.</span> <span class="nav-text">求最大值（最小值同理）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将字符串转换为整数"><span class="nav-number">3.3.</span> <span class="nav-text">将字符串转换为整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符统计-单词统计同理"><span class="nav-number">3.4.</span> <span class="nav-text">字符统计/单词统计同理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组去重"><span class="nav-number">3.5.</span> <span class="nav-text">数组去重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组维度转换"><span class="nav-number">3.6.</span> <span class="nav-text">数组维度转换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接"><span class="nav-number">3.7.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hytonight云息</p>
+  <div class="site-description" itemprop="description">云之息，浴乎沂，风乎舞雩，咏而归</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HytonightYX" title="GitHub → https://github.com/HytonightYX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:whosiyuan@qq.com" title="E-Mail → mailto:whosiyuan@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hytonight云息</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+<script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script>
+<script src="/blog/js/schemes/muse.js"></script>
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

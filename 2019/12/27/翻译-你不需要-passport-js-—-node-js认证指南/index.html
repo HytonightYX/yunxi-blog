@@ -1,187 +1,213 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-    <meta charset="utf-8">
-<title>[翻译]你不需要 passport.js — node.js认证指南 - Hytonight云息</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
 
 
-<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:600&display=swap&subset=chinese-simplified" rel="stylesheet">
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
 
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yunxi.site","root":"/blog/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-    <meta name="description" content="原文地址：You don’t need passport.js - Guide to node.js authentication 原文作者：Sam Quinn 译文出自：掘金翻译计划 本文永久链接：https://github.com/xitu/gold-miner/blob/master/TODO1/nodejs-jwt-authentication-oauth.md 译者：Hytonig">
+  <meta name="description" content="简介诸如 Google Firebase，AWS Cognito 以及 Auth0 这样的第三方认证服务越来越流行，类似于 passport.js 这样的一站式解决方案也成为了业界标准，但是一个普遍情况是，开发者们其实并不清楚完整的认证流程到底涉及那些部分。 这一系列关于 node.js 认证的文章，旨在让你搞清楚一些概念，比如 JSON Web Token (JWT)、社交账号登录 (OAuth">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[翻译]你不需要 passport.js — node.js认证指南">
 <meta property="og:url" content="http://yunxi.site/blog/2019/12/27/翻译-你不需要-passport-js-—-node-js认证指南/index.html">
 <meta property="og:site_name" content="Hytonight云息">
-<meta property="og:description" content="原文地址：You don’t need passport.js - Guide to node.js authentication 原文作者：Sam Quinn 译文出自：掘金翻译计划 本文永久链接：https://github.com/xitu/gold-miner/blob/master/TODO1/nodejs-jwt-authentication-oauth.md 译者：Hytonig">
+<meta property="og:description" content="简介诸如 Google Firebase，AWS Cognito 以及 Auth0 这样的第三方认证服务越来越流行，类似于 passport.js 这样的一站式解决方案也成为了业界标准，但是一个普遍情况是，开发者们其实并不清楚完整的认证流程到底涉及那些部分。 这一系列关于 node.js 认证的文章，旨在让你搞清楚一些概念，比如 JSON Web Token (JWT)、社交账号登录 (OAuth">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yunxi.site/blog/images/og_image.png">
-<meta property="og:updated_time" content="2020-02-09T07:35:06.063Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/12/27/16f4786e85559909?w=876&h=237&f=jpeg&s=35571">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/12/27/16f47875bce9c545?w=1680&h=800&f=jpeg&s=52198">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/12/27/16f4788494504f1c?w=572&h=160&f=jpeg&s=19098">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/12/27/16f4788fce870bbf?w=584&h=616&f=jpeg&s=25245">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/12/27/16f478a107523508?w=1127&h=191&f=jpeg&s=29633">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/12/27/16f478aaae779e66?w=977&h=166&f=jpeg&s=28234">
+<meta property="og:updated_time" content="2020-02-13T03:47:21.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[翻译]你不需要 passport.js — node.js认证指南">
-<meta name="twitter:description" content="原文地址：You don’t need passport.js - Guide to node.js authentication 原文作者：Sam Quinn 译文出自：掘金翻译计划 本文永久链接：https://github.com/xitu/gold-miner/blob/master/TODO1/nodejs-jwt-authentication-oauth.md 译者：Hytonig">
-<meta name="twitter:image" content="http://yunxi.site/blog/images/og_image.png">
+<meta name="twitter:description" content="简介诸如 Google Firebase，AWS Cognito 以及 Auth0 这样的第三方认证服务越来越流行，类似于 passport.js 这样的一站式解决方案也成为了业界标准，但是一个普遍情况是，开发者们其实并不清楚完整的认证流程到底涉及那些部分。 这一系列关于 node.js 认证的文章，旨在让你搞清楚一些概念，比如 JSON Web Token (JWT)、社交账号登录 (OAuth">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/12/27/16f4786e85559909?w=876&h=237&f=jpeg&s=35571">
+
+<link rel="canonical" href="http://yunxi.site/blog/2019/12/27/翻译-你不需要-passport-js-—-node-js认证指南/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>[翻译]你不需要 passport.js — node.js认证指南 | Hytonight云息</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?57d30e6a21aa4345d6c1d19d35e02e03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
 
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-
-<link rel="icon" href="/blog/assets/img/logo.png">
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/tomorrow.css">
-
-
-    
-    
-    
-    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
-    
-
-    
-    
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
-    
-
-    
-    
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
-
-
-    
-    
-    
-    
-
-<link rel="stylesheet" href="/blog/css/back-to-top.css">
-
-
-    
-    
-
-    
-    
-    
-    
-
-    
-    
-<link rel="stylesheet" href="/blog/css/progressbar.css">
-<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-
-    
-    
-    
-
-    
-    
-    
-        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-
-<link rel="stylesheet" href="/blog/css/style.css">
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
 </head>
-<body class="is-3-column">
-    <nav class="navbar navbar-main">
-    <div class="container">
-        <div class="navbar-brand is-flex-center">
-            <a class="navbar-item navbar-logo" href="/blog/">
-            
-                <img src="/blog/assets/img/logo.png" alt="[翻译]你不需要 passport.js — node.js认证指南" height="28">
-            
-            </a>
-        </div>
-        <div class="navbar-menu">
-            
-            <div class="navbar-start">
-                
-                <a class="navbar-item" href="/blog/">Home</a>
-                
-                <a class="navbar-item" href="/blog/archives/">Archives</a>
-                
-                <a class="navbar-item" href="/blog/tags/">Tags</a>
-                
-                <a class="navbar-item" href="/blog/about/">About</a>
-                
-            </div>
-            
-            <div class="navbar-end">
-                
-                    
-                    
-                    <a class="navbar-item" target="_blank" title="HytonightYX GitHub" href="https://github.com/HytonightYX">
-                        
-                        <i class="fab fa-github"></i>
-                        
-                    </a>
-                    
-                
-                
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catálogo" href="javascript:;">
-                    <i class="fas fa-list-ul"></i>
-                </a>
-                
-                
-                <a class="navbar-item search" title="Search" href="javascript:;">
-                    <i class="fas fa-search"></i>
-                </a>
-                
-            </div>
-        </div>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hytonight云息</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
     </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
 </nav>
+</div>
+    </header>
+
     
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main"><div class="card">
-    
-    <div class="card-content article ">
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
             
-                [翻译]你不需要 passport.js — node.js认证指南
-            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yunxi.site/blog/2019/12/27/翻译-你不需要-passport-js-—-node-js认证指南/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="Hytonight云息">
+      <meta itemprop="description" content="云之息，浴乎沂，风乎舞雩，咏而归">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hytonight云息">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [翻译]你不需要 passport.js — node.js认证指南
         </h1>
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-27T07:23:01.000Z"><i class="far fa-calendar-alt">&nbsp;</i>2019-12-27</time>
-                
-                <time class="level-item has-text-grey is-hidden-mobile" datetime="2020-02-09T07:35:06.063Z"><i class="far fa-calendar-check">&nbsp;</i>2020-02-09</time>
-                
-                
-                
-                <span class="level-item has-text-grey">
-                    <i class="far fa-clock"></i>&nbsp;
-                    
-                    
-                    21 minutes read (About 3086 words)
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-27 15:23:01" itemprop="dateCreated datePublished" datetime="2019-12-27T15:23:01+08:00">2019-12-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                
-                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
-                    <i class="far fa-eye"></i>
-                    <span id="busuanzi_value_page_pv">0</span> visits
-                </span>
-                
-            </div>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-13 11:47:21" itemprop="dateModified" datetime="2020-02-13T11:47:21+08:00">2020-02-13</time>
+              </span>
+
+          
+
         </div>
-        
-        <div class="content">
-            <blockquote>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>诸如 Google Firebase，AWS Cognito 以及 Auth0 这样的第三方认证服务越来越流行，类似于 passport.js 这样的一站式解决方案也成为了业界标准，但是一个普遍情况是，开发者们其实并不清楚完整的认证流程到底涉及那些部分。</p>
+<p>这一系列关于 node.js 认证的文章，旨在让你搞清楚一些概念，比如 JSON Web Token (JWT)、社交账号登录 (OAuth2)、用户模仿（一个管理员无需密码便能作为特定用户登录）。</p>
+<p>当然，文末也给你准备好了一个完整的 node.js 认证流程的代码库，放在GitHub上了，你可以作为你自己项目的基础来使用。</p>
+<a id="more"></a>
+<blockquote>
 <ul>
 <li>原文地址：<a href="https://softwareontheroad.com/nodejs-jwt-authentication-oauth/" target="_blank" rel="noopener">You don’t need passport.js - Guide to node.js authentication</a></li>
 <li>原文作者：<a href="https://softwareontheroad.com/author/santypk-4/" target="_blank" rel="noopener">Sam Quinn</a></li>
@@ -191,10 +217,6 @@
 <li>校对者：<a href="https://github.com/HZNU-Qiu" target="_blank" rel="noopener">HZNU-Qiu</a>,<a href="https://github.com/xionglong58" target="_blank" rel="noopener">xionglong58</a></li>
 </ul>
 </blockquote>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>诸如 Google Firebase，AWS Cognito 以及 Auth0 这样的第三方认证服务越来越流行，类似于 passport.js 这样的一站式解决方案也成为了业界标准，但是一个普遍情况是，开发者们其实并不清楚完整的认证流程到底涉及那些部分。</p>
-<p>这一系列关于 node.js 认证的文章，旨在让你搞清楚一些概念，比如 JSON Web Token (JWT)、社交账号登录 (OAuth2)、用户模仿（一个管理员无需密码便能作为特定用户登录）。</p>
-<p>当然，文末也给你准备好了一个完整的 node.js 认证流程的代码库，放在GitHub上了，你可以作为你自己项目的基础来使用。</p>
-<a id="more"></a>
 <h1 id="前置知识-✍️"><a href="#前置知识-✍️" class="headerlink" title="前置知识 ✍️"></a>前置知识 ✍️</h1><p>在阅读之前，你需要先了解：</p>
 <ul>
 <li>数据库中如何存储用户的 email 和密码，或者客户端ID和客户端密钥，或者其他的密钥对。</li>
@@ -413,407 +435,192 @@ export default jwt({
 <p><a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a> 是一个翻译优质互联网技术文章的社区，文章来源为 <a href="https://juejin.im" target="_blank" rel="noopener">掘金</a> 上的英文分享文章。内容覆盖 <a href="https://github.com/xitu/gold-miner#android" target="_blank" rel="noopener">Android</a>、<a href="https://github.com/xitu/gold-miner#ios" target="_blank" rel="noopener">iOS</a>、<a href="https://github.com/xitu/gold-miner#前端" target="_blank" rel="noopener">前端</a>、<a href="https://github.com/xitu/gold-miner#后端" target="_blank" rel="noopener">后端</a>、<a href="https://github.com/xitu/gold-miner#区块链" target="_blank" rel="noopener">区块链</a>、<a href="https://github.com/xitu/gold-miner#产品" target="_blank" rel="noopener">产品</a>、<a href="https://github.com/xitu/gold-miner#设计" target="_blank" rel="noopener">设计</a>、<a href="https://github.com/xitu/gold-miner#人工智能" target="_blank" rel="noopener">人工智能</a>等领域，想要查看更多优质译文请持续关注 <a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a>、<a href="http://weibo.com/juejinfanyi" target="_blank" rel="noopener">官方微博</a>、<a href="https://zhuanlan.zhihu.com/juejinfanyi" target="_blank" rel="noopener">知乎专栏</a>。</p>
 </blockquote>
 
-        </div>
-        
-            <ul class="post-copyright">
-            <li><strong>本文标题：</strong><a href="http://yunxi.site/blog/2019/12/27/翻译-你不需要-passport-js-—-node-js认证指南/">[翻译]你不需要 passport.js — node.js认证指南</a></li>
-            <li><strong>本文作者：</strong><a href="http://yunxi.site/blog">Hytonight云息</a></li>
-            <li><strong>本文链接：</strong><a href="http://yunxi.site/blog/2019/12/27/翻译-你不需要-passport-js-—-node-js认证指南/">http://yunxi.site/blog/2019/12/27/翻译-你不需要-passport-js-—-node-js认证指南/</a></li>
-            <li><strong>发布时间：</strong>2019-12-27</li>
-            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
-            </li>
-            </ul>
-        
-        
-        
-        
     </div>
-</div>
 
+    
+    
+    
 
+      <footer class="post-footer">
 
-
-
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
         
+
+
         
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/blog/2019/10/22/校对-如何设计一款讨人喜欢的暗色主题/">
-                <span class="level-item">校对-如何设计一款讨人喜欢的暗色主题</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2019/10/22/校对-如何设计一款讨人喜欢的暗色主题/" rel="prev" title="校对-如何设计一款讨人喜欢的暗色主题">
+      <i class="fa fa-chevron-left"></i> 校对-如何设计一款讨人喜欢的暗色主题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2020/02/01/关于这几个月/" rel="next" title="关于这几个月">
+      关于这几个月 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-</div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
 
 
+          </div>
+          
 
-<div class="card">
-    <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comentarios</h3>
-        
 <script>
-    var disqus_config = function () {
-        this.page.url = 'http://yunxi.site/blog/2019/12/27/翻译-你不需要-passport-js-—-node-js认证指南/';
-        this.page.identifier = '2019/12/27/翻译-你不需要-passport-js-—-node-js认证指南/';
-    };
-    (function() {
-        var d = document, s = d.createElement('script');  
-        s.src = '//' + 'yunxi-blog' + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
 </script>
 
-<div id="disqus_thread">
-    
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前置知识-✍️"><span class="nav-number">2.</span> <span class="nav-text">前置知识 ✍️</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写一个注册程序-🥇"><span class="nav-number">2.1.</span> <span class="nav-text">写一个注册程序 🥇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再来写一个登录程序-🥈"><span class="nav-number">2.2.</span> <span class="nav-text">再来写一个登录程序 🥈</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#但是，JWT到底是啥？-👩‍🏫"><span class="nav-number">3.</span> <span class="nav-text">但是，JWT到底是啥？ 👩‍🏫</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#node-js-中如何创建-JWT？-🏭"><span class="nav-number">4.</span> <span class="nav-text">node.js 中如何创建 JWT？ 🏭</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#保护端点以及验证-JWT-⚔️"><span class="nav-number">4.1.</span> <span class="nav-text">保护端点以及验证 JWT ⚔️</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么-JWT-是安全的"><span class="nav-number">4.2.</span> <span class="nav-text">为什么 JWT 是安全的 ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何模拟一个用户-🕵️"><span class="nav-number">4.3.</span> <span class="nav-text">如何模拟一个用户 🕵️</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结论-🏗️"><span class="nav-number">5.</span> <span class="nav-text">结论 🏗️</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#这里是示例仓库-🔬"><span class="nav-number">5.0.1.</span> <span class="nav-text">这里是示例仓库 🔬</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">5.0.2.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hytonight云息</p>
+  <div class="site-description" itemprop="description">云之息，浴乎沂，风乎舞雩，咏而归</div>
 </div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HytonightYX" title="GitHub → https://github.com/HytonightYX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:whosiyuan@qq.com" title="E-Mail → mailto:whosiyuan@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
     </div>
-</div>
-
-</div>
-                
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
 
+      </div>
+    </main>
 
-
-<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
-    
-        
-<div class="card widget">
-    <div class="card-content">
-        <nav class="level" style="margin-bottom:1rem">
-            <div class="level-item has-text-centered">
-                <div>
-                    
-                        <img class="image is-96x96 has-mb-6" src="/blog/assets/img/avater.png" alt="Hytonight云息">
-                    
-                    
-                    <p class="is-size-4 is-block">
-                        Hytonight云息
-                    </p>
-                    
-                    
-                    <p class="is-size-6 is-block">
-                        Junior
-                    </p>
-                    
-                    
-                </div>
-            </div>
-        </nav>
-        <nav class="level menu-list is-mobile" style="margin-bottom:1rem">
-            <div class="level-item has-text-centered is-marginless">
-                <a href="/blog/archives/">
-                    <p class="heading">
-                        Entradas
-                    </p>
-                    <p class="title has-text-weight-normal">
-                        16
-                    </p>
-                </a>
-            </div>
-            <div class="level-item has-text-centered is-marginless">
-                <a href="/blog/categories/">
-                    <p class="heading">
-                        Categorias
-                    </p>
-                    <p class="title has-text-weight-normal">
-                        0
-                    </p>
-                </a>
-            </div>
-            <div class="level-item has-text-centered is-marginless">
-                <a href="/blog/tags/">
-                    <p class="heading">
-                        Etiquetas
-                    </p>
-                    <p class="title has-text-weight-normal">
-                        16
-                    </p>
-                </a>
-            </div>
-        </nav>
-        <div class="level">
-            <a class="level-item button is-link is-rounded" href="https://www.github.com/HytonightYX" target="_blank">
-                <i class="fab fa-github"></i>&nbsp;&nbsp;SEGUIR</a>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="QQ" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1044865610">
-                
-                <i class="fab fa-qq"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="ZhiHu" href="https://www.zhihu.com/people/HytonightYX">
-                
-                <i class="fab fa-zhihu"></i>
-                
-            </a>
-            
-        </div>
-        
-    </div>
-</div>
-
-    
-        
-<div class="card widget column-left is-sticky" id="toc">
-    <div class="card-content">
-        <div class="menu" style="max-height: 800px; overflow: auto;">
-            <h3 class="menu-label">
-                Catálogo
-            </h3>
-            <ul class="menu-list"><li>
-        <a class="is-flex" href="#简介">
-        <span class="has-mr-6">1</span>
-        <span>简介</span>
-        </a></li><li>
-        <a class="is-flex" href="#前置知识-✍️">
-        <span class="has-mr-6">2</span>
-        <span>前置知识 ✍️</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#写一个注册程序-🥇">
-        <span class="has-mr-6">2.1</span>
-        <span>写一个注册程序 🥇</span>
-        </a></li><li>
-        <a class="is-flex" href="#再来写一个登录程序-🥈">
-        <span class="has-mr-6">2.2</span>
-        <span>再来写一个登录程序 🥈</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#但是，JWT到底是啥？-👩‍🏫">
-        <span class="has-mr-6">3</span>
-        <span>但是，JWT到底是啥？ 👩‍🏫</span>
-        </a></li><li>
-        <a class="is-flex" href="#node-js-中如何创建-JWT？-🏭">
-        <span class="has-mr-6">4</span>
-        <span>node.js 中如何创建 JWT？ 🏭</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#保护端点以及验证-JWT-⚔️">
-        <span class="has-mr-6">4.1</span>
-        <span>保护端点以及验证 JWT ⚔️</span>
-        </a></li><li>
-        <a class="is-flex" href="#为什么-JWT-是安全的">
-        <span class="has-mr-6">4.2</span>
-        <span>为什么 JWT 是安全的 ?</span>
-        </a></li><li>
-        <a class="is-flex" href="#如何模拟一个用户-🕵️">
-        <span class="has-mr-6">4.3</span>
-        <span>如何模拟一个用户 🕵️</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#结论-🏗️">
-        <span class="has-mr-6">5</span>
-        <span>结论 🏗️</span>
-        </a><ul class="menu-list"><ul class="menu-list"><li>
-        <a class="is-flex" href="#这里是示例仓库-🔬">
-        <span class="has-mr-6">5.1.1</span>
-        <span>这里是示例仓库 🔬</span>
-        </a></li><li>
-        <a class="is-flex" href="#参考资料">
-        <span class="has-mr-6">5.1.2</span>
-        <span>参考资料</span>
-        </a></li></ul></ul></li></ul>
-        </div>
-    </div>
-</div>
-
-
-    
-    
-        <div class="column-right-shadow is-hidden-widescreen ">
-        
-        </div>
-    
-</div>
-
-                
-            </div>
-        </div>
-    </section>
     <footer class="footer">
-    <div class="container">
-        <div class="level">
-            <div class="level-start has-text-centered-mobile">
-                <a class="footer-logo is-block has-mb-6" href="/blog/">
-                
-                    <img src="/blog/assets/img/logo.png" alt="[翻译]你不需要 passport.js — node.js认证指南" height="28">
-                
-                </a>
-                <p class="is-size-7">
-                &copy; 2020 Hytonight云息&nbsp;
-                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
-                
-                <br>
-                <span id="busuanzi_container_site_uv">
-                Visited by <span id="busuanzi_value_site_uv">0</span> users
-                </span>
-                
-                </p>
-            </div>
-            <div class="level-end">
-            
-                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
-                
-                
-                <p class="control">
-                    <a class="button is-white is-large" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-                        
-                        <i class="fab fa-creative-commons"></i>&nbsp;<i class="fab fa-creative-commons-by"></i>&nbsp;<i class="fab fa-creative-commons-nc"></i>&nbsp;<i class="fab fa-creative-commons-sa"></i>&nbsp;
-                        
-                    </a>
-                </p>
-                
-                <p class="control">
-                    <a class="button is-white is-large" target="_blank" title="AlphaLxy GitHub" href="https://www.github.com/AlphaLxy">
-                        
-                        <i class="fab fa-github"></i>&nbsp;
-                        
-                    </a>
-                </p>
-                
-                </div>
-            
-            </div>
-        </div>
-    </div>
-</footer>
+      <div class="footer-inner">
+        
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
-<script>moment.locale("en");</script>
-
-
-    
-    
-    
-    <script src="/blog/js/animation.js"></script>
-    
-
-    
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-    <script src="/blog/js/gallery.js" defer></script>
-    
-
-    
-    
-
-<div id="outdated">
-    <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
-            my browser now </a></p>
-    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hytonight云息</span>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        outdatedBrowser({
-            bgColor: '#f25648',
-            color: '#ffffff',
-            lowerThan: 'flex'
-        });
-    });
-</script>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
 
 
-    
-    
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    MathJax.Hub.Config({
-        'HTML-CSS': {
-            matchFontHeight: false
-        },
-        SVG: {
-            matchFontHeight: false
-        },
-        CommonHTML: {
-            matchFontHeight: false
-        },
-        tex2jax: {
-            inlineMath: [
-                ['$','$'],
-                ['\\(','\\)']
-            ]
-        }
-    });
-});
-</script>
-
-    
-    
-
-<a id="back-to-top" title="Back to Top" href="javascript:;">
-    <i class="fas fa-chevron-up"></i>
-</a>
-<script src="/blog/js/back-to-top.js" defer></script>
 
 
-    
-    
-
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
-    <script src="/blog/js/clipboard.js" defer></script>
-    
-
-    
-    
-    
-
-    
 
 
-<script src="/blog/js/main.js" defer></script>
 
-    
-    <div class="searchbox ins-search">
-    <div class="searchbox-container ins-search-container">
-        <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
-            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="searchbox-result-wrapper ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-    (function (window) {
-        var INSIGHT_CONFIG = {
-            TRANSLATION: {
-                POSTS: 'Entradas',
-                PAGES: 'Pages',
-                CATEGORIES: 'Categorias',
-                TAGS: 'Etiquetas',
-                UNTITLED: '(Untitled)',
-            },
-            CONTENT_URL: '/blog/content.json',
-        };
-        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-    })(window);
-</script>
-<script src="/blog/js/insight.js" defer></script>
-<link rel="stylesheet" href="/blog/css/search.css">
-<link rel="stylesheet" href="/blog/css/insight.css">
-    
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+<script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script>
+<script src="/blog/js/schemes/muse.js"></script>
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>

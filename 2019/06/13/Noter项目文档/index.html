@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yunxi.site","root":"/blog/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="想法&amp;amp;相关介绍 作为一名IT学习者，向来以开源为荣。每逢期末就有种分享自己的笔记的冲动，对于弱势学科也特别想要看看学霸们的笔记。因此萌生了这个知识共享平台的想法 自己平时喜欢用markdown来写点文章，真心觉得这是一种很高效的记录方式，而且结构统一，书面美观，对工科生来说非常好用 在网上找了一番，感觉同类产品比较少。类似的比如腾讯在线文档这类产品，感觉不够轻量，而且文档类型大多是巨硬的o">
+<meta name="keywords" content="文档">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Noter-文档">
+<meta property="og:url" content="http://yunxi.site/blog/2019/06/13/Noter项目文档/index.html">
+<meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="想法&amp;amp;相关介绍 作为一名IT学习者，向来以开源为荣。每逢期末就有种分享自己的笔记的冲动，对于弱势学科也特别想要看看学霸们的笔记。因此萌生了这个知识共享平台的想法 自己平时喜欢用markdown来写点文章，真心觉得这是一种很高效的记录方式，而且结构统一，书面美观，对工科生来说非常好用 在网上找了一番，感觉同类产品比较少。类似的比如腾讯在线文档这类产品，感觉不够轻量，而且文档类型大多是巨硬的o">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://oauth.net/images/oauth-2-sm.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2014/bg2014051203.png">
+<meta property="og:updated_time" content="2019-06-13T13:38:30.386Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Noter-文档">
+<meta name="twitter:description" content="想法&amp;amp;相关介绍 作为一名IT学习者，向来以开源为荣。每逢期末就有种分享自己的笔记的冲动，对于弱势学科也特别想要看看学霸们的笔记。因此萌生了这个知识共享平台的想法 自己平时喜欢用markdown来写点文章，真心觉得这是一种很高效的记录方式，而且结构统一，书面美观，对工科生来说非常好用 在网上找了一番，感觉同类产品比较少。类似的比如腾讯在线文档这类产品，感觉不够轻量，而且文档类型大多是巨硬的o">
+<meta name="twitter:image" content="https://oauth.net/images/oauth-2-sm.png">
+
+<link rel="canonical" href="http://yunxi.site/blog/2019/06/13/Noter项目文档/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Noter-文档 | Hytonight云息</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?57d30e6a21aa4345d6c1d19d35e02e03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hytonight云息</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yunxi.site/blog/2019/06/13/Noter项目文档/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="Hytonight云息">
+      <meta itemprop="description" content="云之息，浴乎沂，风乎舞雩，咏而归">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hytonight云息">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Noter-文档
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-06-13 14:41:25 / Modified: 21:38:30" itemprop="dateCreated datePublished" datetime="2019-06-13T14:41:25+08:00">2019-06-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="想法-amp-相关介绍"><a href="#想法-amp-相关介绍" class="headerlink" title="想法&amp;相关介绍"></a>想法&amp;相关介绍</h2><ul>
+<li>作为一名IT学习者，向来以开源为荣。每逢期末就有种分享自己的笔记的冲动，对于弱势学科也特别想要看看学霸们的笔记。因此萌生了这个知识共享平台的想法</li>
+<li>自己平时喜欢用markdown来写点文章，真心觉得这是一种很高效的记录方式，而且结构统一，书面美观，对工科生来说非常好用</li>
+<li>在网上找了一番，感觉同类产品比较少。类似的比如<a href="&quot;https://docs.qq.com/desktop&quot;">腾讯在线文档</a>这类产品，感觉不够轻量，而且文档类型大多是巨硬的office，后来找到了<a href="&quot;https://tower.im/&quot;">Tower</a>这一款产品，感觉比较符合我的预期，看起来很清爽，所见即所得，不过同样的，功能太多，产品定位也略有不同，但可以以其为蓝本，精简功能</li>
+</ul>
+<a id="more"></a>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="http://proj.cloudbreath.top/noter" target="_blank" rel="noopener">在线地址</a></p>
+<p><a href="https://github.com/HytonightYX" target="_blank" rel="noopener">Github</a></p>
+<ul>
+<li><a href="https://github.com/HytonightYX/noter-react" target="_blank" rel="noopener">前端</a></li>
+<li><a href="https://github.com/HytonightYX/noter-server" target="_blank" rel="noopener">后端</a></li>
+</ul>
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">技术</th>
+<th style="text-align:left">说明                       </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">react</td>
+<td style="text-align:left">用于构建UI的 JavaScript 库</td>
+</tr>
+<tr>
+<td style="text-align:left">react-router</td>
+<td style="text-align:left">路由管理器</td>
+</tr>
+<tr>
+<td style="text-align:left">redux</td>
+<td style="text-align:left">全局状态管理模式</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>redux-thunk</strong></td>
+<td style="text-align:left">redux 异步 action 中间件</td>
+</tr>
+<tr>
+<td style="text-align:left">axios</td>
+<td style="text-align:left">基于promise 的HTTP 库</td>
+</tr>
+<tr>
+<td style="text-align:left">Ant Design</td>
+<td style="text-align:left">前端UI组件库</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>react-responsive</strong></td>
+<td style="text-align:left">支持react的响应式组件</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>universal-cookie</strong></td>
+<td style="text-align:left">封装了处理cookie的函数</td>
+</tr>
+<tr>
+<td style="text-align:left">react-markdown</td>
+<td style="text-align:left">渲染markdown为HTML格式</td>
+</tr>
+<tr>
+<td style="text-align:left">for-editor</td>
+<td style="text-align:left">支持react的Markdown编辑器</td>
+</tr>
+</tbody>
+</table>
+<h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">技术</th>
+<th style="text-align:left">说明</th>
+<th style="text-align:left">官网</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Koa2</strong></td>
+<td style="text-align:left">丢弃callback的轻量Web框架</td>
+<td style="text-align:left"><a href="https://github.com/koajs/koa" target="_blank" rel="noopener">https://github.com/koajs/koa</a></td>
+</tr>
+<tr>
+<td style="text-align:left">bcryptjs</td>
+<td style="text-align:left">字符串加密</td>
+<td style="text-align:left"><a href="https://github.com/dcodeIO/bcrypt.js/" target="_blank" rel="noopener">https://github.com/dcodeIO/bcrypt.js/</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>koa-router</strong></td>
+<td style="text-align:left">koa的第三方路由中间件</td>
+<td style="text-align:left"><a href="https://github.com/ZijianHe/koa-router" target="_blank" rel="noopener">https://github.com/ZijianHe/koa-router</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Mongoose</strong></td>
+<td style="text-align:left">异步的 MongoDB 对象建模工具</td>
+<td style="text-align:left"><a href="https://mongoosejs.com/" target="_blank" rel="noopener">https://mongoosejs.com/</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>数据库: <code>MongoDB</code></p>
+<p>登录: <code>OAuth 2</code></p>
+<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><h3 id="前端-1"><a href="#前端-1" class="headerlink" title="前端"></a>前端</h3><pre><code class="javascript">.
+├── README.md
+├── config-overrides.js        // webpack覆写文件
+├── package.json
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+├── src
+│   ├── App.css
+│   ├── App.js                        // 主页
+│   ├── actions                        // 定义Redux的各种action
+│   ├── api                                // 公用API(CRUD)
+│   ├── assets                        // 公用静态资源
+│   ├── components                // 组件
+│   ├── pages                            // 完整页面
+│   ├── configureStore.js // Redux的Store配置文件
+│   ├── constants.js            // 存放常量
+│   ├── history.js                // 创建游览器history
+│   ├── index.js                    // 入口
+│   └── reducer                        // Redux的reducer
+└── yarn.lock
+</code></pre>
+<p>ME.md<br>├── app.js                    // 入口<br>├── config                    // 公共配置文件<br>│   └── keys.js<br>├── middleware            // 自定义的中间件<br>│   └── OAuth.js<br>├── models                    // 数据库中的对应实体<br>│   ├── Auth.js<br>│   ├── Note.js<br>│   └── User.js<br>├── package.json<br>├── routes                    // 定义路由(Restful)<br>│   └── api<br>└── yarn.lock<br><code>`</code></p>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><p>全部采用<code>Restful</code>风格,数据传输采用<code>JSON</code>格式</p>
+<h3 id="笔记模块"><a href="#笔记模块" class="headerlink" title="笔记模块"></a>笔记模块</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>请求类型</th>
+<th>路径</th>
+<th>参数类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>笔记测试接口</td>
+<td>GET</td>
+<td>api/notes/test</td>
+<td></td>
+</tr>
+<tr>
+<td>所有笔记</td>
+<td>GET</td>
+<td>api/notes</td>
+<td></td>
+</tr>
+<tr>
+<td>添加笔记</td>
+<td>POST</td>
+<td>api/notes</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>根据id获取笔记</td>
+<td>GET</td>
+<td>api/notes/:id</td>
+<td></td>
+</tr>
+<tr>
+<td>更新笔记</td>
+<td>PATCH</td>
+<td>api/notes</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>根据所有者id获取他的所有笔记</td>
+<td>GET</td>
+<td>Api/notes/owner/:ownerId</td>
+<td></td>
+</tr>
+<tr>
+<td>删除笔记</td>
+<td>DELETE</td>
+<td>api/notes/:id</td>
+</tr>
+</tbody>
+</table>
+<h3 id="用户模块"><a href="#用户模块" class="headerlink" title="用户模块"></a>用户模块</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>请求类型</th>
+<th>路径</th>
+<th>传输类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户测试接口</td>
+<td>GET</td>
+<td>api/users/test</td>
+<td></td>
+</tr>
+<tr>
+<td>获取用户详情</td>
+<td>GET</td>
+<td>api/users/:id</td>
+<td></td>
+</tr>
+<tr>
+<td>新用户注册</td>
+<td>POST</td>
+<td>api/users/register</td>
+<td>暂时废弃</td>
+</tr>
+<tr>
+<td>修改用户信息</td>
+<td>PATCH</td>
+<td>api/users/:id</td>
+<td>{newUser}</td>
+</tr>
+</tbody>
+</table>
+<h2 id="系统功能"><a href="#系统功能" class="headerlink" title="系统功能"></a>系统功能</h2><h4 id="用户个人模块"><a href="#用户个人模块" class="headerlink" title="用户个人模块"></a>用户个人模块</h4><ul>
+<li>修改个人信息</li>
+<li>使用Github账户一键登录</li>
+</ul>
+<h4 id="笔记仓库模块"><a href="#笔记仓库模块" class="headerlink" title="笔记仓库模块"></a>笔记仓库模块</h4><ul>
+<li>对属于自己的笔记的增、删、改操作</li>
+<li>查看笔记</li>
+</ul>
+<h4 id="笔记市场模块"><a href="#笔记市场模块" class="headerlink" title="笔记市场模块"></a>笔记市场模块</h4><ul>
+<li>查看所有用户共享的笔记</li>
+<li>点赞</li>
+</ul>
+<h2 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h2><ul>
+<li>桌面端:上中下三栏式布局</li>
+<li>移动端:已适配</li>
+</ul>
+<h2 id="OAuth2-Github"><a href="#OAuth2-Github" class="headerlink" title="OAuth2 + Github"></a>OAuth2 + Github</h2><p><img src="https://oauth.net/images/oauth-2-sm.png" alt="oauth-2-sm"></p>
+<p><a href="https://oauth.net/2/" target="_blank" rel="noopener">https://oauth.net/2/</a></p>
+<p>原本为了”偷懒”,没想到成了最坑、最费时间的点…</p>
+<p>(菜是原罪)</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2014/bg2014051203.png" alt="bg2014051203"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/文档/" rel="tag"># 文档</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2019/05/19/翻译-ES6中数组去重的三种方法/" rel="prev" title="[ 翻译 ] ES6中数组去重的三种方法">
+      <i class="fa fa-chevron-left"></i> [ 翻译 ] ES6中数组去重的三种方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2019/06/13/期末Web答辩后的思索/" rel="next" title="期末Web项目答辩后的思索">
+      期末Web项目答辩后的思索 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#想法-amp-相关介绍"><span class="nav-number">1.</span> <span class="nav-text">想法&amp;相关介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目地址"><span class="nav-number">2.</span> <span class="nav-text">项目地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术选型"><span class="nav-number">3.</span> <span class="nav-text">技术选型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前端"><span class="nav-number">3.1.</span> <span class="nav-text">前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后端"><span class="nav-number">3.2.</span> <span class="nav-text">后端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">3.3.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件结构"><span class="nav-number">4.</span> <span class="nav-text">文件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前端-1"><span class="nav-number">4.1.</span> <span class="nav-text">前端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">5.</span> <span class="nav-text">API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#笔记模块"><span class="nav-number">5.1.</span> <span class="nav-text">笔记模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户模块"><span class="nav-number">5.2.</span> <span class="nav-text">用户模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统功能"><span class="nav-number">6.</span> <span class="nav-text">系统功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用户个人模块"><span class="nav-number">6.0.1.</span> <span class="nav-text">用户个人模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#笔记仓库模块"><span class="nav-number">6.0.2.</span> <span class="nav-text">笔记仓库模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#笔记市场模块"><span class="nav-number">6.0.3.</span> <span class="nav-text">笔记市场模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布局"><span class="nav-number">7.</span> <span class="nav-text">布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OAuth2-Github"><span class="nav-number">8.</span> <span class="nav-text">OAuth2 + Github</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hytonight云息</p>
+  <div class="site-description" itemprop="description">云之息，浴乎沂，风乎舞雩，咏而归</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HytonightYX" title="GitHub → https://github.com/HytonightYX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:whosiyuan@qq.com" title="E-Mail → mailto:whosiyuan@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hytonight云息</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+<script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script>
+<script src="/blog/js/schemes/muse.js"></script>
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

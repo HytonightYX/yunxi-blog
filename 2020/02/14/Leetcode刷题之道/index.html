@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yunxi.site","root":"/blog/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Leetcode 刷题之道这几天高强度刷剑指 Offer，也算是算法入门题组。刚开始还蛮痛苦的，另外自己还有一段参加 ACM 集训被各路大神吊打的惨痛回忆。但是刷多了竟然有点爽，近期准备正式进军 LeetCode 了。但是又对自己的方法产生了怀疑，刚好在 YouTube 搜到了这个视频（微软工程师：蔡克贺与他的 Leetcode 刷题之道），做了一些笔记。">
+<meta name="keywords" content="LeetCode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode刷题之道">
+<meta property="og:url" content="http://yunxi.site/blog/2020/02/14/Leetcode刷题之道/index.html">
+<meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="Leetcode 刷题之道这几天高强度刷剑指 Offer，也算是算法入门题组。刚开始还蛮痛苦的，另外自己还有一段参加 ACM 集训被各路大神吊打的惨痛回忆。但是刷多了竟然有点爽，近期准备正式进军 LeetCode 了。但是又对自己的方法产生了怀疑，刚好在 YouTube 搜到了这个视频（微软工程师：蔡克贺与他的 Leetcode 刷题之道），做了一些笔记。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-02-14T12:35:48.076Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Leetcode刷题之道">
+<meta name="twitter:description" content="Leetcode 刷题之道这几天高强度刷剑指 Offer，也算是算法入门题组。刚开始还蛮痛苦的，另外自己还有一段参加 ACM 集训被各路大神吊打的惨痛回忆。但是刷多了竟然有点爽，近期准备正式进军 LeetCode 了。但是又对自己的方法产生了怀疑，刚好在 YouTube 搜到了这个视频（微软工程师：蔡克贺与他的 Leetcode 刷题之道），做了一些笔记。">
+
+<link rel="canonical" href="http://yunxi.site/blog/2020/02/14/Leetcode刷题之道/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Leetcode刷题之道 | Hytonight云息</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?57d30e6a21aa4345d6c1d19d35e02e03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hytonight云息</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yunxi.site/blog/2020/02/14/Leetcode刷题之道/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="Hytonight云息">
+      <meta itemprop="description" content="云之息，浴乎沂，风乎舞雩，咏而归">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hytonight云息">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Leetcode刷题之道
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-02-14 20:33:53 / Modified: 20:35:48" itemprop="dateCreated datePublished" datetime="2020-02-14T20:33:53+08:00">2020-02-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Leetcode-刷题之道"><a href="#Leetcode-刷题之道" class="headerlink" title="Leetcode 刷题之道"></a>Leetcode 刷题之道</h1><p>这几天高强度刷剑指 Offer，也算是算法入门题组。刚开始还蛮痛苦的，另外自己还有一段参加 ACM 集训被各路大神吊打的惨痛回忆。但是刷多了竟然有点爽，近期准备正式进军 LeetCode 了。但是又对自己的方法产生了怀疑，刚好在 YouTube 搜到了<a href="https://www.youtube.com/watch?v=Z3KrtEaw0vI&amp;t=1055s" target="_blank" rel="noopener">这个视频（微软工程师：蔡克贺与他的 Leetcode 刷题之道）</a>，做了一些笔记。</p>
+<a id="more"></a>
+<p><strong>对于刚开始刷题的人有什么建议？</strong></p>
+<blockquote>
+<p>第一遍刷，很多题目做不出来很正常。看别人答案，理解之后再刷一两遍就慢慢熟练了。</p>
+</blockquote>
+<p><strong>心态怎么把握？怎么鼓励刷到心态爆炸的人（我）？</strong></p>
+<blockquote>
+<p>这种感受大多数人都会有，不要气馁。设定大厂目标，告诉自己要进大厂必须刷题，逃不掉。北美的情况是，要进 FLAG，刷题刷个两三遍太正常了。不要给自己退路，逃避没有用，早晚是要面对的。</p>
+</blockquote>
+<p><strong>很多人都是有完美主义倾向的，会想很多东西，比如“我该如何开始？怎么刷是最优的？”。众说纷纭，比如有的说要按照标签刷，有的说要按照难度刷，按序号刷等等。蔡大神有什么建议吗？</strong></p>
+<blockquote>
+<p>我第一次刷肯定是从简单到难来刷，这样更容易有成就感，培养信心。当然做不出来也很正常，即使是 Easy 难度也可能卡住。第二遍可以按照类别来刷，比如图、二叉树等等。</p>
+</blockquote>
+<p><strong>现在 LeetCode 已经有 600+（现在已经 1000+）了。从你的角度来说，这么多题目需要都刷两遍吗？</strong></p>
+<blockquote>
+<p>这个不好说。其实面试也是有很大运气成分的。但是<strong>三个难度的题都要刷至少一半</strong>吧，这个不过分吧。其实说慢也就是第一遍慢，第二第三遍每天都可以刷个十几二十道，很快的。很多大厂面试也是拿原题来考。</p>
+</blockquote>
+<p><strong>但是很多同学时间确实不够，蔡大神是建议他们刷 1 ～ 300 这样的经典题，还是建议刷后面的新题目？</strong></p>
+<blockquote>
+<p>还是按照类别，每个类别，比如字符串、链表、DP 之类的，都要去接触。如果熟练了就去总结，比如一维 DP 如何优化这种，不用继续刷这个类别的题目了。意思就是，刷部分题，去做总结，理解透。然后薄弱点要多花时间，比如 DP 这种更要多花时间。</p>
+</blockquote>
+<p><strong>现场面试的问题。谷歌面试官经常会看到一些刷题痕迹很严重的人，比如题目一上来马上就秒了。那么你对这种现场面试有什么看法？</strong></p>
+<blockquote>
+<p>我刚开始也找了十几个公司。其实大公司都有套路，面试官也清楚你来面试之前肯定刷过题，你第一遍能做出来 bug-free 的题解也蛮正常，但是大多数面试官都更<strong>看重你是如何思考解决这个问题</strong>的，而不是你仅仅背下了答案。</p>
+</blockquote>
+<p><strong>嗯，也就是说很多小伙伴都太看重题量了，却没有仔细去钻研题目背后的思想。</strong></p>
+<p><strong>你是刷到什么阶段能做到看到题目就能想出题解的呢？比如你拿到题目，就能知道这个题目用 DP 来做。</strong></p>
+<blockquote>
+<p>第一遍刷不用考虑这么多，可以看别人答案把题目做出来。第二遍的时候看到题目，你就会有思路。这是用经验和时间来堆积的。</p>
+</blockquote>
+<p><strong>你现在慢慢用 Java 刷题了？</strong></p>
+<blockquote>
+<p>嗯，刚开始是用 Python，但是现在工作需要，所以也是为了趁这个机会熟练语言。其实更重要的还是解题思路，一开始用 Python 也是这个原因。Python 代码量少，我就能用更多的时间去思考。</p>
+</blockquote>
+<p><strong>你当时面试微软，你觉得难不难？</strong></p>
+<blockquote>
+<p>但是面试给了两道题，一道是 Easy，一道 Medium。后来 4 轮是每人两道，也是这个配置。</p>
+</blockquote>
+<p><strong>我有些朋友是在职工程师，他们接触的领域其实和算法数据结构接触比较少。他们现在找新工作也要开始刷题。对于这种情况，你有什么时间规划方面的建议？</strong></p>
+<blockquote>
+<p>辞职去刷题很不划算。最好是边工作边刷题，先投简历吧，其实对方也不是完全看你算法的，也会看很大一部分工程经验。</p>
+</blockquote>
+<p><strong>你实际工作中有多少成分是用到这些刷题的东西的呢</strong>？</p>
+<blockquote>
+<p>我工作时间也不是很长。但是没种数据结构在工作中肯定都用得上，比如图、二叉树等等。这些基本功扎实的话，对于工作是肯定有作用的。</p>
+</blockquote>
+<p><strong>你是如何准备系统设计的？</strong></p>
+<blockquote>
+<p>这两年做大数据比较多，但是我面试的时候对方会问你如何设计一个 Pipe line，比如数据来了之后要怎么分发，做个负载均衡啊，消息队列啊等等。再比如技术选型之类啊。有工程经验会好很多。</p>
+</blockquote>
+<p><strong>面试的时候也会有很多变种，比如你做完 two sum 之后面试官突然加了个条件进去你就懵逼了，对于这种情况你是什么看法，有什么建议？</strong></p>
+<blockquote>
+<p>这个我觉得还是基本功的问题。当然如果你工程经验比较好，面试的时候算法题没有完全写对也是 ok 的。当然刷题的时候也要主动深入一点想问题，比如 two sum 做完了，也要主动想一下 3 sum，4 sum 怎么做，可能有什么样的变种。也要把别人更好的答案多看一看。</p>
+<p>其实面试官也看出来的，你是只为了做一道题而做一道题，还是做完了会主动去举一反三。</p>
+</blockquote>
+<p><strong>我发现你写的代码都很精炼很舒服，所以想问问你做题的时候对代码的态度是怎样的？</strong></p>
+<blockquote>
+<p>我写题的时候也参考了很多别人的代码。</p>
+<p>那个一行代码的可能面试官会青睐，但是你写工程代码不要这么写，可读性太差。</p>
+</blockquote>
+<p><strong>现在网上也会有很多培训班，比如什么九章算法，你觉得有没有必要去报这个培训班？</strong></p>
+<blockquote>
+<p>这个看自己吧。如果自己毅力足够也愿意钻研，是完全可以自学的。当然如果你基础不好，报个费用不高的班也是可以的。因为里面的老师还是有经验的，可以节省很多时间。有同学一起的话也比较容易坚持下去。</p>
+</blockquote>
+<p><strong>最后还有几个问题。有的同学在刷题和项目之间有一个抉择。想问问你但是在投递简历的时候是不是已经有自己的项目了呢？</strong></p>
+<blockquote>
+<p>我当时也有实习经验。但是应届生会更看重你的基本功，算法等等。有了基础后面工程经验都是可以培养的。当然如果你的项目很有影响力，比如大型开源项目有贡献等等，这个还是很亮眼的。如果没有的话，还是需要多刷刷题的。</p>
+<p>换句话说，如果你能在那些很厉害的开源项目里做贡献，那么给你时间去刷 LeetCode 你也是没问题的。</p>
+</blockquote>
+<p><strong>一位同学是这么问的，我们应该是 DFS 还是 BFS 去了解一个题型？</strong></p>
+<blockquote>
+<p>这就是学的广还是学的深的问题。我觉得对于 LeetCode 来说，200+ 道题目就是一个初步的广度，然后要去要去深挖。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/LeetCode/" rel="tag"># LeetCode</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2020/02/14/CSS回顾（一）基础/" rel="prev" title="CSS回顾（一）基础">
+      <i class="fa fa-chevron-left"></i> CSS回顾（一）基础
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Leetcode-刷题之道"><span class="nav-number">1.</span> <span class="nav-text">Leetcode 刷题之道</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hytonight云息</p>
+  <div class="site-description" itemprop="description">云之息，浴乎沂，风乎舞雩，咏而归</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HytonightYX" title="GitHub → https://github.com/HytonightYX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:whosiyuan@qq.com" title="E-Mail → mailto:whosiyuan@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hytonight云息</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+<script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script>
+<script src="/blog/js/schemes/muse.js"></script>
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

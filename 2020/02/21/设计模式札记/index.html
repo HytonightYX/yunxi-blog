@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yunxi.site","root":"/blog/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="掘金小册《JavaScript 设计模式核⼼原理与应⽤实践》的阅读笔记。私以为，所谓学习编程，就是去学习前人留下的“Best Practice”，而设计模式就是这样一种最佳实践。但个人认为学习设计模式的特殊之处是，只有在接触了大量的业务场景，写了大量的代码之后才能体会到其所带来的魅力，并且意识到，原来我们在用的东西，早已蕴含了大量的设计模式。">
+<meta name="keywords" content="设计模式,笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 设计模式札记">
+<meta property="og:url" content="http://yunxi.site/blog/2020/02/21/设计模式札记/index.html">
+<meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="掘金小册《JavaScript 设计模式核⼼原理与应⽤实践》的阅读笔记。私以为，所谓学习编程，就是去学习前人留下的“Best Practice”，而设计模式就是这样一种最佳实践。但个人认为学习设计模式的特殊之处是，只有在接触了大量的业务场景，写了大量的代码之后才能体会到其所带来的魅力，并且意识到，原来我们在用的东西，早已蕴含了大量的设计模式。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc3pp2q13aj30bh0lhq81.jpg">
+<meta property="og:updated_time" content="2020-02-21T15:03:05.876Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 设计模式札记">
+<meta name="twitter:description" content="掘金小册《JavaScript 设计模式核⼼原理与应⽤实践》的阅读笔记。私以为，所谓学习编程，就是去学习前人留下的“Best Practice”，而设计模式就是这样一种最佳实践。但个人认为学习设计模式的特殊之处是，只有在接触了大量的业务场景，写了大量的代码之后才能体会到其所带来的魅力，并且意识到，原来我们在用的东西，早已蕴含了大量的设计模式。">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc3pp2q13aj30bh0lhq81.jpg">
+
+<link rel="canonical" href="http://yunxi.site/blog/2020/02/21/设计模式札记/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>JavaScript 设计模式札记 | Hytonight云息</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?57d30e6a21aa4345d6c1d19d35e02e03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hytonight云息</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yunxi.site/blog/2020/02/21/设计模式札记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="Hytonight云息">
+      <meta itemprop="description" content="云之息，浴乎沂，风乎舞雩，咏而归">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hytonight云息">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript 设计模式札记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-02-21 23:02:15 / Modified: 23:03:05" itemprop="dateCreated datePublished" datetime="2020-02-21T23:02:15+08:00">2020-02-21</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/blog/2020/02/21/设计模式札记/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2020/02/21/设计模式札记/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>掘金小册《<a href="https://juejin.im/book/5c70fc83518825428d7f9dfb" target="_blank" rel="noopener">JavaScript 设计模式核⼼原理与应⽤实践</a>》的阅读笔记。私以为，所谓学习编程，就是去学习前人留下的“Best Practice”，而设计模式就是这样一种最佳实践。但个人认为学习设计模式的特殊之处是，只有在接触了大量的业务场景，写了大量的代码之后才能体会到其所带来的魅力，并且意识到，原来我们在用的东西，早已蕴含了大量的设计模式。</p>
+<a id="more"></a>
+<h3 id="SOLID-设计原则"><a href="#SOLID-设计原则" class="headerlink" title="SOLID 设计原则"></a>SOLID 设计原则</h3><blockquote>
+<p>“SOLID” 是由罗伯特·C·马丁在 21 世纪早期引入的记忆术首字母缩略字，指代了面向对象编程和面向对象设计的五个基本原则。</p>
+</blockquote>
+<p>设计原则是设计模式的指导理论，它可以帮助我们规避不良的软件设计。SOLID 指代的五个基本原则分别是：</p>
+<ul>
+<li><strong>单一功能原则（Single Responsibility Principle）</strong></li>
+<li><strong>开放封闭原则（Opened Closed Principle）</strong></li>
+<li>里式替换原则（Liskov Substitution Principle）</li>
+<li>接口隔离原则（Interface Segregation Principle）</li>
+<li>依赖反转原则（Dependency Inversion Principle）</li>
+</ul>
+<p>JavaScript 中的设计模式主要围绕前两个展开。设计模式的核心思想，就是“封装变化”。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybply1gc3pp2q13aj30bh0lhq81.jpg" alt="image-20200221082216584"></p>
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><h3 id="先来看看构造器模式"><a href="#先来看看构造器模式" class="headerlink" title="先来看看构造器模式"></a>先来看看构造器模式</h3><pre><code class="javascript">function User(name, age, career) {
+  (this.name = name), (this.age = age), (this.career = career);
+}
+// ES6
+class _User {
+  constructor(name, age, career) {
+    (this.name = name), (this.age = age), (this.career = career);
+  }
+}
+const user = new User(name, age, career);
+</code></pre>
+<h3 id="再来看看简单工厂模式"><a href="#再来看看简单工厂模式" class="headerlink" title="再来看看简单工厂模式"></a>再来看看简单工厂模式</h3><p>工厂模式其实就是<strong>将创建对象的过程单独封装</strong>。</p>
+<p>对于使用者来说，只需要输入必要的参数，其余的事情让工厂内部去做，比如根据你的工种给你分配任务。你还是和以前一样<strong>无脑传参</strong>就行了！</p>
+<pre><code class="javascript">function User(name , age, career, work) {
+    this.name = name
+    this.age = age
+    this.career = career
+    this.work = work
+}
+
+function UserFactory(name, age, career) {
+    let work
+    switch(career) {
+        case &#39;coder&#39;:
+            work =  [&#39;写代码&#39;,&#39;写系分&#39;, &#39;修Bug&#39;]
+            break
+        case &#39;product manager&#39;:
+            work = [&#39;订会议室&#39;, &#39;写PRD&#39;, &#39;催更&#39;]
+            break
+        case &#39;boss&#39;:
+            work = [&#39;喝茶&#39;, &#39;看报&#39;, &#39;见客户&#39;]
+        case &#39;xxx&#39;:
+            // 其它工种的职责分配
+            ...
+
+    return new User(name, age, career, work)
+}
+</code></pre>
+<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><p><strong>遵守开放封闭原则</strong>；</p>
+<p>四个关键角色</p>
+<ul>
+<li><strong>抽象工厂（抽象类，它不能被用于生成具体实例）：</strong> 用于声明最终目标产品的共性。在一个系统里，抽象工厂可以有多个（大家可以想象我们的手机厂后来被一个更大的厂收购了，这个厂里除了手机抽象类，还有平板、游戏机抽象类等等），每一个抽象工厂对应的这一类的产品，被称为“产品族”。</li>
+<li><strong>具体工厂（用于生成产品族里的一个具体的产品）：</strong> 继承自抽象工厂、实现了抽象工厂里声明的那些方法，用于创建具体的产品的类。</li>
+<li><strong>抽象产品（抽象类，它不能被用于生成具体实例）：</strong> 上面我们看到，具体工厂里实现的接口，会依赖一些类，这些类对应到各种各样的具体的细粒度产品（比如操作系统、硬件等），这些具体产品类的共性各自抽离，便对应到了各自的抽象产品类。</li>
+<li><strong>具体产品（用于生成产品族里的一个具体的产品所依赖的更细粒度的产品）：</strong> 比如我们上文中具体的一种操作系统、或具体的一种硬件等。</li>
+</ul>
+<pre><code class="javascript">class OS {
+  controlHardWare() {
+    throw new Error(&quot;抽象产品方法不允许直接调用，你需要将我重写！&quot;);
+  }
+}
+
+// 定义具体操作系统的具体产品类
+class AndroidOS extends OS {
+  controlHardWare() {
+    console.log(&quot;我会用安卓的方式去操作硬件&quot;);
+  }
+}
+
+class AppleOS extends OS {
+  controlHardWare() {
+    console.log(&quot;我会用🍎的方式去操作硬件&quot;);
+  }
+}
+
+let os = new OS();
+os.controlHardWare();
+</code></pre>
+<h4 id="业务场景"><a href="#业务场景" class="headerlink" title="业务场景"></a>业务场景</h4><p>Koa.js 封装了异常类，包含抽象工厂类（基础错误），然后别的错误类（比如登陆错误类，认证错误类）来继承它，并改写其方法；符合开闭原则。</p>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><p>保证一个类仅有一个实例。要做到这一点，就需要构造函数<strong>具备判断自己是否已经创建过一个实例</strong>的能力。</p>
+<p>可以用静态方法（其实也可以直接写入构造函数的函数体里）：</p>
+<pre><code class="javascript">class Singleton {
+  show() {
+    console.log(&quot;我是一个单例&quot;);
+  }
+
+  static getInstance() {
+    if (!Singleton.instance) {
+      SingleDog.instance = new Singleton();
+    }
+
+    return Singleton.instance;
+  }
+}
+
+const s1 = Singleton.getInstance();
+const s2 = Singleton.getInstance();
+
+// true
+console.log(s1 === s2);
+</code></pre>
+<p>也可以用闭包：</p>
+<pre><code class="javascript">class Singleton {}
+Singleton.getInstance = (function() {
+  let instance = null;
+  return function() {
+    if (!instance) {
+      instance = new Singleton();
+    }
+    return instance;
+  };
+})();
+
+const s1 = Singleton.getInstance();
+const s2 = Singleton.getInstance();
+
+// true
+console.log(s1 === s2);
+</code></pre>
+<h3 id="业务场景-1"><a href="#业务场景-1" class="headerlink" title="业务场景"></a>业务场景</h3><h4 id="单例-Storage"><a href="#单例-Storage" class="headerlink" title="单例 Storage"></a>单例 Storage</h4><blockquote>
+<p>实现 Storage，使得该对象为单例，基于 localStorage 进行封装。实现方法 setItem(key,value) 和 getItem(key)。</p>
+</blockquote>
+<p><strong>静态方法版</strong></p>
+<pre><code class="javascript">class MyStorage {
+  getItem(key) {
+    return localStorage.getItem(key);
+  }
+
+  setItem(key, value) {
+    return localStorage.setItem(key, value);
+  }
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new MyStorage();
+    }
+    return this.instance;
+  }
+}
+
+const s1 = MyStorage.getInstance();
+const s2 = MyStorage.getInstance();
+
+s1.setItem(&quot;name&quot;, &quot;Kirto&quot;);
+console.log(s2.getItem(&quot;name&quot;)); // Kirto
+
+s2.setItem(&quot;name&quot;, &quot;Asuna&quot;);
+console.log(s1.getItem(&quot;name&quot;)); // Asuna
+</code></pre>
+<blockquote>
+<p>实现全局唯一的弹出 Modal。</p>
+</blockquote>
+<p><strong>闭包版本</strong></p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+    &lt;style&gt;
+      #modal {
+        height: 200px;
+        width: 200px;
+        line-height: 200px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid #000;
+        text-align: center;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;button id=&quot;open&quot;&gt;打开&lt;/button&gt;
+    &lt;button id=&quot;close&quot;&gt;关闭&lt;/button&gt;
+
+    &lt;script&gt;
+      const Modal = (function() {
+        let modal = null;
+        return function() {
+          if (!modal) {
+            modal = document.createElement(&quot;div&quot;);
+            modal.innerHTML = &quot;我是单例弹出框&quot;;
+            modal.id = &quot;modal&quot;;
+            modal.style.display = &quot;none&quot;;
+            document.body.appendChild(modal);
+          }
+          return modal;
+        };
+      })();
+
+      document.getElementById(&quot;open&quot;).addEventListener(&quot;click&quot;, function() {
+        const modal = new Modal();
+        if (modal) {
+          modal.style.display = &quot;block&quot;;
+        }
+      });
+
+      document.getElementById(&quot;close&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+        const modal = new Modal();
+        if (modal) {
+          modal.style.display = &quot;none&quot;;
+        }
+      });
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h2><p>原型模式不仅是一种设计模式，它还是一种<strong>编程范式</strong>（programming paradigm），是 JavaScript 面向对象系统实现的根基。</p>
+<p>在 Java 等强类型语言中，原型模式的出现是为了实现类型之间的解耦。而 JavaScript 本身类型就比较模糊，不存在类型耦合的问题，所以说咱们平时<strong>根本不会刻意地去使用原型模式</strong>。因此我们此处不必强行把原型模式当作一种设计模式去理解，把它作为一种编程范式来讨论会更合适。</p>
+<p>原型编程范式的核心思想就是<strong>利用实例来描述对象，用实例作为定义对象和继承的基础</strong>。在 JavaScript 中，原型编程范式的体现就是<strong>基于原型链的继承</strong>。这其中，对原型、原型链的理解是关键。</p>
+<pre><code class="javascript">// 创建一个Dog构造函数
+function Dog(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+Dog.prototype.eat = function() {
+  console.log(&quot;肉骨头真好吃&quot;);
+};
+
+// 使用Dog构造函数创建dog实例
+const dog = new Dog(&quot;旺财&quot;, 3);
+
+console.log(&quot;dog.__proto__ === Dog.prototype&quot;, dog.__proto__ === Dog.prototype); // true
+
+console.log(
+  &quot;dog.__proto__ === Dog.prototype.constructor.prototype&quot;,
+  dog.__proto__ === Dog.prototype.constructor.prototype
+); //true
+</code></pre>
+<p>几乎所有 JavaScript 中的对象都是位于原型链顶端的 Object 的实例，除了<code>Object.prototype</code>（当然，如果我们手动用<code>Object.create(null)</code>创建一个没有任何原型的对象，那它也不是 Object 的实例）。</p>
+<h3 id="对象的深拷贝"><a href="#对象的深拷贝" class="headerlink" title="对象的深拷贝"></a>对象的深拷贝</h3><pre><code class="javascript">// 调用深拷贝方法，若属性为值类型，则直接返回；若属性为引用类型，则递归遍历。
+// 这就是我们在解这一类题时的核心的方法。
+function deepClone(obj) {
+  if (typeof obj !== &quot;object&quot; || obj === null) {
+    return null;
+  }
+  // 默认结果是对象
+  let copy = {};
+  // 对象是数组，结果也应该是数组
+  if (Object.prototype.toString.call(obj) === &quot;[object Array]&quot;) {
+    copy = [];
+  }
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      copy[key] = deepClone(obj[key]);
+    }
+  }
+  return copy;
+}
+</code></pre>
+<h2 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a>装饰器模式</h2><p>装饰器模式，又名装饰者模式。它的定义是“在不改变原对象的基础上，通过对其进行包装拓展，使原有对象可以满足用户的更复杂需求”。</p>
+<p>“只添加，不修改”。</p>
+<h3 id="ES7-中的装饰器"><a href="#ES7-中的装饰器" class="headerlink" title="ES7 中的装饰器"></a>ES7 中的装饰器</h3><h4 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h4><p><strong>类装饰器</strong></p>
+<pre><code class="javascript">function classDecorator(target) {
+  target.hasDecorator = true;
+  return target;
+}
+
+// 将装饰器“安装”到Button类上
+@classDecorator
+class Button {
+  // Button类的相关逻辑
+}
+</code></pre>
+<p><strong>方法装饰器</strong></p>
+<pre><code class="javascript">// 参数中的 target 变成了 Button.prototype
+function funcDecorator(target, name, descriptor) {
+  let originalMethod = descriptor.value;
+  descriptor.value = function() {
+    console.log(&quot;我是Func的装饰器逻辑&quot;);
+    return originalMethod.apply(this, arguments);
+  };
+  return descriptor;
+}
+
+class Button {
+  @funcDecorator
+  onClick() {
+    console.log(&quot;我是Func的原有逻辑&quot;);
+  }
+}
+</code></pre>
+<h4 id="装饰器函数调用的时机"><a href="#装饰器函数调用的时机" class="headerlink" title="装饰器函数调用的时机"></a><strong>装饰器函数调用的时机</strong></h4><p>装饰器函数执行的时候，Button 实例还并不存在。这是因为实例是在我们的代码<strong>运行时</strong>动态生成的，而装饰器函数则是在<strong>编译阶段</strong>就执行了。所以说装饰器函数真正能触及到的，就只有类这个层面上的对象。</p>
+<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><p>还好李雷学过设计模式，他立刻联想到了专门为我们<strong>抹平差异</strong>的适配器模式。要把老代码迁移到新接口，不一定要挨个儿去修改每一次的接口调用——正如我们想用 iPhoneX + 旧耳机听歌，不必挨个儿去改造耳机一样，我们只需要在引入接口时进行<strong>一次适配</strong>，便可轻松地 cover 掉业务里可能会有的<strong>多次调用</strong>（具体的解析在注释里）：</p>
+<p>axios 完美地<strong>抹平了两种环境下 api 的调用差异</strong>，靠的正是对适配器模式的灵活运用。</p>
+<p>这么一来，通过 axios 发起跨平台的网络请求，不仅调用的接口名是同一个，连入参、出参的格式都只需要掌握同一套。这导致它的学习成本非常低，开发者看了文档就能上手；同时因为足够简单，在使用的过程中也不容易出错，带来了极佳的用户体验，axios 也因此越来越流行。</p>
+<p>这正是一个好的适配器的自我修养——把变化留给自己，把统一留给用户。在此处，所有关于 http 模块、关于 xhr 的实现细节，全部被 Adapter 封装进了自己复杂的底层逻辑里，暴露给用户的都是十分简单的统一的东西——统一的接口，统一的入参，统一的出参，统一的规则。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/设计模式/" rel="tag"># 设计模式</a>
+              <a href="/blog/tags/笔记/" rel="tag"># 笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2020/02/14/Leetcode刷题之道/" rel="prev" title="Leetcode刷题之道">
+      <i class="fa fa-chevron-left"></i> Leetcode刷题之道
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SOLID-设计原则"><span class="nav-number">1.</span> <span class="nav-text">SOLID 设计原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-number"></span> <span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来看看构造器模式"><span class="nav-number">1.</span> <span class="nav-text">先来看看构造器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再来看看简单工厂模式"><span class="nav-number">2.</span> <span class="nav-text">再来看看简单工厂模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number"></span> <span class="nav-text">抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#业务场景"><span class="nav-number">0.1.</span> <span class="nav-text">业务场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式"><span class="nav-number"></span> <span class="nav-text">单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#业务场景-1"><span class="nav-number">1.</span> <span class="nav-text">业务场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单例-Storage"><span class="nav-number">1.1.</span> <span class="nav-text">单例 Storage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型模式"><span class="nav-number"></span> <span class="nav-text">原型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的深拷贝"><span class="nav-number">1.</span> <span class="nav-text">对象的深拷贝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰器模式"><span class="nav-number"></span> <span class="nav-text">装饰器模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES7-中的装饰器"><span class="nav-number">1.</span> <span class="nav-text">ES7 中的装饰器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类型"><span class="nav-number">1.1.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#装饰器函数调用的时机"><span class="nav-number">1.2.</span> <span class="nav-text">装饰器函数调用的时机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适配器模式"><span class="nav-number"></span> <span class="nav-text">适配器模式</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hytonight云息</p>
+  <div class="site-description" itemprop="description">云之息，浴乎沂，风乎舞雩，咏而归</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HytonightYX" title="GitHub → https://github.com/HytonightYX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:whosiyuan@qq.com" title="E-Mail → mailto:whosiyuan@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hytonight云息</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+<script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script>
+<script src="/blog/js/schemes/muse.js"></script>
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : false,
+      appId      : 'poBG3RLh2xdaKYTvOB9yLgTP-gzGzoHsz',
+      appKey     : 'uKHvvpz0NYgD3n5uxJKWUdVE',
+      placeholder: "Lorem Ipsum...",
+      avatar     : 'mp',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

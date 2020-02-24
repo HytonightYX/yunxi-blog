@@ -29,7 +29,7 @@
 <meta property="og:description" content="掘金小册《JavaScript 设计模式核⼼原理与应⽤实践》的阅读笔记。私以为，所谓学习编程，就是去学习前人留下的“Best Practice”，而设计模式就是这样一种最佳实践。但个人认为学习设计模式的特殊之处是，只有在接触了大量的业务场景，写了大量的代码之后才能体会到其所带来的魅力，并且意识到，原来我们在用的东西，早已蕴含了大量的设计模式。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc3pp2q13aj30bh0lhq81.jpg">
-<meta property="og:updated_time" content="2020-02-21T15:03:05.876Z">
+<meta property="og:updated_time" content="2020-02-24T08:14:18.211Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 设计模式札记">
 <meta name="twitter:description" content="掘金小册《JavaScript 设计模式核⼼原理与应⽤实践》的阅读笔记。私以为，所谓学习编程，就是去学习前人留下的“Best Practice”，而设计模式就是这样一种最佳实践。但个人认为学习设计模式的特殊之处是，只有在接触了大量的业务场景，写了大量的代码之后才能体会到其所带来的魅力，并且意识到，原来我们在用的东西，早已蕴含了大量的设计模式。">
@@ -177,10 +177,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-02-21 23:02:15 / Modified: 23:03:05" itemprop="dateCreated datePublished" datetime="2020-02-21T23:02:15+08:00">2020-02-21</time>
+              <time title="Created: 2020-02-21 23:02:15" itemprop="dateCreated datePublished" datetime="2020-02-21T23:02:15+08:00">2020-02-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-24 16:14:18" itemprop="dateModified" datetime="2020-02-24T16:14:18+08:00">2020-02-24</time>
+              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -509,6 +515,125 @@ class Button {
 <p>axios 完美地<strong>抹平了两种环境下 api 的调用差异</strong>，靠的正是对适配器模式的灵活运用。</p>
 <p>这么一来，通过 axios 发起跨平台的网络请求，不仅调用的接口名是同一个，连入参、出参的格式都只需要掌握同一套。这导致它的学习成本非常低，开发者看了文档就能上手；同时因为足够简单，在使用的过程中也不容易出错，带来了极佳的用户体验，axios 也因此越来越流行。</p>
 <p>这正是一个好的适配器的自我修养——把变化留给自己，把统一留给用户。在此处，所有关于 http 模块、关于 xhr 的实现细节，全部被 Adapter 封装进了自己复杂的底层逻辑里，暴露给用户的都是十分简单的统一的东西——统一的接口，统一的入参，统一的出参，统一的规则。</p>
+<h2 id="观察者模式-🌿"><a href="#观察者模式-🌿" class="headerlink" title="观察者模式 🌿"></a>观察者模式 🌿</h2><p>观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个目标对象，当这个目标对象的状态发生变化时，会通知所有观察者对象，使它们能够自动更新。</p>
+<pre><code class="javascript">
+
+
+
+
+
+
+
+
+class Publisher {
+  constructor() {
+    this.observers = []
+    console.log(&#39;Publisher created&#39;)
+  }
+
+  // 增加订阅者
+  add(observer) {
+    console.log(&#39;Publisher.add invoked&#39;)
+    this.observers.push(observer)
+  }
+
+  // 移除订阅者
+  remove(observer) {
+    console.log(&#39;Publisher.remove invoked&#39;)
+    this.observers.forEach((item, i) =&gt; {
+      if (item === observer) {
+        this.observers.splice(i, 1)
+      }
+    })
+  }
+
+  // 通知所有订阅者
+  notify() {
+    console.log(&#39;Publisher.notify invoked&#39;)
+    this.observers.forEach(observer =&gt; {
+      observer.update(this)
+    })
+  }
+}
+
+class Observer {
+  constructor() {
+    console.log(&#39;Observer created&#39;)
+  }
+
+  update() {
+    console.log(&#39;Observer.update invoked&#39;)
+  }
+}
+
+class PrdPublisher extends Publisher {
+  constructor() {
+    super()
+    // 初始化需求文档
+    this.prdState = null
+    // 初始化订阅者为空
+    this.observers = []
+    console.log(&#39;PrdPublisher created&#39;)
+  }
+
+  // 该方法用于获取当前的 prdState 需求文档
+  getState() {
+    console.log(&#39;PrdPublisher.getState invoked&#39;)
+  }
+
+  setState(state) {
+    console.log(&#39;PrdPublisher.setState invoked&#39;)
+    // 修改需求文档
+    this.prdState = state
+    // 立即通知所有订阅者
+    this.notify()
+  }
+}
+
+class DeveloperObserver extends Observer {
+  constructor() {
+    super()
+    // 这位开发者一开始的需求文档为空
+    this.prdState = {}
+    console.log(&#39;DeveloperObserver created&#39;)
+  }
+
+  // override update()
+  update(publisher) {
+    // 更新需求文档
+    this.prdState = publisher.getState()
+    // 调用工作函数
+    this.word()
+  }
+
+  word() {
+    // 拿到需求文档
+    const prd = this.prdState
+    // 开始工作
+    console.log(&#39;根据新的开发文档开始工作&#39;)
+  }
+}
+
+// 订阅者，前端开发
+const liLei = new DeveloperObserver()
+// 订阅者，后端开发
+const be = new DeveloperObserver()
+// 订阅者，测试
+const td = new DeveloperObserver()
+
+const hanmeimei = new PrdPublisher()
+
+const prd = {
+  name: &#39;prd&#39;,
+  content: &#39;好好干&#39;
+}
+
+hanmeimei.add(liLei)
+hanmeimei.add(be)
+hanmeimei.add(td)
+
+hanmeimei.setState(prd)
+</code></pre>
 
     </div>
 
@@ -531,7 +656,10 @@ class Button {
     <a href="/blog/2020/02/14/Leetcode刷题之道/" rel="prev" title="Leetcode刷题之道">
       <i class="fa fa-chevron-left"></i> Leetcode刷题之道
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/blog/2020/02/24/看懂源码，手写一个EventEmitter基础版/" rel="next" title="手写一个EventEmitter基础版">
+      手写一个EventEmitter基础版 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -592,7 +720,7 @@ class Button {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SOLID-设计原则"><span class="nav-number">1.</span> <span class="nav-text">SOLID 设计原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-number"></span> <span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来看看构造器模式"><span class="nav-number">1.</span> <span class="nav-text">先来看看构造器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再来看看简单工厂模式"><span class="nav-number">2.</span> <span class="nav-text">再来看看简单工厂模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number"></span> <span class="nav-text">抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#业务场景"><span class="nav-number">0.1.</span> <span class="nav-text">业务场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式"><span class="nav-number"></span> <span class="nav-text">单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#业务场景-1"><span class="nav-number">1.</span> <span class="nav-text">业务场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单例-Storage"><span class="nav-number">1.1.</span> <span class="nav-text">单例 Storage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型模式"><span class="nav-number"></span> <span class="nav-text">原型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的深拷贝"><span class="nav-number">1.</span> <span class="nav-text">对象的深拷贝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰器模式"><span class="nav-number"></span> <span class="nav-text">装饰器模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES7-中的装饰器"><span class="nav-number">1.</span> <span class="nav-text">ES7 中的装饰器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类型"><span class="nav-number">1.1.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#装饰器函数调用的时机"><span class="nav-number">1.2.</span> <span class="nav-text">装饰器函数调用的时机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适配器模式"><span class="nav-number"></span> <span class="nav-text">适配器模式</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SOLID-设计原则"><span class="nav-number">1.</span> <span class="nav-text">SOLID 设计原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-number"></span> <span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来看看构造器模式"><span class="nav-number">1.</span> <span class="nav-text">先来看看构造器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再来看看简单工厂模式"><span class="nav-number">2.</span> <span class="nav-text">再来看看简单工厂模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number"></span> <span class="nav-text">抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#业务场景"><span class="nav-number">0.1.</span> <span class="nav-text">业务场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式"><span class="nav-number"></span> <span class="nav-text">单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#业务场景-1"><span class="nav-number">1.</span> <span class="nav-text">业务场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单例-Storage"><span class="nav-number">1.1.</span> <span class="nav-text">单例 Storage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型模式"><span class="nav-number"></span> <span class="nav-text">原型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的深拷贝"><span class="nav-number">1.</span> <span class="nav-text">对象的深拷贝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰器模式"><span class="nav-number"></span> <span class="nav-text">装饰器模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES7-中的装饰器"><span class="nav-number">1.</span> <span class="nav-text">ES7 中的装饰器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类型"><span class="nav-number">1.1.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#装饰器函数调用的时机"><span class="nav-number">1.2.</span> <span class="nav-text">装饰器函数调用的时机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适配器模式"><span class="nav-number"></span> <span class="nav-text">适配器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#观察者模式-🌿"><span class="nav-number"></span> <span class="nav-text">观察者模式 🌿</span></a></div>
       </div>
       <!--/noindex-->
 
@@ -606,12 +734,12 @@ class Button {
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

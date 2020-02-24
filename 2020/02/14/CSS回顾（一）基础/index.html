@@ -216,145 +216,47 @@
 <a id="more"></a>
 <h2 id="“display-none”-与-visibility"><a href="#“display-none”-与-visibility" class="headerlink" title="“display:none” 与 visibility"></a>“display:none” 与 visibility</h2><p>一些特殊元素的默认 display 值是<code>display:none</code>，例如 <code>script</code> 。<code>display:none</code> 通常被 JavaScript 用来在不删除元素的情况下隐藏或显示元素。</p>
 <p>它和 <code>visibility</code> 属性不一样。把 <code>display</code> 设置成 <code>none</code> 元素不会占据它本来应该显示的空间，但是设置成 <code>visibility: hidden;</code> 还会占据空间。</p>
-<h2 id="margin-auto"><a href="#margin-auto" class="headerlink" title="margin: auto"></a>margin: auto</h2><pre><code class="css">#main {
-  width: 600px;
-  margin: 0 auto;
-}
-</code></pre>
+<h2 id="margin-auto"><a href="#margin-auto" class="headerlink" title="margin: auto"></a>margin: auto</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">600px</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>设置块级元素的 <code>width</code> 可以防止它从左到右撑满整个容器。然后你就可以设置左右外边距为 <code>auto</code> 来使其水平居中。元素会占据你所指定的宽度，然后剩余的宽度会一分为二成为左右外边距。</p>
 <p>唯一的问题是，当浏览器窗口比元素的宽度还要窄时，浏览器会显示一个水平滚动条来容纳页面。让我们再来改进下这个方案…</p>
-<pre><code class="css">#main {
-  max-width: 600px;
-  margin: 0 auto;
-}
-</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#main</span> &#123;</span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">600px</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在这种情况下使用 <code>max-width</code> 替代 <code>width</code> 可以使浏览器更好地处理小窗口的情况。这点在移动设备上显得尤为重要，调整下浏览器窗口大小检查下吧！</p>
 <p>顺便提下， <a href="http://caniuse.com/#search=max-width" target="_blank" rel="noopener">所有的主流浏览器</a>包括 IE7+在内都支持 <code>max-width</code> ，所以放心大胆的用吧。</p>
 <h2 id="box-sizing"><a href="#box-sizing" class="headerlink" title="box-sizing"></a>box-sizing</h2><p>人们慢慢的意识到传统的盒子模型不直接，所以他们新增了一个叫做 <code>box-sizing</code> 的 CSS 属性。当你设置一个元素为 <code>box-sizing: border-box;</code> 时，此元素的内边距和边框不再会增加它的宽度。这里有一个与前一页相同的例子，唯一的区别是两个元素都设置了 <code>box-sizing: border-box;</code> ：</p>
-<pre><code class="css">.simple {
-  width: 500px;
-  margin: 20px auto;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.fancy {
-  width: 500px;
-  margin: 20px auto;
-  padding: 50px;
-  border: solid blue 10px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.simple</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">20px</span> auto;</span><br><span class="line">  <span class="attribute">-webkit-box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">-moz-box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.fancy</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">20px</span> auto;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">50px</span>;</span><br><span class="line">  <span class="attribute">border</span>: solid blue <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">-moz-box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="position"><a href="#position" class="headerlink" title="position"></a>position</h2><p><a href="http://zh.learnlayout.com/position.html" target="_blank" rel="noopener">http://zh.learnlayout.com/position.html</a></p>
-<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><pre><code class="css">.static {
-  position: static;
-}
-</code></pre>
+<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.static</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: static;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>static</code> 是默认值。任意 <code>position: static;</code> 的元素不会被特殊的定位。一个 static 元素表示它<em>不会被“positioned”</em>，一个 position 属性被设置为其他值的元素表示它<em>会被“positioned”</em>。</p>
-<h3 id="relative"><a href="#relative" class="headerlink" title="relative"></a>relative</h3><pre><code class="css">.relative1 {
-  position: relative;
-}
-.relative2 {
-  position: relative;
-  top: -20px;
-  left: 20px;
-  background-color: white;
-  width: 500px;
-}
-</code></pre>
+<h3 id="relative"><a href="#relative" class="headerlink" title="relative"></a>relative</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.relative1</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.relative2</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">top</span>: -<span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: white;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>relative</code> 表现的和 <code>static</code> 一样，除非你添加了一些额外的属性。</p>
 <p>在一个相对定位（position 属性的值为 relative）的元素上设置 <code>top</code> 、 <code>right</code> 、 <code>bottom</code> 和 <code>left</code> 属性会使其偏离其正常位置。其他的元素的位置则不会受该元素的影响发生位置改变来弥补它偏离后剩下的空隙。</p>
 <h3 id="fixed"><a href="#fixed" class="headerlink" title="fixed"></a>fixed</h3><p>一个固定定位（position 属性的值为 fixed）元素会相对于视窗来定位，这意味着即便页面滚动，它还是会停留在相同的位置。和 <code>relative</code> 一样， <code>top</code> 、 <code>right</code> 、 <code>bottom</code> 和 <code>left</code> 属性都可用。</p>
-<pre><code class="css">.fixed {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 200px;
-  background-color: white;
-}
-</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.fixed</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>一个固定定位元素不会保留它原本在页面应有的空隙（脱离文档流）。</p>
 <p>令人惊讶地是移动浏览器对 fixed 的支持很差。<a href="http://bradfrostweb.com/blog/mobile/fixed-position/" target="_blank" rel="noopener">这里有相应的解决方案</a>.</p>
 <h3 id="absolute"><a href="#absolute" class="headerlink" title="absolute"></a>absolute</h3><p><code>absolute</code> 是最棘手的 position 值。 <code>absolute</code> 与 <code>fixed</code> 的表现类似，但是它不是相对于视窗而是<strong>相对于<em>最近的“positioned”祖先元素</em></strong>。如果绝对定位（position 属性的值为 absolute）的元素没有“positioned”祖先元素，那么它是相对于文档的 body 元素，并且它会随着页面滚动而移动。记住一个“positioned”元素是指 position 值不是 <code>static</code> 的元素。</p>
 <p>这里有一个简单的例子：</p>
-<pre><code class="css">.relative {
-  position: relative;
-  width: 600px;
-  height: 400px;
-}
-.absolute {
-  position: absolute;
-  top: 120px;
-  right: 0;
-  width: 300px;
-  height: 200px;
-}
-</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.relative</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">600px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.absolute</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">120px</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="float"><a href="#float" class="headerlink" title="float"></a>float</h2><p>另一个布局中常用的 CSS 属性是 <code>float</code> 。Float 可用于实现文字环绕图片，如下：</p>
-<pre><code class="css">img {
-  float: right;
-  margin: 0 0 1em 1em;
-}
-</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: right;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">1em</span> <span class="number">1em</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h2><p><code>clear</code> 属性被用于控制浮动。比较下面两个例子：</p>
 <p><a href="http://zh.learnlayout.com/clear.html" target="_blank" rel="noopener">http://zh.learnlayout.com/clear.html</a></p>
 <h2 id="清除浮动（clearfix-hack）"><a href="#清除浮动（clearfix-hack）" class="headerlink" title="清除浮动（clearfix hack）"></a>清除浮动（clearfix hack）</h2><p>浮动元素比包含它的元素还高， 而且它是浮动的，于是它就溢出到了容器外面！</p>
 <p>见证奇迹的时刻到了！有一种比较丑陋的方法可以解决这个问题，它叫做<em>清除浮动（clearfix hack）</em>.</p>
 <p>让我们加入一些新的 CSS 样式：</p>
-<pre><code class="css">.clearfix {
-  overflow: auto;
-  zoom: 1;
-}
-</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span> &#123;</span><br><span class="line">  <span class="attribute">overflow</span>: auto;</span><br><span class="line">  <span class="attribute">zoom</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>完全使用 <code>float</code> 来实现页面的布局是很常见的。</p>
 <h2 id="百分比宽度"><a href="#百分比宽度" class="headerlink" title="百分比宽度"></a>百分比宽度</h2><p>百分比是一种相对于包含块的计量单位。它对图片很有用：如下我们实现了图片宽度始终是容器宽度的 50%。</p>
-<pre><code class="css">article img {
-  float: right;
-  width: 50%;
-}
-</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">article</span> <span class="selector-tag">img</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: right;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">50%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>你甚至还能同时使用 <code>min-width</code> 和 <code>max-width</code> 来限制图片的最大或最小宽度！</p>
 <h2 id="媒体查询"><a href="#媒体查询" class="headerlink" title="媒体查询"></a>媒体查询</h2><p>“响应式设计（Responsive Design” 是一种让网站针对不同的浏览器和设备“呈现”不同显示效果的策略，这样可以让网站在任何情况下显示的很棒！</p>
 <p>媒体查询是做此事所需的最强大的工具。让我们使用百分比宽度来布局，然后在浏览器变窄到无法容纳侧边栏中的菜单时，把布局显示成一列：</p>
-<pre><code class="CSS">@media screen and (min-width:600px) {
-  nav {
-    float: left;
-    width: 25%;
-  }
-  section {
-    margin-left: 25%;
-  }
-}
-@media screen and (max-width:599px) {
-  nav li {
-    display: inline;
-  }
-}
-</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> screen and (min-width:<span class="number">600px</span>) &#123;</span><br><span class="line">  <span class="selector-tag">nav</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">25%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">section</span> &#123;</span><br><span class="line">    <span class="attribute">margin-left</span>: <span class="number">25%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> screen and (max-width:<span class="number">599px</span>) &#123;</span><br><span class="line">  <span class="selector-tag">nav</span> <span class="selector-tag">li</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="inline-block"><a href="#inline-block" class="headerlink" title="inline-block"></a>inline-block</h2><p>我们可以创建很多网格来铺满浏览器。在过去很长的一段时间内使用 <code>float</code> 是一种选择，但是使用 <code>inline-block</code> 会更简单。让我们看下使用这两种方法的例子：</p>
-<h3 id="困难的方式（使用浮动）"><a href="#困难的方式（使用浮动）" class="headerlink" title="困难的方式（使用浮动）"></a>困难的方式（使用浮动）</h3><pre><code class="css">.box {
-  float: left;
-  width: 200px;
-  height: 100px;
-  margin: 1em;
-}
-
-.after-box {
-  clear: left;
-}
-</code></pre>
+<h3 id="困难的方式（使用浮动）"><a href="#困难的方式（使用浮动）" class="headerlink" title="困难的方式（使用浮动）"></a>困难的方式（使用浮动）</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">1em</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.after-box</span> &#123;</span><br><span class="line">  <span class="attribute">clear</span>: left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="更容易的方式（使用-inline-block）"><a href="#更容易的方式（使用-inline-block）" class="headerlink" title="更容易的方式（使用 inline-block）"></a>更容易的方式（使用 inline-block）</h3><p>你可以用 <code>display</code> 属性的值 <code>inline-block</code> 来实现相同效果。</p>
-<pre><code>.box2 {
-  display: inline-block;
-  width: 200px;
-  height: 100px;
-  margin: 1em;
-}
-</code></pre><p>你可以使用 <code>inline-block</code> 来布局。但要注意：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.box2 &#123;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  width: 200px;</span><br><span class="line">  height: 100px;</span><br><span class="line">  margin: 1em;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以使用 <code>inline-block</code> 来布局。但要注意：</p>
 <ul>
 <li><code>vertical-align</code> 属性会影响到 <code>inline-block</code> 元素，你可能会把它的值设置为 <code>top</code> 。</li>
 <li>需要设置每一列的宽度</li>
@@ -362,16 +264,8 @@
 </ul>
 <h3 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h3><p>需要额外工作来让<a href="http://blog.mozilla.org/webdev/2009/02/20/cross-browser-inline-block/" target="_blank" rel="noopener">IE6 和 IE7 支持</a> <code>inline-block</code>。有些时候人们谈到 <code>inline-block</code> 会触发叫做 <code>hasLayout</code> 的东西，你只需要知道那是用来支持旧浏览器的。</p>
 <h2 id="column"><a href="#column" class="headerlink" title="column"></a>column</h2><p>这里有一系列新的 CSS 属性，可以帮助你很轻松的实现文字的多列布局。让我们瞧瞧：</p>
-<pre><code>.three-column {
-  padding: 1em;
-  -moz-column-count: 3;
-  -moz-column-gap: 1em;
-  -webkit-column-count: 3;
-  -webkit-column-gap: 1em;
-  column-count: 3;
-  column-gap: 1em;
-}
-</code></pre><p>CSS columns 是很新的标准，所以你需要使用前缀，并且它不被<a href="http://caniuse.com/#search=column" target="_blank" rel="noopener">IE9 及以下和 Opera Mini</a>支持</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.three-column &#123;</span><br><span class="line">  padding: 1em;</span><br><span class="line">  -moz-column-count: 3;</span><br><span class="line">  -moz-column-gap: 1em;</span><br><span class="line">  -webkit-column-count: 3;</span><br><span class="line">  -webkit-column-gap: 1em;</span><br><span class="line">  column-count: 3;</span><br><span class="line">  column-gap: 1em;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>CSS columns 是很新的标准，所以你需要使用前缀，并且它不被<a href="http://caniuse.com/#search=column" target="_blank" rel="noopener">IE9 及以下和 Opera Mini</a>支持</p>
 <h2 id="flexbox"><a href="#flexbox" class="headerlink" title="flexbox"></a>flexbox</h2><p>链接两篇好文：</p>
 <p><a href="https://www.zhangxinxu.com/wordpress/2018/10/display-flex-css3-css/" target="_blank" rel="noopener">https://www.zhangxinxu.com/wordpress/2018/10/display-flex-css3-css/</a></p>
 <p><a href="https://bocoup.com/blog/dive-into-flexbox" target="_blank" rel="noopener">https://bocoup.com/blog/dive-into-flexbox</a></p>

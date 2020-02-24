@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"yunxi.site","root":"/blog/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue); /*   accumulator:  必需。累计器   currentValue: 必需。当前元素">
+  <meta name="description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： 123456789array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);/*  accumulator:  必需。累计器  currentValue: 必需。当">
 <meta name="keywords" content="JavaScript,进阶">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript 高阶函数 reduce 总结">
 <meta property="og:url" content="http://yunxi.site/blog/2019/05/09/JavaScript 高阶函数 reduce 总结/index.html">
 <meta property="og:site_name" content="Hytonight云息">
-<meta property="og:description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue); /*   accumulator:  必需。累计器   currentValue: 必需。当前元素">
+<meta property="og:description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： 123456789array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);/*  accumulator:  必需。累计器  currentValue: 必需。当">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://javascript.info/article/array-methods/reduce.png">
 <meta property="og:updated_time" content="2020-02-13T03:16:58.696Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 高阶函数 reduce 总结">
-<meta name="twitter:description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue); /*   accumulator:  必需。累计器   currentValue: 必需。当前元素">
+<meta name="twitter:description" content="定义reduce()方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。语法为： 123456789array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);/*  accumulator:  必需。累计器  currentValue: 必需。当">
 <meta name="twitter:image" content="http://javascript.info/article/array-methods/reduce.png">
 
 <link rel="canonical" href="http://yunxi.site/blog/2019/05/09/JavaScript 高阶函数 reduce 总结/">
@@ -221,63 +221,22 @@
 
       
         <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><code>reduce()</code>方法对数组中的每个元素执行一个由您提供的<code>reducer</code>函数(升序执行)，将其结果汇总为单个返回值。语法为：</p>
-<pre><code class="javascript">array.reduce(function(accumulator, currentValue, currentIndex, arr), initialValue);
-/*
-  accumulator:  必需。累计器
-  currentValue: 必需。当前元素
-
-  currentIndex: 可选。当前元素的索引；                    
-  arr:          可选。要处理的数组
-  initialValue: 可选。传递给函数的初始值，相当于accumulator的初始值
-*/
-</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">array.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">accumulator, currentValue, currentIndex, arr</span>), <span class="title">initialValue</span>);</span></span><br><span class="line"><span class="function">/*</span></span><br><span class="line"><span class="function">  <span class="title">accumulator</span>:  必需。累计器</span></span><br><span class="line"><span class="function">  <span class="title">currentValue</span>: 必需。当前元素</span></span><br><span class="line"><span class="function">  </span></span><br><span class="line"><span class="function">  <span class="title">currentIndex</span>: 可选。当前元素的索引；                    </span></span><br><span class="line"><span class="function">  <span class="title">arr</span>:          可选。要处理的数组</span></span><br><span class="line"><span class="function">  <span class="title">initialValue</span>: 可选。传递给函数的初始值，相当于<span class="title">accumulator</span>的初始值</span></span><br><span class="line"><span class="function">*/</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3><p>简单来说就是对一个<code>array</code>执行<code>reduce()</code>方法，就是把其中的<code>function()</code>挨个地作用于<code>array</code>中的元素上，<strong>而且上一次的输出会作为下一次的一个输入</strong>。例如下面这个对<code>array</code>求和的例子。</p>
-<pre><code class="javascript">let array = [1, 2, 3, 4, 5];
-array.reduce((sum, curr) =&gt; sum + curr, 0); // 得到15
-</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> array = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line">array.reduce(<span class="function">(<span class="params">sum, curr</span>) =&gt;</span> sum + curr, <span class="number">0</span>); <span class="comment">// 得到15</span></span><br></pre></td></tr></table></figure>
 <p>执行流程图如下：</p>
 <p><img src="http://javascript.info/article/array-methods/reduce.png" alt="reduce"></p>
 <p>令<code>f（a, b）= a + b</code>， 也可以一次性写为：</p>
 <p><code>array.reduce = f( f( f( f( f(0, 1) ,2) ,3), 4) ,5)</code></p>
 <p>奉上一个<a href="http://reduce.surge.sh/" target="_blank" rel="noopener">动画演示</a></p>
-<h3 id="常见用法"><a href="#常见用法" class="headerlink" title="常见用法"></a>常见用法</h3><h4 id="求加法（乘法同理）"><a href="#求加法（乘法同理）" class="headerlink" title="求加法（乘法同理）"></a>求加法（乘法同理）</h4><pre><code class="javascript">let arr = [1, 2, 3, 4, 5];
-arr.reduce((sum, curr) =&gt; sum + curr, 0);             // 得到15
-</code></pre>
+<h3 id="常见用法"><a href="#常见用法" class="headerlink" title="常见用法"></a>常见用法</h3><h4 id="求加法（乘法同理）"><a href="#求加法（乘法同理）" class="headerlink" title="求加法（乘法同理）"></a>求加法（乘法同理）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line">arr.reduce(<span class="function">(<span class="params">sum, curr</span>) =&gt;</span> sum + curr, <span class="number">0</span>); 			<span class="comment">// 得到15</span></span><br></pre></td></tr></table></figure>
 <p>此基础上还可以求平均值</p>
-<h4 id="求最大值（最小值同理）"><a href="#求最大值（最小值同理）" class="headerlink" title="求最大值（最小值同理）"></a>求最大值（最小值同理）</h4><pre><code class="javascript">let arr = [23,123,342,12];
-let max = arr.reduce((pre,cur,index,arr) =&gt; {
-  return pre &gt; cur ? pre : cur
-});                                                                                             // 得到 342
-</code></pre>
-<h4 id="将字符串转换为整数"><a href="#将字符串转换为整数" class="headerlink" title="将字符串转换为整数"></a>将字符串转换为整数</h4><pre><code class="javascript">let str = &quot;4321&quot;
-
-let strParseInt = str.split(&#39;&#39;)                                        // 得到 [&#39;4&#39;, &#39;3&#39;, &#39;2&#39;, &#39;1&#39;, &#39;4&#39;]
-        .map(item =&gt; {return item.charCodeAt() - 48})    // 得到 [4, 3, 2, 1, 4]
-        .reduce((a, b) =&gt; {return a * 10 + b})                // 得到 43214
-</code></pre>
-<h4 id="字符统计-单词统计同理"><a href="#字符统计-单词统计同理" class="headerlink" title="字符统计/单词统计同理"></a>字符统计/单词统计同理</h4><pre><code class="javascript">let str = &#39;abcdaabc&#39;;
-
-str.split(&#39;&#39;).reduce((res, cur) =&gt; {
-    res[cur] ? res[cur] ++ : res[cur] = 1 // 如果cur第一次出现，记为1
-    return res;                                                        // 否则记录数+1
-}, {})                                                                        // 得到 {a: 3, b: 2, c: 2, d: 1}
-</code></pre>
-<h4 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h4><pre><code class="javascript">let arr = [1, 2, 3, 4, 4, 1]
-let newArr = arr.reduce((pre,cur) =&gt; {
-    if(!pre.includes(cur)){
-      return pre.concat(cur)
-    }else{
-      return pre
-    }
-},[])                                                                            // 得到 [1, 2, 3, 4]
-</code></pre>
-<h4 id="数组维度转换"><a href="#数组维度转换" class="headerlink" title="数组维度转换"></a>数组维度转换</h4><pre><code class="javascript">let arr = [[0, 1], [2, 3], [4, 5]]            // 二维数组
-let newArr = arr.reduce((pre,cur) =&gt; {
-    return pre.concat(cur)                            // 合并pre 与 cur, 并返回一个新数组
-},[])
-console.log(newArr);                                         // 一维数组 [0, 1, 2, 3, 4, 5]
-</code></pre>
+<h4 id="求最大值（最小值同理）"><a href="#求最大值（最小值同理）" class="headerlink" title="求最大值（最小值同理）"></a>求最大值（最小值同理）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">23</span>,<span class="number">123</span>,<span class="number">342</span>,<span class="number">12</span>];</span><br><span class="line"><span class="keyword">let</span> max = arr.reduce(<span class="function">(<span class="params">pre,cur,index,arr</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> pre &gt; cur ? pre : cur</span><br><span class="line">&#125;); 																							<span class="comment">// 得到 342</span></span><br></pre></td></tr></table></figure>
+<h4 id="将字符串转换为整数"><a href="#将字符串转换为整数" class="headerlink" title="将字符串转换为整数"></a>将字符串转换为整数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">"4321"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> strParseInt = str.split(<span class="string">''</span>)										<span class="comment">// 得到 ['4', '3', '2', '1', '4']</span></span><br><span class="line">		.map(<span class="function"><span class="params">item</span> =&gt;</span> &#123;<span class="keyword">return</span> item.charCodeAt() - <span class="number">48</span>&#125;)	<span class="comment">// 得到 [4, 3, 2, 1, 4]</span></span><br><span class="line">		.reduce(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123;<span class="keyword">return</span> a * <span class="number">10</span> + b&#125;)				<span class="comment">// 得到 43214</span></span><br></pre></td></tr></table></figure>
+<h4 id="字符统计-单词统计同理"><a href="#字符统计-单词统计同理" class="headerlink" title="字符统计/单词统计同理"></a>字符统计/单词统计同理</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'abcdaabc'</span>;</span><br><span class="line"></span><br><span class="line">str.split(<span class="string">''</span>).reduce(<span class="function">(<span class="params">res, cur</span>) =&gt;</span> &#123;</span><br><span class="line">    res[cur] ? res[cur] ++ : res[cur] = <span class="number">1</span> <span class="comment">// 如果cur第一次出现，记为1</span></span><br><span class="line">    <span class="keyword">return</span> res;														<span class="comment">// 否则记录数+1</span></span><br><span class="line">&#125;, &#123;&#125;)																		<span class="comment">// 得到 &#123;a: 3, b: 2, c: 2, d: 1&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">1</span>]</span><br><span class="line"><span class="keyword">let</span> newArr = arr.reduce(<span class="function">(<span class="params">pre,cur</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(!pre.includes(cur))&#123;</span><br><span class="line">      <span class="keyword">return</span> pre.concat(cur)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> pre</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,[])																			<span class="comment">// 得到 [1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure>
+<h4 id="数组维度转换"><a href="#数组维度转换" class="headerlink" title="数组维度转换"></a>数组维度转换</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [[<span class="number">0</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>]]			<span class="comment">// 二维数组</span></span><br><span class="line"><span class="keyword">let</span> newArr = arr.reduce(<span class="function">(<span class="params">pre,cur</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> pre.concat(cur)							<span class="comment">// 合并pre 与 cur, 并返回一个新数组</span></span><br><span class="line">&#125;,[])</span><br><span class="line"><span class="built_in">console</span>.log(newArr); 										<span class="comment">// 一维数组 [0, 1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
 <h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce" target="_blank" rel="noopener">MDN Array​.prototype​.reduce()</a></p>
 <p><a href="https://segmentfault.com/a/1190000010731933" target="_blank" rel="noopener">JS进阶篇–JS数组reduce()方法详解及高级技巧</a></p>
 <p><a href="https://manqc.site/mooc" target="_blank" rel="noopener">manqc</a></p>

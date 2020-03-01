@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yunxi.site","root":"/blog/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="笔者刚接触前端是在大半年前，那是早已是 ES6 + React/Vue 盛行的年代。而自己又是追求新潮新技术的人，心想有了 ES6+ 这么多“高级”的写法为何还要去学那古老的 ES5- ？但是随着学习的深入，遇到了许多不明不白的错误， DEBUG 起来一头雾水，这才明白是自己对 JavaScript 的原理了解甚少，语法糖终究是语法糖，不懂底层原理最终坑的是自己。其实不仅是 JS，React 框架">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript继承的八种写法">
+<meta property="og:url" content="http://yunxi.site/blog/2020/03/01/JavaScript继承的八种写法/index.html">
+<meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="笔者刚接触前端是在大半年前，那是早已是 ES6 + React/Vue 盛行的年代。而自己又是追求新潮新技术的人，心想有了 ES6+ 这么多“高级”的写法为何还要去学那古老的 ES5- ？但是随着学习的深入，遇到了许多不明不白的错误， DEBUG 起来一头雾水，这才明白是自己对 JavaScript 的原理了解甚少，语法糖终究是语法糖，不懂底层原理最终坑的是自己。其实不仅是 JS，React 框架">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://qn-noter.yunxi.site/imagehost/n5zcl.png-style1">
+<meta property="og:image" content="http://qn-noter.yunxi.site/imagehost/yozb8.png">
+<meta property="og:image" content="http://qn-noter.yunxi.site/imagehost/65y7m.png">
+<meta property="og:updated_time" content="2020-03-01T12:04:13.045Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript继承的八种写法">
+<meta name="twitter:description" content="笔者刚接触前端是在大半年前，那是早已是 ES6 + React/Vue 盛行的年代。而自己又是追求新潮新技术的人，心想有了 ES6+ 这么多“高级”的写法为何还要去学那古老的 ES5- ？但是随着学习的深入，遇到了许多不明不白的错误， DEBUG 起来一头雾水，这才明白是自己对 JavaScript 的原理了解甚少，语法糖终究是语法糖，不懂底层原理最终坑的是自己。其实不仅是 JS，React 框架">
+<meta name="twitter:image" content="http://qn-noter.yunxi.site/imagehost/n5zcl.png-style1">
+
+<link rel="canonical" href="http://yunxi.site/blog/2020/03/01/JavaScript继承的八种写法/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>JavaScript继承的八种写法 | Hytonight云息</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?57d30e6a21aa4345d6c1d19d35e02e03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hytonight云息</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yunxi.site/blog/2020/03/01/JavaScript继承的八种写法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="Hytonight云息">
+      <meta itemprop="description" content="云之息，浴乎沂，风乎舞雩，咏而归">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hytonight云息">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript继承的八种写法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-01 20:00:56 / Modified: 20:04:13" itemprop="dateCreated datePublished" datetime="2020-03-01T20:00:56+08:00">2020-03-01</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/blog/2020/03/01/JavaScript继承的八种写法/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2020/03/01/JavaScript继承的八种写法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>笔者刚接触前端是在大半年前，那是早已是 ES6 + React/Vue 盛行的年代。而自己又是追求新潮新技术的人，心想有了 ES6+ 这么多“高级”的写法为何还要去学那古老的 ES5- ？但是随着学习的深入，遇到了许多不明不白的错误， DEBUG 起来一头雾水，这才明白是自己对 JavaScript 的原理了解甚少，语法糖终究是语法糖，不懂底层原理最终坑的是自己。其实不仅是 JS，React 框架等等也是一个道理。</p>
+<p>感悟抒发完了，今天好好地把继承这部分捋捋清楚。</p>
+<a id="more"></a>
+<h2 id="继承分类"><a href="#继承分类" class="headerlink" title="继承分类"></a>继承分类</h2><p>先来个整体印象。如图所示，JS中继承可以按照是否使用object函数（在下文中会提到），将继承分成两部分（Object.create是ES5新增的方法，用来规范化这个函数）。</p>
+<p>其中，原型链继承和原型式继承有一样的优缺点，构造函数继承与寄生式继承也相互对应。寄生组合继承基于Object.create, 同时优化了组合继承，成为了完美的继承方式。ES6 Class Extends的结果与寄生组合继承基本一致，但是实现方案又略有不同。</p>
+<p><img src="http://qn-noter.yunxi.site/imagehost/n5zcl.png-style1" alt="image-20200301095456912"></p>
+<h2 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h2><p>构造函数、原型和实例之间的关系：每个构造函数都有一个原型对象，原型对象都包含一个指向构造函数的指针，而实例都包含一个原型对象的指针。</p>
+<p>继承的本质就是<strong>复制，即重写原型对象，代之以一个新类型的实例</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.property = <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line">SuperType.prototype.getSuperValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.property</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.subProperty = <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line">SubType.prototype.getSubValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.subProperty</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 关键，创建SuperType的实例，让SubType.prototype指向这个实例</span></span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType()</span><br><span class="line"><span class="built_in">console</span>.dir(SuperType)</span><br><span class="line"><span class="keyword">let</span> inst1 = <span class="keyword">new</span> SuperType()</span><br><span class="line"><span class="keyword">let</span> inst2 = <span class="keyword">new</span> SubType()</span><br><span class="line"><span class="built_in">console</span>.log(inst2.getSuperValue()) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>父类方法可以复用</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>父类的引用属性会被所有子类实例共享，多个实例对引用类型的操作会被篡改（代码如下）；</li>
+<li>子类构建实例时不能向父类传递参数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.colors = [<span class="string">"red"</span>, <span class="string">"blue"</span>, <span class="string">"green"</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多个实例共享父类引用（上面的 new SuperType()）</span></span><br><span class="line"><span class="keyword">var</span> instance1 = <span class="keyword">new</span> SubType();</span><br><span class="line">instance1.colors.push(<span class="string">"black"</span>);</span><br><span class="line">alert(instance1.colors); <span class="comment">//"red,blue,green,black"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instance2 = <span class="keyword">new</span> SubType(); </span><br><span class="line">alert(instance2.colors); <span class="comment">//"red,blue,green,black"</span></span><br></pre></td></tr></table></figure>
+<h2 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h2><p>使用父类的构造函数来增强子类<strong>实例</strong>，等同于复制父类的实例给子类（不使用原型）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.color = [<span class="string">'red'</span>, <span class="string">'green'</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构造函数继承</span></span><br><span class="line"><span class="comment">// 使得每个实例都会复制得到自己独有的一份属性</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 将父对象的构造函数绑定在子对象上</span></span><br><span class="line">  SuperType.call(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> inst1 = <span class="keyword">new</span> SubType()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(inst1)</span><br><span class="line"></span><br><span class="line"><span class="comment">// SubType &#123;color: Array(2)&#125;</span></span><br></pre></td></tr></table></figure>
+<p>核心代码是<code>SuperType.call(this)</code>，创建子类实例时调用<code>SuperType</code>构造函数，于是<code>SubType</code>的每个实例都会将SuperType中的属性复制一份，<strong>解决了原型链继承中多实例相互影响的问题</strong>。</p>
+<p><strong>优点</strong>：和原型链继承完全反过来</p>
+<ul>
+<li>父类的引用属性不会被共享</li>
+<li>子类构建实例时可以向父类传递参数</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>只能继承父类的<strong>实例</strong>属性和方法，不能继承原型属性/方法</li>
+<li>无法实现复用，每个子类都有父类实例函数的副本，影响性能</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">// 父类原型链上的方法</span></span><br><span class="line">SuperType.prototype.getColor = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.color</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(inst1.getColor()) <span class="comment">// TypeError: inst1.getColor is not a function</span></span><br></pre></td></tr></table></figure>
+<h2 id="组合继承（上面两种结合起来）"><a href="#组合继承（上面两种结合起来）" class="headerlink" title="组合继承（上面两种结合起来）"></a>组合继承（上面两种结合起来）</h2><p>组合上述两种方法就是组合继承。用原型链实现对<strong>原型</strong>属性和方法的继承，用借用构造函数技术来实现<strong>实例</strong>属性的继承。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SuperType.prototype.getName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 1、构造函数来复制父类的属性给SubType实例</span></span><br><span class="line">  <span class="comment">// *** 第二次调用SuperType()</span></span><br><span class="line">  SuperType.call(<span class="keyword">this</span>, name)</span><br><span class="line">  <span class="keyword">this</span>.age = age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SubType.prototype.getAge = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、原型继承</span></span><br><span class="line"><span class="comment">// *** 第一次调用SuperType()</span></span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType()</span><br><span class="line"><span class="comment">// 手动挂上构造器，指向自己的构造函数 SubType</span></span><br><span class="line">SubType.prototype.constructor = SubType</span><br><span class="line">SubType.prototype.getAge = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> inst1 = <span class="keyword">new</span> SubType(<span class="string">'Asuna'</span>, <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'inst1'</span>, inst1)</span><br><span class="line"><span class="built_in">console</span>.log(inst1.getName(), inst1.getAge())</span><br><span class="line"><span class="built_in">console</span>.log(inst1 <span class="keyword">instanceof</span> SubType, inst1 <span class="keyword">instanceof</span> SuperType)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// inst1 SubType &#123;name: "Asuna", colors: Array(3), age: 20&#125;</span></span><br><span class="line"><span class="comment">// Asuna 20</span></span><br><span class="line"><span class="comment">// true true</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://qn-noter.yunxi.site/imagehost/yozb8.png" alt="image-20200301153621951"></p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>父类的方法可以被复用</li>
+<li>父类的引用属性不会被共享</li>
+<li>子类构建实例时可以向父类传递参数</li>
+</ul>
+<p><strong>缺点（对照注释）</strong>：</p>
+<ul>
+<li>第一次调用<code>SuperType()</code>：给<code>SubType.prototype</code>写入两个属性name，color。</li>
+<li>第二次调用<code>SuperType()</code>：给<code>instance1</code>写入两个属性name，color。</li>
+</ul>
+<p>实例对象<code>inst1</code>上的两个属性就屏蔽了其原型对象SubType.prototype的两个同名属性。所以，组合模式的缺点就是在使用子类创建实例对象时，其原型中会存在两份相同的父类实例的属性/方法。这种被覆盖的情况造成了性能上的浪费。</p>
+<h2 id="原型式继承-哎，就是浅拷贝"><a href="#原型式继承-哎，就是浅拷贝" class="headerlink" title="原型式继承(哎，就是浅拷贝)"></a>原型式继承(哎，就是浅拷贝)</h2><p>我们举个🌰，比如，现在有一个对象，叫做”中国人”，还有一个对象，叫做”医生”。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Chinese = &#123;</span><br><span class="line">  nation: <span class="string">'中国'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Doctor = &#123;</span><br><span class="line">  career: <span class="string">'医生'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>请问怎样才能让”医生”去继承”中国人”，也就是说，我怎样才能生成一个”中国医生”的对象？</p>
+<p>这里要注意，这两个对象都是<strong>普通对象</strong>，不是构造函数，所以无法使用构造函数方法实现”继承”。</p>
+<p><strong>可以用<code>object()</code>方法</strong></p>
+<p>利用一个<strong>空对象作为中介</strong>，将某个对象直接赋值给空对象构造函数的原型。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES5中存在Object.create()的方法，能覆盖下面这个方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123; &#125;</span><br><span class="line">  F.prototype = obj</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>object()</code>本质上是对传入其中的对象执行了一次<code>浅拷贝</code>，将构造函数<code>F</code>的原型直接指向传入的对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> person = &#123;</span><br><span class="line">  name: <span class="string">"Nicholas"</span>,</span><br><span class="line">  friends: [<span class="string">"Shelby"</span>, <span class="string">"Court"</span>, <span class="string">"Van"</span>]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> anotherPerson = object(person);</span><br><span class="line">anotherPerson.name = <span class="string">"Greg"</span>;</span><br><span class="line">anotherPerson.friends.push(<span class="string">"Rob"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> yetAnotherPerson = object(person);</span><br><span class="line">yetAnotherPerson.name = <span class="string">"Linda"</span>;</span><br><span class="line">yetAnotherPerson.friends.push(<span class="string">"Barbie"</span>);</span><br><span class="line"></span><br><span class="line">alert(person.friends);   <span class="comment">//"Shelby,Court,Van,Rob,Barbie"</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>ECMAScript 5 通过新增 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create" target="_blank" rel="noopener">Object.create()</a> 方法规范化了原型式继承。这个方法接收两个参数:一 个用作新对象原型的对象和(可选的)一个为新对象定义额外属性的对象。在传入一个参数的情况下， Object.create()与 object()方法的行为相同。——《JavaScript高级程序设计》</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> yetAnotherPerson = object(person)</span><br><span class="line"><span class="comment">//  =&gt; </span></span><br><span class="line"><span class="keyword">let</span> yetAnotherPerson = <span class="built_in">Object</span>.create(person)</span><br></pre></td></tr></table></figure>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>父类方法可以复用</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>原型链继承多个实例的引用类型属性指向相同，存在篡改的可能</li>
+<li>子类构建实例时不能向父类传递参数</li>
+</ul>
+<h2 id="寄生式继承（能附加一些方法）"><a href="#寄生式继承（能附加一些方法）" class="headerlink" title="寄生式继承（能附加一些方法）"></a>寄生式继承（能附加一些方法）</h2><p>使用原型式继承获得一份目标对象的<code>浅拷贝</code>，然后增强了这个浅拷贝的能力。</p>
+<p><strong>优缺点其实和原型式继承一样</strong>，寄生式继承说白了就是能在拷贝来的对象上加点方法，也就是所谓增强能力。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123; &#125;</span><br><span class="line">  F.prototype = obj</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createAnother</span>(<span class="params">original</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 通过调用函数创建一个新对象</span></span><br><span class="line">  <span class="keyword">let</span> clone = object(original)</span><br><span class="line">  <span class="comment">//以某种方式来增强这个对象</span></span><br><span class="line">  clone.getName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'我有了getName方法: '</span> + <span class="keyword">this</span>.name)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> clone</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> person = &#123;</span><br><span class="line">  name: <span class="string">'Asuna'</span>,</span><br><span class="line">  friends: [<span class="string">'Kirito'</span>, <span class="string">'Yuuki'</span>, <span class="string">'Sinon'</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> inst1 = createAnother(person)</span><br><span class="line"><span class="keyword">let</span> inst2 = createAnother(person)</span><br></pre></td></tr></table></figure>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>父类方法可以复用</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>原型链继承多个实例的引用类型属性指向相同，存在篡改的可能</li>
+<li>子类构建实例时不能向父类传递参数</li>
+</ul>
+<h2 id="寄生组合继承（最优方案）"><a href="#寄生组合继承（最优方案）" class="headerlink" title="寄生组合继承（最优方案）"></a>寄生组合继承（最优方案）</h2><p>组合继承会有两次调用父类的构造函数而造成浪费的缺点，寄生组合继承就可以解决这个问题。</p>
+<p>核心在于<code>inheritPrototype(subType, superType)</code>，让子类的<code>prototype</code>指向<strong>父类原型的拷贝</strong>，这样就不会调用父类的构造函数，进而引发内存的浪费问题。</p>
+<p><strong>完整代码</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inheritPrototype</span>(<span class="params">subType, superType</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 修正子类原型对象指针，指向父类原型的一个副本 (用object()也可以) </span></span><br><span class="line">  subType.prototype = <span class="built_in">Object</span>.create(superType.prototype)</span><br><span class="line">  <span class="comment">// 增强对象，弥补因重写原型而失去的默认的constructor属性</span></span><br><span class="line">  subType.prototype.constructor = subType</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SuperType.prototype.getColors = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.colors)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">  SuperType.call(<span class="keyword">this</span>, name)</span><br><span class="line">  <span class="keyword">this</span>.age = age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">inheritPrototype(SubType, SuperType)</span><br><span class="line"></span><br><span class="line">SubType.prototype.getAge = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.age)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> inst1 = <span class="keyword">new</span> SubType(<span class="string">"Asuna"</span>, <span class="number">20</span>)</span><br><span class="line"><span class="keyword">let</span> inst2 = <span class="keyword">new</span> SubType(<span class="string">"Krito"</span>, <span class="number">21</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'inst1'</span>, inst1)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'inst2'</span>, inst2)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qn-noter.yunxi.site/imagehost/65y7m.png" alt="image-20200301182914803"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构造函数继承和组合继承的缺陷：二次调用 SuperType 的构造函数</span></span><br><span class="line">subType.prototype = <span class="keyword">new</span> SuperType()</span><br><span class="line"><span class="comment">// 改为 =&gt; </span></span><br><span class="line">subType.prototype = <span class="built_in">Object</span>.create(superType.prototype)</span><br></pre></td></tr></table></figure>
+<h2 id="实现多继承"><a href="#实现多继承" class="headerlink" title="实现多继承"></a>实现多继承</h2><p>如果你希望能继承到多个对象，则可以使用混入的方式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyClass</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     SuperClass.call(<span class="keyword">this</span>);</span><br><span class="line">     OtherSuperClass.call(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 继承一个类（就是寄生组合继承的套路）</span></span><br><span class="line">MyClass.prototype = <span class="built_in">Object</span>.create(SuperClass.prototype);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 混合其它类，关键是这里的 assign() 方法</span></span><br><span class="line"><span class="built_in">Object</span>.assign(MyClass.prototype, OtherSuperClass.prototype);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 重新指定constructor</span></span><br><span class="line">MyClass.prototype.constructor = MyClass;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在之类上附加方法</span></span><br><span class="line">MyClass.prototype.myMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// do a thing</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign</a> 会把  <code>OtherSuperClass</code>原型上的函数拷贝到 <code>MyClass</code>原型上，使 MyClass 的所有实例都可用 OtherSuperClass 的方法。Object.assign 是在 ES2015 引入的，且可用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill" target="_blank" rel="noopener"> polyfilled</a>。要支持旧浏览器的话，可用使用 <a href="https://api.jquery.com/jQuery.extend/" target="_blank" rel="noopener">jQuery.extend()</a> 或者 <a href="https://lodash.com/docs/#assign" target="_blank" rel="noopener">_.assign()</a>。 ——<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create" target="_blank" rel="noopener">[MDN] Object.create()</a></p>
+</blockquote>
+<h2 id="ES6-extends"><a href="#ES6-extends" class="headerlink" title="ES6 extends"></a>ES6 extends</h2><blockquote>
+<p>虽然 ES6 引入了关键字 class，但是底层仍然是基于原型的实现。class 只是语法糖，使得在 JavaScript 模拟类的代码更为简洁。——《JavaScript忍者秘籍》</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 原型方法</span></span><br><span class="line">  <span class="comment">// 即 Person.prototype.getName = function() &#123; &#125;</span></span><br><span class="line">  <span class="comment">// 下面可以简写为 getName() &#123;...&#125;</span></span><br><span class="line">  getName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Person:'</span>, <span class="keyword">this</span>.name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Gamer</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name, age) &#123;</span><br><span class="line">    <span class="comment">// 子类中存在构造函数，则需要在使用“this”之前首先调用 super()。</span></span><br><span class="line">    <span class="keyword">super</span>(name)</span><br><span class="line">    <span class="keyword">this</span>.age = age</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> asuna = <span class="keyword">new</span> Gamer(<span class="string">'Asuna'</span>, <span class="number">20</span>)</span><br><span class="line">asuna.getName() <span class="comment">// 成功访问到父类的方法</span></span><br></pre></td></tr></table></figure>
+<p><strong><code>super</code> 实现的原理</strong></p>
+<p>就是将继承的那个父类对象在子类中调用，比如 <code>super.call(this)</code> 实现将父类中的属性(父类的方法是通过原型链来继承，实例都可以共享这些方法)在子类中声明。</p>
+<p> <strong><code>extends</code> 中实现继承的源码</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_inherits</span>(<span class="params">subClass, superClass</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> superClass !== <span class="string">"function"</span> &amp;&amp; superClass !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">"Super expression must either be null or a function, not "</span> + <span class="keyword">typeof</span> superClass)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 子类的原型的__proto__指向父类的原型</span></span><br><span class="line">  subClass.prototype = <span class="built_in">Object</span>.create(superClass &amp;&amp; superClass.prototype,  </span><br><span class="line">    <span class="comment">// 给子类添加 constructor属性 subclass.prototype.constructor === subclass</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">constructor</span>:</span><br><span class="line">      &#123;</span><br><span class="line">        value: subClass,</span><br><span class="line">        enumerable: <span class="literal">false</span>,</span><br><span class="line">        writable: <span class="literal">true</span>,</span><br><span class="line">        configurable: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">if</span> (superClass)</span><br><span class="line">    <span class="comment">//子类__proto__ 指向父类</span></span><br><span class="line">    <span class="built_in">Object</span>.setPrototypeOf ? <span class="built_in">Object</span>.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更多 ES6 的源码解释点击<a href="https://segmentfault.com/a/1190000008390268" target="_blank" rel="noopener">这里</a></p>
+<h2 id="写在最前面的致谢"><a href="#写在最前面的致谢" class="headerlink" title="写在最前面的致谢"></a>写在最前面的致谢</h2><p><strong>本文大量参考自下面几篇很不错的文章</strong></p>
+<p><a href="https://segmentfault.com/a/1190000015727237" target="_blank" rel="noopener">一篇文章理解JS继承——原型链/构造函数/组合/原型式/寄生式/寄生组合/Class extends</a></p>
+<p><a href="https://juejin.im/post/5bcb2e295188255c55472db0" target="_blank" rel="noopener">JavaScript常用八种继承方案</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html" target="_blank" rel="noopener">Javascript面向对象编程（三）：非构造函数的继承</a></p>
+<p><a href="https://segmentfault.com/a/1190000008390268" target="_blank" rel="noopener">ES6中类的实现原理</a></p>
+<p><strong>还有这本书籍</strong></p>
+<p>《JavaScript忍者秘籍》第七章</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>ES6 Class extends是ES5继承的语法糖</li>
+<li>JS的继承除了构造函数继承之外都基于原型链构建的</li>
+<li>函数声明和类声明的区别<ul>
+<li>函数声明会提升，类声明不会。首先需要声明你的类，然后才能访问它。</li>
+</ul>
+</li>
+<li>可以用寄生组合继承实现ES6 Class extends，但是还是会有细微的差别<ul>
+<li>ES6的继承有所不同，实质上是先创建父类的实例对象this，然后再用子类的构造函数修改this。因为子类没有自己的this对象，所以必须先调用父类的super()方法，否则新建实例报错。</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2020/02/24/看懂源码，手写一个EventEmitter基础版/" rel="prev" title="手写一个EventEmitter基础版">
+      <i class="fa fa-chevron-left"></i> 手写一个EventEmitter基础版
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#继承分类"><span class="nav-text">继承分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型链继承"><span class="nav-text">原型链继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数继承"><span class="nav-text">构造函数继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组合继承（上面两种结合起来）"><span class="nav-text">组合继承（上面两种结合起来）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型式继承-哎，就是浅拷贝"><span class="nav-text">原型式继承(哎，就是浅拷贝)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寄生式继承（能附加一些方法）"><span class="nav-text">寄生式继承（能附加一些方法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寄生组合继承（最优方案）"><span class="nav-text">寄生组合继承（最优方案）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现多继承"><span class="nav-text">实现多继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6-extends"><span class="nav-text">ES6 extends</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最前面的致谢"><span class="nav-text">写在最前面的致谢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hytonight云息</p>
+  <div class="site-description" itemprop="description">云之息，浴乎沂，风乎舞雩，咏而归</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HytonightYX" title="GitHub → https://github.com/HytonightYX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:whosiyuan@qq.com" title="E-Mail → mailto:whosiyuan@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hytonight云息</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+<script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script>
+<script src="/blog/js/schemes/muse.js"></script>
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : false,
+      appId      : 'poBG3RLh2xdaKYTvOB9yLgTP-gzGzoHsz',
+      appKey     : 'uKHvvpz0NYgD3n5uxJKWUdVE',
+      placeholder: "Lorem Ipsum...",
+      avatar     : 'mp',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

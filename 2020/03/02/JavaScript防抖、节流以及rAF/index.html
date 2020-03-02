@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yunxi.site","root":"/blog/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="防抖（Debounce） 和节流（throttle） 是两个可以控制在一段时间内函数执行次数的技巧。也是前端界的出名人物，我们在输入框、DOM事件等场景下经常要用到。今天来完整地梳理一遍防抖和节流，顺便提一下rAF。">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript防抖、节流以及rAF">
+<meta property="og:url" content="http://yunxi.site/blog/2020/03/02/JavaScript防抖、节流以及rAF/index.html">
+<meta property="og:site_name" content="Hytonight云息">
+<meta property="og:description" content="防抖（Debounce） 和节流（throttle） 是两个可以控制在一段时间内函数执行次数的技巧。也是前端界的出名人物，我们在输入框、DOM事件等场景下经常要用到。今天来完整地梳理一遍防抖和节流，顺便提一下rAF。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://qn-noter.yunxi.site/imagehost/nj1tn.png-style1">
+<meta property="og:updated_time" content="2020-03-02T13:43:08.571Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript防抖、节流以及rAF">
+<meta name="twitter:description" content="防抖（Debounce） 和节流（throttle） 是两个可以控制在一段时间内函数执行次数的技巧。也是前端界的出名人物，我们在输入框、DOM事件等场景下经常要用到。今天来完整地梳理一遍防抖和节流，顺便提一下rAF。">
+<meta name="twitter:image" content="http://qn-noter.yunxi.site/imagehost/nj1tn.png-style1">
+
+<link rel="canonical" href="http://yunxi.site/blog/2020/03/02/JavaScript防抖、节流以及rAF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>JavaScript防抖、节流以及rAF | Hytonight云息</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?57d30e6a21aa4345d6c1d19d35e02e03";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hytonight云息</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yunxi.site/blog/2020/03/02/JavaScript防抖、节流以及rAF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="Hytonight云息">
+      <meta itemprop="description" content="云之息，浴乎沂，风乎舞雩，咏而归">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hytonight云息">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript防抖、节流以及rAF
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-02 21:41:28 / Modified: 21:43:08" itemprop="dateCreated datePublished" datetime="2020-03-02T21:41:28+08:00">2020-03-02</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/blog/2020/03/02/JavaScript防抖、节流以及rAF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2020/03/02/JavaScript防抖、节流以及rAF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>防抖（Debounce） 和节流（throttle） 是两个可以控制在一段时间内函数执行次数的技巧。也是前端界的出名人物，我们在输入框、DOM事件等场景下经常要用到。今天来完整地梳理一遍防抖和节流，顺便提一下rAF。</p>
+<a id="more"></a>
+<h2 id="1-防抖与节流的定义"><a href="#1-防抖与节流的定义" class="headerlink" title="1 防抖与节流的定义"></a>1 防抖与节流的定义</h2><ul>
+<li>防抖：事件持续触发，但只有当事件停止触发后n秒才执行函数。</li>
+<li>节流：事件持续触发时，每n秒执行一次函数。</li>
+</ul>
+<h2 id="2-防抖-debounce"><a href="#2-防抖-debounce" class="headerlink" title="2 防抖 debounce"></a>2 防抖 debounce</h2><h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>监听鼠标移动事件，每次监听到移动屏幕数字+1。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> count = <span class="number">1</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> container = <span class="built_in">document</span>.getElementById(<span class="string">'container'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">getUserAction</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">    container.innerHTML = count++</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">  container.onmousemove = debounce(getUserAction, 1000)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="第一版"><a href="#第一版" class="headerlink" title="第一版"></a>第一版</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一版</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, wait</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timeout</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    timeout &amp;&amp; clearTimeout(timeout)</span><br><span class="line">    timeout = setTimeout(fn, wait)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="第二版（修正-this-指向）"><a href="#第二版（修正-this-指向）" class="headerlink" title="第二版（修正 this 指向）"></a>第二版（修正 this 指向）</h3><p><strong>发现问题</strong></p>
+<p>将 <code>fn</code> 送入 <code>setTimeout()</code> 之后，<code>getUserAction()</code> 中的 <code>this</code> 指向了 <code>Window</code>！</p>
+<p><strong>解决方案</strong></p>
+<p>手动绑定 <code>this</code> 指针</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第二版 解决 this 指向</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timeout</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span></span><br><span class="line">    timeout &amp;&amp; clearTimeout(timeout)</span><br><span class="line">    timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      fn.apply(self)</span><br><span class="line">    &#125;, delay)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="第三版（解决传参）"><a href="#第三版（解决传参）" class="headerlink" title="第三版（解决传参）"></a>第三版（解决传参）</h3><p><strong>发现问题</strong></p>
+<p><code>fn</code> 无法传参数</p>
+<p><strong>解决问题</strong></p>
+<p>使用 ES6 的 <code>剩余参数</code> 将参数传入 <code>fn</code></p>
+<p>拓展：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters" target="_blank" rel="noopener">剩余参数和 <code>arguments</code>对象的区别</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第三版 解决传参</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timeout</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span></span><br><span class="line">    timeout &amp;&amp; clearTimeout(timeout)</span><br><span class="line">    timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      fn.apply(self, args)</span><br><span class="line">    &#125;, delay)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到了这里，我们的防抖函数已经完成了！下面是三个可能的拓展需求。</p>
+<h3 id="新需求：立即执行"><a href="#新需求：立即执行" class="headerlink" title="新需求：立即执行"></a>新需求：立即执行</h3><blockquote>
+<p>不等到事件停止触发后才执行，希望立即执行函数。然后等到停止触发n秒后，才重新触发执行。</p>
+</blockquote>
+<p><strong>也就是—— <code>immediate</code> 参数将执行时机从末尾改成了开头</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加 immediate 参数控制是否立即执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay, immediate = false</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timeout</span><br><span class="line">  <span class="comment">// 首次立即执行</span></span><br><span class="line">  <span class="keyword">let</span> callNow = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">if</span> (timeout) clearTimeout(timeout)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 需要立即执行的情况</span></span><br><span class="line">    <span class="keyword">if</span> (immediate) &#123;</span><br><span class="line">      <span class="comment">// 说明已经过了 n 秒，允许执行</span></span><br><span class="line">      <span class="keyword">if</span> (callNow) &#123;</span><br><span class="line">        fn.apply(self, args)</span><br><span class="line">      &#125;</span><br><span class="line">      callNow = <span class="literal">false</span></span><br><span class="line">      timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        callNow = <span class="literal">true</span>  <span class="comment">// n 秒后设置 callNow 为 true，也就是可以执行</span></span><br><span class="line">      &#125;, delay)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'延迟执行'</span>)</span><br><span class="line">        fn.apply(self, args)</span><br><span class="line">      &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="新需求：返回值"><a href="#新需求：返回值" class="headerlink" title="新需求：返回值"></a>新需求：返回值</h3><blockquote>
+<p>此时注意一点，就是 <code>getUserAction</code> 函数可能是有返回值的，所以我们也要返回函数的执行结果，但是当 <code>immediate</code> 为 <code>false</code> 的时候，因为使用了 <code>setTimeout</code> ，我们将 <code>fu.apply(self, args)</code> 的返回值赋给变量，最后再 <code>return</code> 的时候，值将会一直是 <code>undefined</code>，所以我们只在 <code>immediate</code> 为 <code>true</code> 的时候返回函数的执行结果。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在immediate为true的时候返回函数的执行结果。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay, immediate = false</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timeout</span><br><span class="line">  <span class="keyword">let</span> callNow = <span class="literal">true</span></span><br><span class="line">  <span class="keyword">let</span> result</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">if</span> (timeout) clearTimeout(timeout)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 需要立即执行的情况</span></span><br><span class="line">    <span class="keyword">if</span> (immediate) &#123;</span><br><span class="line">      <span class="comment">// 说明已经过了 n 秒，允许执行</span></span><br><span class="line">      <span class="keyword">if</span> (callNow) &#123;</span><br><span class="line">        result = fn.apply(self, args)</span><br><span class="line">      &#125;</span><br><span class="line">      callNow = <span class="literal">false</span></span><br><span class="line">      timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        callNow = <span class="literal">true</span>  <span class="comment">// n 秒后设置 callNow 为 true，也就是可以执行</span></span><br><span class="line">      &#125;, delay)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        fn.apply(self, args)</span><br><span class="line">      &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 让函数有返回值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUserAction</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> ret = count</span><br><span class="line">  container.innerHTML = count++</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`当前移动<span class="subst">$&#123;ret&#125;</span>次`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试一下</span></span><br><span class="line"><span class="keyword">const</span> getDebounceResult = debounce(getUserAction, <span class="number">600</span>, <span class="literal">true</span>)</span><br><span class="line"><span class="built_in">document</span></span><br><span class="line">  .getElementById(<span class="string">'container'</span>)</span><br><span class="line">  .addEventListener(<span class="string">'mousemove'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> result = getDebounceResult.call(<span class="keyword">this</span>, e)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'result'</span>, result)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>测试结果</p>
+<p><img src="http://qn-noter.yunxi.site/imagehost/nj1tn.png-style1" alt="image-20200302153109791"></p>
+<p><strong>疑问：为什么在<code>immediate</code>是<code>true</code>时，才可能存在返回值。如果为<code>false</code>，在n秒之后执行就没有返回值了吗？</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    ...</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        fn.apply(self, args)</span><br><span class="line">      &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果 <code>immediate</code> 为 <code>false</code>，那么这个事件是 <code>delay</code> 毫秒后才执行的，但是执行完 <code>else</code> 的代码块之后，马上就执行 <code>return result</code> 这一行代码了。而 <code>setTimeout</code> 中的回调函数是延迟执行的，<code>result</code> 没有办法获取到结果，所以会返回 <code>undefined</code>。<strong>也就是说，如果 <code>immediate</code> 为 <code>false</code>，那你本来就没办法拿到 <code>result</code> 了。</strong></p>
+<h3 id="新需求：取消本次防抖计时"><a href="#新需求：取消本次防抖计时" class="headerlink" title="新需求：取消本次防抖计时"></a>新需求：取消本次防抖计时</h3><p>举个夸张的例子哈，<code>delay</code> 设置为10分钟。那么用户一旦进入防抖计时，他就必须等十分钟才能执行。我们能否加一个功能，让用户可以马上取消这次计时，重新开始呢？</p>
+<p>我们只要清除掉原来的定时器就可以了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加重置防抖计时功能</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay, immediate = false</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timeout</span><br><span class="line">  <span class="keyword">let</span> callNow = <span class="literal">true</span></span><br><span class="line">  <span class="keyword">let</span> result</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 正常的防抖函数</span></span><br><span class="line">  <span class="keyword">const</span> debounced = <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">if</span> (timeout) clearTimeout(timeout)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (immediate) &#123;</span><br><span class="line">      <span class="keyword">if</span> (callNow) &#123;</span><br><span class="line">        result = fn.apply(self, args)</span><br><span class="line">      &#125;</span><br><span class="line">      callNow = <span class="literal">false</span></span><br><span class="line">      timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        callNow = <span class="literal">true</span></span><br><span class="line">      &#125;, delay)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        fn.apply(self, args)</span><br><span class="line">      &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 这里再挂上重置定时器的方法</span></span><br><span class="line">  debounced.cancel = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    clearTimeout(timeout)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'清除了定时器'</span>)</span><br><span class="line">    timeout = <span class="literal">null</span></span><br><span class="line">    callNow = <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> debounced</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们把测试用例也写掉</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>点击取消防抖<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"debounce.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> count = <span class="number">1</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> container = <span class="built_in">document</span>.getElementById(<span class="string">'container'</span>)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">getUserAction</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> ret = count</span></span><br><span class="line"><span class="undefined">      container.innerHTML = count++</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> getDebounceResult = debounce(getUserAction, <span class="number">2000</span>, <span class="literal">true</span>)</span></span><br><span class="line"><span class="undefined">    container.onmousemove = getDebounceResult</span></span><br><span class="line"><span class="javascript">		<span class="comment">// 点击按钮重置防抖定时</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>).addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">      getDebounceResult.cancel()</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在防抖计时过程中，点一下按钮然后马上进入检测区域，数字会马上+1，说明我们成功重置了防抖计时。</p>
+<h2 id="3-节流-throttle"><a href="#3-节流-throttle" class="headerlink" title="3 节流 throttle"></a>3 节流 throttle</h2><p>节流的原理很简单：如果你持续触发事件，每隔一段时间，只执行一次事件。</p>
+<p>关于节流的实现，有两种主流的实现方式，一种是使用时间戳，一种是设置定时器。</p>
+<h3 id="使用时间戳（有头无尾）"><a href="#使用时间戳（有头无尾）" class="headerlink" title="使用时间戳（有头无尾）"></a>使用时间戳（有头无尾）</h3><blockquote>
+<p>使用时间戳，当触发事件的时候，我们取出当前的时间戳，然后减去之前的时间戳(最一开始值设为 0 )，如果大于设置的时间周期，就执行函数，然后更新时间戳为当前的时间戳，如果小于，就不执行。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 时间戳版</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> previous = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> self</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> now = +<span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">    self = <span class="keyword">this</span></span><br><span class="line">		<span class="comment">// 持续一段时间就触发事件</span></span><br><span class="line">    <span class="keyword">if</span> (now - previous &gt; delay) &#123;</span><br><span class="line">      fn.apply(self, args)</span><br><span class="line">      previous = now</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样鼠标移入立即执行，时间间隔不满 <code>delay</code> 就不会执行，所以“有头无尾”。</p>
+<h3 id="使用定时器（有尾无头）"><a href="#使用定时器（有尾无头）" class="headerlink" title="使用定时器（有尾无头）"></a>使用定时器（有尾无头）</h3><blockquote>
+<p>当触发事件的时候，我们设置一个定时器，再触发事件的时候，如果定时器存在，就不执行，直到定时器执行，然后执行函数，清空定时器，这样就可以设置下个定时器。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定时器版</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timeout</span><br><span class="line">  <span class="keyword">let</span> self</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    self = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">if</span> (!timeout) &#123;</span><br><span class="line">      timeout = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        timeout = <span class="literal">null</span></span><br><span class="line">        fn.apply(self, args)</span><br><span class="line">      &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>鼠标移入不会立即执行，而是等待了 <code>delay</code> 秒后执行。当你移除鼠标，仍然会在满 <code>delay</code> 后再次执行，所以“有尾无头”。</p>
+<p><strong>比较两个方法</strong>：</p>
+<ol>
+<li>第一种事件会立刻执行，第二种事件会在 n 秒后第一次执行</li>
+<li>第一种事件停止触发后没有办法再执行事件，第二种事件停止触发后依然会再执行一次事件</li>
+</ol>
+<h3 id="有头有尾（最精彩的一段代码）"><a href="#有头有尾（最精彩的一段代码）" class="headerlink" title="有头有尾（最精彩的一段代码）"></a>有头有尾（最精彩的一段代码）</h3><blockquote>
+<p>就是鼠标移入能立刻执行，停止触发的时候还能再执行一次！</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timeout</span><br><span class="line">  <span class="keyword">let</span> self</span><br><span class="line">  <span class="keyword">let</span> _args</span><br><span class="line">  <span class="keyword">let</span> previous = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> later = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    previous = +<span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">    timeout = <span class="literal">null</span></span><br><span class="line">    fn.apply(fn, _args)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> throttled = <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> now = +<span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">    <span class="keyword">const</span> remaining = delay - (now - previous)</span><br><span class="line"></span><br><span class="line">    self = <span class="keyword">this</span></span><br><span class="line">    _args = args</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (remaining &lt;= <span class="number">0</span> || remaining &gt; delay) &#123;</span><br><span class="line">      <span class="keyword">if</span> (timeout) &#123;</span><br><span class="line">        clearTimeout(timeout)</span><br><span class="line">      &#125;</span><br><span class="line">      previous = now</span><br><span class="line">      fn.apply(self, args)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!timeout) &#123;</span><br><span class="line">      timeout = setTimeout(later, remaining)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> throttled</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>第一次触发<code>onmousemove</code>事件：<code>previous = 0</code>，那么 <code>remaining &lt; 0</code>，<code>timeout</code> 未定义，更新 <code>previous</code>，执行 <code>fn.apply(self, args)</code>，屏幕显示出 1，那么<strong>这是“头”</strong>。</p>
+</li>
+<li><p>紧接着第二次触发：此时 <code>0 &lt; remaining &lt; delay</code>，并且 <code>timeout = undefined</code>，所以走下面的 <code>else if</code>，<strong>此时便设置好了定时器</strong>！</p>
+</li>
+<li><p>后面的若干次触发：依然是 <code>0 &lt; remaining &lt; delay</code>，然而 <code>timeout</code> 已经有值，<strong>因此什么也不会做</strong>。</p>
+</li>
+<li>终于第二次设置的 <code>setTimeout</code> 设置的时间到了，执行 <code>later</code> 函数，这个函数里面更新了 <code>previous</code>，执行 <code>fn.apply(self, _args)</code>，重置了 <code>timeout</code>，因此屏幕显示出 2。</li>
+<li>要注意的是，在这个时间内，你即使将鼠标不动了 or 移出去，上一步我们设置的定时器依然在，所以<strong>这就是有 “尾”</strong>。</li>
+<li>后续重复上述步骤。</li>
+</ul>
+<h3 id="可调节头尾"><a href="#可调节头尾" class="headerlink" title="可调节头尾"></a>可调节头尾</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * options &#123;</span></span><br><span class="line"><span class="comment"> *  leading: boolean，是否有头,</span></span><br><span class="line"><span class="comment"> *  trailing: boolean，是否有尾</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay, options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timeout</span><br><span class="line">  <span class="keyword">let</span> self</span><br><span class="line">  <span class="keyword">let</span> _args</span><br><span class="line">  <span class="keyword">let</span> previous = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  options = options || &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> later = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    previous = options.leading ? +<span class="keyword">new</span> <span class="built_in">Date</span>() : <span class="number">0</span></span><br><span class="line">    timeout = <span class="literal">null</span></span><br><span class="line">    fn.apply(fn, _args)</span><br><span class="line">    <span class="keyword">if</span> (!timeout) self = _args = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> throttled = <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> now = +<span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果leading = false，则让首次触发事件时 previous = now</span></span><br><span class="line">    <span class="keyword">if</span> (previous === <span class="number">0</span> &amp;&amp; !options.leading) previous = now</span><br><span class="line">    <span class="keyword">const</span> remaining = delay - (now - previous)</span><br><span class="line"></span><br><span class="line">    self = <span class="keyword">this</span></span><br><span class="line">    _args = args</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (remaining &lt;= <span class="number">0</span> || remaining &gt; delay) &#123;</span><br><span class="line">      <span class="keyword">if</span> (timeout) &#123;</span><br><span class="line">        clearTimeout(timeout)</span><br><span class="line">        timeout = <span class="literal">null</span></span><br><span class="line">      &#125;</span><br><span class="line">      previous = now</span><br><span class="line">      fn.apply(self, args)</span><br><span class="line">      <span class="keyword">if</span> (!timeout) self = _agrs = <span class="literal">null</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!timeout &amp;&amp; options.trailing) &#123;</span><br><span class="line">      timeout = setTimeout(later, remaining)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> throttled</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大致原理和有头有尾版的类似。我们可以进行”控制变量法“来分别看<code>leading</code> 和 <code>trailing</code> 的作用。</p>
+<p><code>context = args = null</code> 主要是为了释放内存，回收垃圾。</p>
+<h2 id="4-requestAnimationFrame-rAF"><a href="#4-requestAnimationFrame-rAF" class="headerlink" title="4 requestAnimationFrame(rAF)"></a>4 requestAnimationFrame(rAF)</h2><p><code>requestAnimationFrame</code> 是另一种能控制一个 <code>function</code> 执行速率的函数。理论上等价于 <code>throttle(fn, 16.7)</code></p>
+<p>在做动画时经常用到这种方式，防止在一帧时间中渲染多次造成性能浪费。而这个<code>一帧</code> 是取决于显示器帧数的，比如是显示器为60FPS，则一帧时间为 1000 / 60 = 16.7ms 。</p>
+<p>更多关于<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame" target="_blank" rel="noopener">requestAnimationFrame</a>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// throttle(fn, 帧时间)</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useRAF</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timer</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    timer &amp;&amp; cancelAnimationFrame(timer)</span><br><span class="line">    timer = requestAnimationFrame(fn)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>优势</strong></p>
+<ul>
+<li>目标为 60fps，而且游览器会优化到最佳渲染时间；</li>
+<li>使用非常简单，而且是标准Web API，不用担心维护。</li>
+</ul>
+<p><strong>劣势</strong></p>
+<ul>
+<li>不支持 <code>Node.js</code></li>
+<li>当<code>requestAnimationFrame()</code> 运行在后台标签页或者隐藏的<code>&lt;iframe&gt;</code>里时，<code>requestAnimationFrame()</code> 会被暂停调用以提升性能和电池寿命。当然对于鼠标键盘这类事件来说问题不大。</li>
+</ul>
+<p>由以上，可以知道 <code>rAF</code> 适用于网页动画、鼠标键盘事件等等，但是不适用于网络异步请求等场景。</p>
+<h2 id="5-致谢"><a href="#5-致谢" class="headerlink" title="5 致谢"></a>5 致谢</h2><ul>
+<li><p><a href="https://github.com/mqyqingfeng/Blog/issues/22" target="_blank" rel="noopener">JavaScript专题之跟着underscore学防抖</a></p>
+</li>
+<li><p><a href="https://github.com/mqyqingfeng/Blog/issues/26" target="_blank" rel="noopener">JavaScript专题之跟着underscore学节流</a></p>
+</li>
+<li><p><a href="https://juejin.im/post/5e55d23c6fb9a07c820fab9e#heading-3" target="_blank" rel="noopener">女友都懂系列之防抖与节流分析</a></p>
+</li>
+<li><p><a href="https://css-tricks.com/debouncing-throttling-explained-examples/" target="_blank" rel="noopener">Debouncing and Throttling Explained Through Examples</a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2020/03/01/JavaScript继承的八种写法/" rel="prev" title="JavaScript继承的八种写法">
+      <i class="fa fa-chevron-left"></i> JavaScript继承的八种写法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-防抖与节流的定义"><span class="nav-text">1 防抖与节流的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-防抖-debounce"><span class="nav-text">2 防抖 debounce</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#场景"><span class="nav-text">场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一版"><span class="nav-text">第一版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二版（修正-this-指向）"><span class="nav-text">第二版（修正 this 指向）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三版（解决传参）"><span class="nav-text">第三版（解决传参）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新需求：立即执行"><span class="nav-text">新需求：立即执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新需求：返回值"><span class="nav-text">新需求：返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新需求：取消本次防抖计时"><span class="nav-text">新需求：取消本次防抖计时</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-节流-throttle"><span class="nav-text">3 节流 throttle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用时间戳（有头无尾）"><span class="nav-text">使用时间戳（有头无尾）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用定时器（有尾无头）"><span class="nav-text">使用定时器（有尾无头）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有头有尾（最精彩的一段代码）"><span class="nav-text">有头有尾（最精彩的一段代码）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可调节头尾"><span class="nav-text">可调节头尾</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-requestAnimationFrame-rAF"><span class="nav-text">4 requestAnimationFrame(rAF)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-致谢"><span class="nav-text">5 致谢</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hytonight云息</p>
+  <div class="site-description" itemprop="description">云之息，浴乎沂，风乎舞雩，咏而归</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HytonightYX" title="GitHub → https://github.com/HytonightYX" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:whosiyuan@qq.com" title="E-Mail → mailto:whosiyuan@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hytonight云息</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+<script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script>
+<script src="/blog/js/schemes/muse.js"></script>
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : false,
+      appId      : 'poBG3RLh2xdaKYTvOB9yLgTP-gzGzoHsz',
+      appKey     : 'uKHvvpz0NYgD3n5uxJKWUdVE',
+      placeholder: "Lorem Ipsum...",
+      avatar     : 'mp',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://qn-noter.yunxi.site/imagehost/ynhsm.png-style1">
 <meta property="og:image" content="http://qn-noter.yunxi.site/imagehost/hpkd4.png">
 <meta property="og:image" content="http://qn-noter.yunxi.site/imagehost/jx9wn.png">
-<meta property="og:updated_time" content="2020-03-22T13:29:29.246Z">
+<meta property="og:updated_time" content="2020-03-22T13:32:28.270Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Koa源码系列1—手写Koa库">
 <meta name="twitter:description" content="很久前研究过的 koa 原理有些淡忘了，趁着刚好在研究异步，而koa刚好是从过渡方案 co + generator 进化到终极方案 async/await 的典型。因此把它挖出来再研究一番。本系列分上下两部分，上部分手写，下部分对照源码，查漏补缺。 面对源码的最好办法就是手写源码，奥利给！">
@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-03-22 21:27:24 / Modified: 21:29:29" itemprop="dateCreated datePublished" datetime="2020-03-22T21:27:24+08:00">2020-03-22</time>
+              <time title="Created: 2020-03-22 21:27:24 / Modified: 21:32:28" itemprop="dateCreated datePublished" datetime="2020-03-22T21:27:24+08:00">2020-03-22</time>
             </span>
 
           
@@ -223,11 +223,11 @@
         <p>很久前研究过的 koa 原理有些淡忘了，趁着刚好在研究异步，而koa刚好是从过渡方案 co + generator 进化到终极方案 async/await 的典型。因此把它挖出来再研究一番。本系列分上下两部分，上部分手写，下部分对照源码，查漏补缺。</p>
 <p>面对源码的最好办法就是手写源码，奥利给！</p>
 <a id="more"></a>
-<h3 id="什么是-koa2"><a href="#什么是-koa2" class="headerlink" title="什么是 koa2"></a>什么是 koa2</h3><ol>
+<h2 id="什么是-koa2"><a href="#什么是-koa2" class="headerlink" title="什么是 koa2"></a>什么是 koa2</h2><ol>
 <li>Nodejs 官方 api 支持的都是 callback 形式的异步编程模型。问题：callback 嵌套问题</li>
 <li>koa2 是由 Express 原班人马打造的，是现在比较流行的基于 Node.js 平台的 web 开发框架，Koa 把 Express 中内置的 router、view 等功能都移除了，使得框架本身更轻量，而且扩展性很强。使用 koa 编写 web 应用，可以免除重复繁琐的回调函数。</li>
 </ol>
-<h3 id="koa2-的优点"><a href="#koa2-的优点" class="headerlink" title="koa2 的优点"></a>koa2 的优点</h3><p>对比原生的 Node.js 开启 http 服务：</p>
+<h2 id="koa2-的优点"><a href="#koa2-的优点" class="headerlink" title="koa2 的优点"></a>koa2 的优点</h2><p>对比原生的 Node.js 开启 http 服务：</p>
 <ul>
 <li><p>传统的 http 服务想使用<code>模块化</code>不是很方便，我们不能在一个服务里面判断所有的请求和一些内容。而 koa2 对模块化提供了更好的帮助;</p>
 </li>
@@ -388,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是-koa2"><span class="nav-text">什么是 koa2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#koa2-的优点"><span class="nav-text">koa2 的优点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-套用-http，跑个服务先"><span class="nav-text">1 套用 http，跑个服务先</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-实现-context"><span class="nav-text">2 实现 context</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实现-request"><span class="nav-text">3 实现 request</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-洋葱之心：compose-和-next"><span class="nav-text">4 洋葱之心：compose() 和 next()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-处理-response"><span class="nav-text">5 处理 response</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码仓库"><span class="nav-text">代码仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#致谢"><span class="nav-text">致谢</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-koa2"><span class="nav-text">什么是 koa2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa2-的优点"><span class="nav-text">koa2 的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-套用-http，跑个服务先"><span class="nav-text">1 套用 http，跑个服务先</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-实现-context"><span class="nav-text">2 实现 context</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实现-request"><span class="nav-text">3 实现 request</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-洋葱之心：compose-和-next"><span class="nav-text">4 洋葱之心：compose() 和 next()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-处理-response"><span class="nav-text">5 处理 response</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码仓库"><span class="nav-text">代码仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#致谢"><span class="nav-text">致谢</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
